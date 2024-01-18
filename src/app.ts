@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
 import { initApi } from './routers';
+import { instanceMySql } from './dbs/MySQL/instanceMySql';
 export const app =express()
 
 
@@ -21,6 +22,7 @@ app.use(
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
 
 initApi(app)
 ////init router 
