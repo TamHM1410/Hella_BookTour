@@ -6,6 +6,7 @@ import crypto from "crypto";
 import { createToken } from "../../auth/createToken";
 import keyService from "../keyService/keyService";
 
+
 interface Data {
     email: string,
     fullName: string,
@@ -18,21 +19,37 @@ class AccessService {
     signUp= async ({fullName, email,password,  phone, gender}: Data) => {
         instanceMongo()
       try{
+       
+        const checkExistMail = await user.findOne({email:email})
+        const checkExistPhone = await user.findOne({phone:phone})
+        
+        if(checkExistMail) return { message :'Existing email' }
+        if(checkExistPhone) return { message :'Existing phone' }
+
+        
         const hassPassword= await bcrypt.hash(password,10)
         const newUser= new user({
-            fullName,email,password:hassPassword,phone:phone,
+            fullName:fullName,
+            email:email,
+            password:hassPassword,
+            phone:phone,
             gender:gender
 
         })
-        console.log('new user',newUser)
+     
       await newUser.save()
+    
       return {
         status :'200',
         message:'Sign up successs'
       }
 
       }catch(error){
-        console.log('error')
+        console.log('error',error)
+        return {
+          stauts :'444',
+          message:'Sign up fail'
+        }
       }
         
     }

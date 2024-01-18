@@ -11,8 +11,8 @@ interface Data {
 
 class AccessController {
     signUp = async (req: Request, res: Response) => {
-        await accesssService.signUp(req.body as Data);
-        return res.status(200).json({ message: 'success' });
+       const result= await accesssService.signUp(req.body as Data);
+        return res.status(200).json( result);
     }
     signIn= async (req:Request,res:Response)=>{
       const result=  await accesssService.signIn(req.body as Data)
