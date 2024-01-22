@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
 import { initApi } from './routers';
-import { instanceMySql } from './dbs/MySQL/instanceMySql';
+
 export const app =express()
 
 

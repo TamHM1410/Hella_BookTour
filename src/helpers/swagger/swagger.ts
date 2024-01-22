@@ -11,7 +11,7 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'Helle Booking  Tour API',
+      title: 'Hello Booking  Tour API',
       description: 'Detail of CRUD API ',
       version: '1.0.0',
     },
@@ -25,7 +25,7 @@ const swaggerSpec = swaggerJsdoc(options)
 const swaggerDocs=(app :any, port:string |undefined) =>{
 
   // Swagger Page
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+  app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
   // Documentation in JSON format
   app.get('/docs.json', (req :Request, res:Response) => {
