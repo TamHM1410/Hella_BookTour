@@ -1,7 +1,7 @@
 
   import { Express} from 'express'; 
   import { accessRouter } from './access/accessRouter';
-  import { tourRouter } from './Tour/tourRouter'
+import { cityRouter } from './City/city.router';
 
 
 /**
@@ -18,7 +18,7 @@
   export const initApi =(app :Express)=>{
   
     app.use('/api/v1',accessRouter )
-    app.use('/api/v1',tourRouter)
+    app.use('/api/v1',cityRouter)
   
    
   }

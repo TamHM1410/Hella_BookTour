@@ -104,7 +104,7 @@ class AccessService {
           await keyService.createKeyToken({userId :checkUser._id,publicKey,refreshKey})
           const token =await createToken({payload,privateKey,refreshKey})
           return {
-            msg :"login success",
+            message :"login success",
             token,
             id: checkUser._id
           }

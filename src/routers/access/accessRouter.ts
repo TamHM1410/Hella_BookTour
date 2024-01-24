@@ -6,11 +6,20 @@ export const accessRouter =express.Router()
 
 
 /**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: Authentication Api
+ */
+
+
+
+/**A
  * @openapi
  * '/api/v1/signUp':
  *   post:
  *     tags:
- *       - Sign Up
+ *        [Authentication]
  *     summary: Register new User
  *     requestBody:
  *       required: true
@@ -61,8 +70,8 @@ accessRouter.post('/signUp', accessController.signUp);
  * @swagger
  * /api/v1/signIn:
  *   post:
- *     summary: Authenticate a user
- *     tags: [Sign In]
+ *     summary: Log in
+ *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
