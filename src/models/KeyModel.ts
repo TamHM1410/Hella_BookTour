@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 // Declare the Schema of the Mongo model
 const  keySchema= new mongoose.Schema({
     userId:{
-        type:String,
+        type:mongoose.Schema.Types.ObjectId,
         required:true,
         unique:true,
         index:true,
