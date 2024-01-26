@@ -17,7 +17,7 @@ const options = {
     },
   },
   // looks for configuration in specified directories
-  apis: ['./src/routers/access/*.ts','./src/routers/City/*.ts'],
+  apis: ['./src/routers/access/*.ts','./src/routers/City/*.ts','./src/routers/location_activity/*.ts'],
 }   
 
 const swaggerSpec = swaggerJsdoc(options)
