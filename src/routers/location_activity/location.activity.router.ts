@@ -194,7 +194,7 @@ locationActivityRouter.patch('/location_activity/update/:id',locationActivityCon
 /**
  * @swagger
  * paths:
- *   /location_activities/{id}:
+ *   api/v1/location_activity/delete/:id:
  *     delete:
  *       summary: Delete a location activity by ID
  *       tags: [LocationActivities]
