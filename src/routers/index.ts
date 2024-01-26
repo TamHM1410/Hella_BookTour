@@ -2,6 +2,7 @@
   import { Express} from 'express'; 
   import { accessRouter } from './access/accessRouter';
 import { cityRouter } from './City/city.router';
+import { locationActivityRouter } from './location_activity/location.activity.router';
 
 
 /**
@@ -19,6 +20,7 @@ import { cityRouter } from './City/city.router';
   
     app.use('/api/v1',accessRouter )
     app.use('/api/v1',cityRouter)
+    app.use('/api/v1',locationActivityRouter)
   
    
   }

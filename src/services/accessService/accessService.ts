@@ -23,8 +23,8 @@ class AccessService {
         const checkExistMail = await user.findOne({email:email})
         const checkExistPhone = await user.findOne({phone:phone})
         
-        if(checkExistMail) return { message :'Existing email' }
-        if(checkExistPhone) return { message :'Existing phone' }
+        if(checkExistMail) return { status :'Error',message :'Existing email' }
+        if(checkExistPhone) return {status :'Error', message :'Existing phone' }
 
         
         const hassPassword= await bcrypt.hash(password,10)
@@ -40,14 +40,14 @@ class AccessService {
       await newUser.save()
     
       return {
-        status :'200',
+        status :'Success',
         message:'Sign up successs'
       }
 
       }catch(error){
         console.log('error',error)
         return {
-          stauts :'444',
+          status :'Error',
           message:'Sign up fail'
         }
       }
@@ -59,7 +59,7 @@ class AccessService {
         const checkUser=await user.findOne({email:email})
         if(!checkUser){
           return  {
-            status :"500",
+            status :"Error",
             message:"Incorrect email"
           }
         }else{
@@ -67,7 +67,7 @@ class AccessService {
       
           if(checkPass===false){
             return {
-              status :"500",
+              status :"Error",
               message:"Incorrect password"
             }
           }

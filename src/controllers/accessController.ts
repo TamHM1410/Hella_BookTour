@@ -12,10 +12,17 @@ interface Data {
 class AccessController {
     signUp = async (req: Request, res: Response) => {
        const result= await accesssService.signUp(req.body as Data);
+       if(result && result.status==='Error'){
+        return res.status(500).json(result)
+       }
         return res.status(200).json( result);
     }
     signIn= async (req:Request,res:Response)=>{
       const result=  await accesssService.signIn(req.body as Data)
+      if(result && result.status==='Error'){
+        return res.status(500).json(result)
+       }
+
         return res.status(200).json(result);
     }
 }
