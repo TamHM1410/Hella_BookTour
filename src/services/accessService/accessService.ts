@@ -23,8 +23,8 @@ class AccessService {
         const checkExistMail = await user.findOne({email:email})
         const checkExistPhone = await user.findOne({phone:phone})
         
-        if(checkExistMail) return { status :'Error',message :'Existing email' }
-        if(checkExistPhone) return {status :'Error', message :'Existing phone' }
+        if(checkExistMail) return { statusCode:500,status :'Error',message :'Existing email' }
+        if(checkExistPhone) return {statusCode:500,status :'Error', message :'Existing phone' }
 
         
         const hassPassword= await bcrypt.hash(password,10)
@@ -47,6 +47,7 @@ class AccessService {
       }catch(error){
         console.log('error',error)
         return {
+          statusCode:500,
           status :'Error',
           message:'Sign up fail'
         }
@@ -59,6 +60,7 @@ class AccessService {
         const checkUser=await user.findOne({email:email})
         if(!checkUser){
           return  {
+            statusCode:500,
             status :"Error",
             message:"Incorrect email"
           }
@@ -67,6 +69,7 @@ class AccessService {
       
           if(checkPass===false){
             return {
+              statusCode:500,
               status :"Error",
               message:"Incorrect password"
             }
@@ -103,10 +106,16 @@ class AccessService {
         
           await keyService.createKeyToken({userId :checkUser._id,publicKey,refreshKey})
           const token =await createToken({payload,privateKey,refreshKey})
+       
           return {
+            statusCode:201,
             message :"login success",
             token,
-            id: checkUser._id
+            userData:{
+              id: checkUser._id,
+            role:checkUser.roleId
+
+            }
           }
   
 

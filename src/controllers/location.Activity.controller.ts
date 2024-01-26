@@ -28,5 +28,26 @@ class  LocationActivityController{
 
         }
     }
+    getActivityById =async (req: Request, res: Response)=>{
+        try{
+
+        const  activity_id:number=req.body.id
+        const result =await location_activity_service.deleteLocationActivityById(activity_id)
+        if(result){
+            return res.status(result.StatusCode).json(result)
+
+           
+        }
+      
+        
+
+        }catch(error){
+            
+            return res.status(500).json({
+                Message: 'Bad request'
+            })
+
+        }
+    }
 }
 export const locationActivityController=new LocationActivityController()

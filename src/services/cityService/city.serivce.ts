@@ -71,7 +71,7 @@ class CityService {
     }
     getCurrentCity =async (cityId:number)=>{
         try{
-            console.log('city current',cityId)
+            
             const currentCity =await this.prisma.city.findUnique({
                 where:{
                     id :cityId
