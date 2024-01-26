@@ -34,6 +34,34 @@ class Location_Activity_Service{
 
         }
     }
+    deleteLocationActivityById =async (activity_id:number)=>{
+        try{
+            await this.prisma.$connect
+            const data =await this.prisma.location_Activity.delete({
+                where:{
+                    id :activity_id
+                }
+            })
+            if(!data){
+                return  {
+                    status :'Error',
+                    StatusCode:500,
+                    message:'Activity not exist!'
+                }
+            }
+            return {
+                StatusCode:200,
+                status : 'Success',
+                message: data,
+               
+            }
+
+        }catch(error){
+            console.log(error)
+        }finally{
+            await this.prisma.$disconnect
+        }
+    }
 
 }
 export  const location_activity_service=new Location_Activity_Service()
