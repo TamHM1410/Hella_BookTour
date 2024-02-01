@@ -17,8 +17,8 @@ model City{
   country                String
   status                 Boolean
   createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  updateAt               DateTime @updatedAt 
+  deleteAt               DateTime?
   location               Location[]
 
 }
@@ -31,7 +31,7 @@ model Location{
   status                Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime?
   location_activity      Location_Activity[]
   point_of_interest      Point_Of_Interest[]
   location_In_Tour       Location_In_Tour[]
@@ -47,7 +47,7 @@ model Location{
   status                 Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime?
   location               Location @relation(fields: [locationId],references: [id])
 
  }
@@ -57,7 +57,7 @@ model Categoty_Of_POI{
   status                 Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime?
 }
 model Point_Of_Interest{
   id                     Int @id @default(autoincrement())
@@ -68,7 +68,7 @@ model Point_Of_Interest{
   status                 Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime @default(dbgenerated("('0000-00-00 00:00:00')")) @db.Timestamp(0)
   location               Location @relation(fields: [locationId],references: [id])
 
 
@@ -79,7 +79,7 @@ model Vehicle{
   status               Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime?
   tour                   Tour []
 
 
@@ -94,7 +94,7 @@ model Tour{
   vehicle                Vehicle @relation(fields: [vehicleId],references: [id])
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime?
   location_in_tour       Location_In_Tour[] 
   trip                   Trip[]
 }
@@ -109,8 +109,7 @@ model Location_In_Tour{
   description            String
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
-
+  deleteAt               DateTime?
 }
 model Tour_Guide{
   id                     Int @id @default(autoincrement())
@@ -119,7 +118,7 @@ model Tour_Guide{
   language               String
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime?
   trip                   Trip[]
 
 }
@@ -136,7 +135,7 @@ model Trip{
   booking                Booking[]
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime?
 
 } 
 model Payment_Method{
@@ -145,7 +144,7 @@ model Payment_Method{
   note                   String?
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime
+  deleteAt               DateTime?
   payment                Payment[]
 
 }
@@ -161,7 +160,7 @@ model Payment{
   payment_method          Payment_Method @relation(fields: [paymentMethodId],references: [id])
   createAt                DateTime @default(now())
   updateAt                DateTime @updatedAt
-  deleteAt                DateTime
+  deleteAt                DateTime?
   bookingId               Int @unique
   booking                 Booking @relation(fields: [bookingId],references: [id])
 
@@ -180,6 +179,9 @@ model Booking{
   payment                 Payment[]
   tripId                  Int @unique
   trip                    Trip @relation(fields: [tripId],references: [id])
+  createAt                DateTime @default(now())
+  updateAt                DateTime @updatedAt
+  deleteAt                DateTime?
 
 
 

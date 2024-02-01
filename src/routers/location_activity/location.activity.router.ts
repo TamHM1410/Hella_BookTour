@@ -88,7 +88,11 @@ locationActivityRouter.get('/location_activity',locationActivityController.getAl
  */
 
 
-locationActivityRouter.get('/location_activity/:id',locationActivityController.getActivityById)
+// locationActivityRouter.get('/location_activity/:id',locationActivityController.getActivityById)
+
+
+
+
 /**
  * @swagger
  * paths:

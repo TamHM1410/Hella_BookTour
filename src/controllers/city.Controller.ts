@@ -9,7 +9,13 @@ class CityController{
 
     }
     createNewCity =async (req: Request, res: Response)=>{
-        const cityData=req.body
+        const cityData=req.body as {
+            cityName: string;
+            country: string;
+            status: boolean;
+            
+           
+        }
         const  result = await cityService.createNewCity(cityData)
         const status=result?.status
         if(status ==="Error"){
@@ -26,9 +32,7 @@ class CityController{
                 cityName: string;
                 country: string;
                 status: boolean;
-                createAt: Date;
-                updateAt: Date;
-                deleteAt: Date;
+              
             };
           const result=  await cityService.editCity(currentData)
             // const result = await cityService.editCity(currentData);

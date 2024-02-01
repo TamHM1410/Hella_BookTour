@@ -6,19 +6,19 @@ class Location_Activity_Service{
     }
     getAll =async ()=>{
         try{
-            await this.prisma.$connect
+            await this.prisma.$connect()
             const  allData= await this.prisma.location_Activity.findMany()
             return allData
 
         }catch(error){
             console.log(error)
         }finally{
-            await this.prisma.$disconnect
+            await this.prisma.$disconnect()
         }
     }
     getLoctionActivityByName=async (nameOfActivity :string)=>{
         try{
-            await this.prisma.$connect
+            await this.prisma.$connect()
             const data= await this.prisma.location_Activity.findFirst({
                 where:{
                     activityName: nameOfActivity
@@ -30,36 +30,63 @@ class Location_Activity_Service{
         }catch(error){
             console.log(error)
         }finally{
-            await this.prisma.$disconnect
+            await this.prisma.$disconnect()
 
         }
     }
-    deleteLocationActivityById =async (activity_id:number)=>{
+    // getActivityById =async (activity_id :number)=>{
+    //     try{
+    //         await this.prisma.$connect()
+    //         const data = await this.prisma.location_Activity.findUnique({
+    //             where :{
+    //                 id:activity_id
+    //             }
+    //         })
+    //         if(data){
+    //             return {
+    //                 status:'SUCCESS',
+    //                 satusCode:203,
+    //                 data:data
+    //             }
+    //         }
+    //         return  {
+    //                 status :'Error',
+    //                 statusCode :400,
+    //                 Message: 'get stuck'
+    //         }
+
+    //     }catch(error){
+    //         return {
+    //             status :'Error',
+    //             statusCode :500,
+    //             Message: 'Internal Internal Server'
+
+    //         }
+
+    //     }finally{
+    //         await this.prisma.$disconnect()
+    //     }
+    // }
+    deleteLocationActivityById =async (id:number)=>{
         try{
-            await this.prisma.$connect
-            const data =await this.prisma.location_Activity.delete({
+            await this.prisma.$connect()
+            await this.prisma.location_Activity.delete({
                 where:{
-                    id :activity_id
+                    id :id
                 }
             })
-            if(!data){
-                return  {
-                    status :'Error',
-                    StatusCode:500,
-                    message:'Activity not exist!'
-                }
-            }
+          
             return {
                 StatusCode:200,
                 status : 'Success',
-                message: data,
+                message: 'Delete successfully',
                
             }
 
         }catch(error){
             console.log(error)
         }finally{
-            await this.prisma.$disconnect
+            await this.prisma.$disconnect()
         }
     }
     updateActivity =async(activityData :{
@@ -74,7 +101,7 @@ class Location_Activity_Service{
 
     })=>{
         try{
-            await this.prisma.$connect
+            await this.prisma.$connect()
             const data =await this.prisma.location_Activity.update({
                 where:{
                   id :activityData.id
@@ -98,40 +125,43 @@ class Location_Activity_Service{
             console.log(error)
 
         }finally{
-            await this.prisma.$disconnect
+            await this.prisma.$disconnect()
         }
     }
-    deleteActivity = async (activityId:number)=>{
-        try{
-            await this.prisma.$connect
+    deleteActivity = async (id: number) => {
+        try {
+            await this.prisma.$connect();
             await this.prisma.location_Activity.delete({
-                where :{
-                    id: activityId
+                where: {
+                    id: id // Make sure 'id' is defined and passed correctly
                 }
-            })
+            });
             return {
-                statusCode:203,
-                status :'Delete location activity successfully!'
-            }
-
-        }catch(error){
-            console.log(error)
-        }finally{
-            await this.prisma.$disconnect
+                statusCode: 203,
+                status: 'Delete location activity successfully!'
+            };
+        } catch (error) {
+            console.log(error);
+            // Handle the error appropriately (e.g., throw or return an error response)
+            return {
+                statusCode: 500,
+                status: 'Internal Server Error'
+            };
+        } finally {
+            await this.prisma.$disconnect();
         }
-    }
+    };
     createActivity =async (data: {
         locationId:number,
         activityName:string,
         activityDuration:string,
         activityDescription:string,
         status:boolean,
-        createAt:Date,
-        updateAt:Date,
-        deleteAt:Date
+       
     })=>{
         try{
-            await this.prisma.$connect
+           
+            await this.prisma.$connect()
             const createNewActivity =await this.prisma.location_Activity.create({
                 data:{
                     locationId:data.locationId,
@@ -139,9 +169,9 @@ class Location_Activity_Service{
                     activityDuration:data.activityDuration,
                     activityDescription:data.activityDescription,
                     status:data.status,
-                    createAt:data.createAt,
-                    updateAt:data.updateAt,
-                    deleteAt:data.deleteAt
+                   
+                   
+                 
 
                 }
                
@@ -156,7 +186,7 @@ class Location_Activity_Service{
             console.log(error)
 
         }finally{
-            await this.prisma.$disconnect
+            await this.prisma.$disconnect()
 
         }
 
