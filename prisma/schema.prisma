@@ -13,8 +13,8 @@ datasource db {
 }
 model City{
   id                     Int @id @default(autoincrement())
-  cityName               String
-  country                String
+  cityName               String @unique
+  country                String  
   status                 Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt 
@@ -24,7 +24,7 @@ model City{
 }
 model Location{
   id                    Int @id @default(autoincrement())
-  cityId                Int  @unique
+  cityId                Int 
   city                  City @relation(fields: [cityId],references: [id])
   locationName          String
   locationAdress        String
@@ -110,6 +110,8 @@ model Location_In_Tour{
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
   deleteAt               DateTime?
+  startCity              String
+  endCity                String
 }
 model Tour_Guide{
   id                     Int @id @default(autoincrement())
