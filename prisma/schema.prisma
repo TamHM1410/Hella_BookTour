@@ -89,9 +89,9 @@ model Tour{
   tourName               String
   status                 Boolean
   price                  Float
-  vehicleId              Int  @unique
+  vehicleTypeId          Int  @unique
   tourType               String
-  vehicle                Vehicle @relation(fields: [vehicleId],references: [id])
+  vehicle                Vehicle @relation(fields: [vehicleTypeId],references: [id])
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
   deleteAt               DateTime?
@@ -152,6 +152,7 @@ model Payment_Method{
 }
 model Payment{
   id                      Int @id @default(autoincrement())
+  paymentName             String
   paymentDate             DateTime
   amount                  Float
   status                  Boolean

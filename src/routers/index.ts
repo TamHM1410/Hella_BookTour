@@ -5,6 +5,8 @@ import { cityRouter } from './City/city.router';
 import { locationActivityRouter } from './location_activity/location.activity.router';
 import { locationRouter } from './location/location.router';
 import { locationInTourRouter } from './locationInTour/locationInTour.router';
+import { tourRouter } from './Tour/tourRouter';
+import { paymentRouter } from './payment/payment.router';
 
 
 /**
@@ -25,6 +27,8 @@ import { locationInTourRouter } from './locationInTour/locationInTour.router';
     app.use('/api/v1',locationActivityRouter) ///location activity router
     app.use('/api/v1',locationRouter) /// location router
     app.use('/api/v1',locationInTourRouter) //location in tour router
+    app.use('/api/v1',tourRouter )////tour router
+    app.use('/api/v1',paymentRouter )////tour router
   
    
   }
