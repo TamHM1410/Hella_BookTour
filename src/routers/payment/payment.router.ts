@@ -12,5 +12,5 @@ paymentRouter.post('/payments',paymentController.createNewPayment)
 
 paymentRouter.delete('/payments/:id',paymentController.deletetById)
 
-paymentRouter.post('/payments/:id',paymentController.updateById)
+paymentRouter.patch('/payments/:id',paymentController.updateById)
 

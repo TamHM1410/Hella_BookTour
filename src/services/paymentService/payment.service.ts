@@ -4,15 +4,45 @@ class PaymentService{
     constructor(){
         this.prisma = new PrismaClient();
     }
-    sample = async ()=>{
+    getPaymentById=async (id:number)=>{
         try{
             await this.prisma.$connect
-            const data = await this.prisma.payment.findMany()
+            const data = await this.prisma.payment.findFirst({
+                where:{
+                    id:id
+                }
+            })
+            if(data){
+                return {
+                    status:'Success',
+                    statusCode:201,
+                    data:data
+                }
+            }
+
+        }catch(error){
+            return {
+                status :'Internal Server Error',
+                statusCode:501
+            }
+        }finally{
+            await this.prisma.$disconnect
+        }
+    }
+    getPaymentByName = async (paymentName:string)=>{
+        try{
+            await this.prisma.$connect
+            const data = await this.prisma.payment.findFirst({
+                where :{
+                    paymentName:paymentName
+                }
+            })
 
             if(data){
                 return {
                     status:'Success',
-                    statusCode:201
+                    statusCode:201,
+                    data:data
                 }
             }
 
@@ -26,6 +56,32 @@ class PaymentService{
             await this.prisma.$disconnect
         }
     }
+    deleteById = async (id:number)=>{
+        try{
+            await this.prisma.$connect
+             await this.prisma.payment.delete({
+                where :{
+                    id:id
+                }
+             })
+
+            return {
+                status:'Delete Success!',
+                statusCode:201,
+
+            }
+
+
+        }catch(error){
+            return {
+                status :'Internal Server Error',
+                statusCode:501
+            }
+        }finally{
+            await this.prisma.$disconnect
+        }
+    }
+    
     getAll = async ()=>{
         try{
             await this.prisma.$connect

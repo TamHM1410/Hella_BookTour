@@ -17,4 +17,4 @@ tourRouter.post('/tours',tourController.createNewTour)
 
 tourRouter.delete('/tours/:id',tourController.deleteById)
 
-tourRouter.post('/tour/:id',tourController.updateTour)
+tourRouter.patch('/tour/:id',tourController.updateTour)

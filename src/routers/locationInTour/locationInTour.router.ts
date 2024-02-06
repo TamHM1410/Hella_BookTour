@@ -12,6 +12,6 @@ locationInTourRouter.delete('/locationInTours:id',locationInTourController.delet
 
 locationInTourRouter.post('/locationInTours',locationInTourController.createNew)
 
-locationInTourRouter.post('/locationInTours/:id',locationInTourController.updateById)
+locationInTourRouter.patch('/locationInTours/:id',locationInTourController.updateById)
 
 

@@ -172,10 +172,10 @@ model Payment{
 }
 model Booking{
   id                      Int @id @default(autoincrement())
-  bookingDate             DateTime
-  fromDate                DateTime
-  toDate                  DateTime
-  userId                  String @unique
+  bookingDate             String
+  fromDate                String
+  toDate                  String
+  userId                  String 
   totalAmount             Float
   totalCustomer           Int
   status                  Boolean

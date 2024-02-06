@@ -126,7 +126,7 @@ class TripService {
             }
         }
     }
-    getAllTripById =async (id:number)=>{
+    getTripById =async (id:number)=>{
         try{
             
             await this.prisma.$connect  
