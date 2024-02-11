@@ -88,6 +88,7 @@ class AccessService {
               },
             }
           );
+          console.log('privatekey',privateKey,publicKey)
           const refreshKey = await new Promise<string>((resolve, reject) => {
             crypto.generateKey('hmac', { length: 512 }, (err, key) => {
                 if (err) reject(err);

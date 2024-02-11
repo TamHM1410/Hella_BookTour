@@ -11,6 +11,7 @@ import { tripRouter } from './trip/trip.router';
 import { bookingRouter } from './booking/booking.router';
 import { categotyOfPoiRouter } from './categoty_of_poi/poi.router';
 import { paymentMethodRouter } from './paymentMethod/paymentMethod.router';
+import { checkLogin } from '../auth/checkLogin';
 
 /**
  * @openapi
@@ -26,16 +27,16 @@ import { paymentMethodRouter } from './paymentMethod/paymentMethod.router';
   export const initApi =(app :Express)=>{
     
     app.use('/api/v1',accessRouter )
-    app.use('/api/v1',cityRouter)   
-    app.use('/api/v1',locationActivityRouter) 
-    app.use('/api/v1',locationRouter) 
-    app.use('/api/v1',locationInTourRouter) 
-    app.use('/api/v1',tourRouter )
-    app.use('/api/v1',paymentRouter )
-    app.use('/api/v1',tripRouter )
-    app.use('/api/v1',bookingRouter )
-    app.use('/api/v1',categotyOfPoiRouter)
-    app.use('/api/v1',paymentMethodRouter)
+    app.use('/api/v1',checkLogin,cityRouter)   
+    app.use('/api/v1',checkLogin,locationActivityRouter) 
+    app.use('/api/v1',checkLogin,locationRouter) 
+    app.use('/api/v1',checkLogin,locationInTourRouter) 
+    app.use('/api/v1',checkLogin,tourRouter )
+    app.use('/api/v1',checkLogin,paymentRouter )
+    app.use('/api/v1',checkLogin,tripRouter )
+    app.use('/api/v1',checkLogin,bookingRouter )
+    app.use('/api/v1',checkLogin,categotyOfPoiRouter)
+    app.use('/api/v1',checkLogin,paymentMethodRouter)
   
    
   }
