@@ -1,5 +1,6 @@
 import express from 'express'
 import { accessController } from '../../controllers/accessController'
+import { checkLogin } from '../../auth/checkLogin';
 
 
 export const accessRouter =express.Router()
@@ -107,4 +108,4 @@ accessRouter.post('/signUp', accessController.signUp);
  *       400:
  *         description: Bad request
  */
-accessRouter.post('/signIn', accessController.signIn);
+accessRouter.post('/signIn',checkLogin, accessController.signIn);

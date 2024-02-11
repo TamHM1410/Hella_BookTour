@@ -74,9 +74,10 @@ model Point_Of_Interest{
 
 }
 model Vehicle{
-  id                   Int @id @default(autoincrement())
-  vehicleName          String
-  status               Boolean
+  id                     Int @id @default(autoincrement())
+  vehicleName            String
+  status                 Boolean
+  capacity               String
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
   deleteAt               DateTime?
@@ -143,6 +144,7 @@ model Trip{
 model Payment_Method{
   id                     Int @id @default(autoincrement())
   paymentType            String
+  bankDetails            String
   note                   String?
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
