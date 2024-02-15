@@ -1,121 +1,159 @@
 import { PrismaClient } from "@prisma/client";
-
-class VehicleService {
-  private prisma: PrismaClient;
-
-  constructor() {
-    this.prisma = new PrismaClient();
-  }
-
-  getVehicle = async () => {
-    try {
-      const allVehicle = await this.prisma.city.findMany();
-      return allVehicle;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    } finally {
-      await this.prisma.$disconnect();
+class VehicleType {
+    private prisma = new PrismaClient();
+    constructor() {
+      this.prisma = new PrismaClient();
     }
-  };
-
-  createNewVehicle = async (vehicleData: {
-    vehicleName: string;
-    status: boolean;
-    createAt: Date;
-    updateAt: Date;
-    deleteAt: Date;
-  }) => {
-    try {
-      console.log("vehicle", vehicleData.vehicleName);
-      const existVehicle = await this.prisma.city.findFirst({
-        where: {
-          cityName: vehicleData.vehicleName,
-        },
-      });
-      if (existVehicle) {
-        return {
-          status: "Error",
-          message: "Vehicle already Exist",
-          data: "null",
-        };
-      }
-      const newVehicle = await this.prisma.vehicle.create({
-        data: {
-          vehicleName: vehicleData?.vehicleName,
-          status: vehicleData?.status,
-          createAt: vehicleData?.createAt,
-          updateAt: vehicleData?.updateAt,
-          deleteAt: vehicleData?.deleteAt,
-        },
-      });
-      return {
-        status: "Success",
-        message: "Create new vehicle success !",
-        data: newVehicle,
+    getAll= async () => {
+        try {
+          const allData = await this.prisma.vehicle.findMany();
+          return {
+               status:'Success',
+               statusCode:201,
+               data:allData
+          }
+        } catch (error) {
+          return {
+            status:'Internal server error',
+            statusCode:500
+          }
+        } finally {
+          await this.prisma.$disconnect;
+        }
       };
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  getCurrentVehicle = async (vehicleId: number) => {
-    try {
-      const currentVehicle = await this.prisma.city.findUnique({
-        where: {
-          id: vehicleId,
-        },
-      });
-      return currentVehicle;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  editVehicle = async (currentData: {
-    id: number;
-    vehicleName: string;
-    status: boolean;
-    createAt: Date;
-    updateAt: Date;
-    deleteAt: Date;
-  }) => {
-    try {
-      await this.prisma.vehicle.update({
-        where: {
-          id: currentData.id,
-        },
-        data: {
-          vehicleName: currentData.vehicleName,
-          status: currentData.status,
-          updateAt: new Date(),
-        },
-      });
-      return {
-        status: "Success",
-        message: "Update successfully!",
+      getByName = async (vehicalName:string) => {
+        try {
+          const allData = await this.prisma.vehicle.findFirst({
+            where :{
+                vehicleName:vehicalName
+            }
+          });
+          return {
+               status:'Success',
+               statusCode:201,
+               data:allData
+          }
+        } catch (error) {
+          return {
+            status:'Internal server error',
+            statusCode:500
+          }
+        } finally {
+          await this.prisma.$disconnect;
+        }
       };
-    } catch (error) {
-      console.log(error);
-      throw new Error("Failed to update vehicle");
-    }
-  };
-
-  deleteVehicle = async (vehicleId: number) => {
-    try {
-      await this.prisma.vehicle.delete({
-        where: {
-          id: vehicleId,
-        },
-      });
-      return {
-        status: "Success",
-        message: "Delete successfully!",
+      getById = async (id:number) => {
+        try {
+          const allData = await this.prisma.vehicle.findFirst({
+            where :{
+                id:id
+            }
+          });
+          return {
+               status:'Success',
+               statusCode:201,
+               data:allData
+          }
+        } catch (error) {
+          return {
+            status:'Internal server error',
+            statusCode:500
+          }
+        } finally {
+          await this.prisma.$disconnect;
+        }
       };
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      deleteById = async (id:number) => {
+        try {
+           await this.prisma.vehicle.delete({
+            where :{
+                id:id
+            }
+          });
+          return {
+               status:'Delete Success',
+               statusCode:201,
+              
+          }
+        } catch (error) {
+          return {
+            status:'Internal server error',
+            statusCode:500
+          }
+        } finally {
+          await this.prisma.$disconnect;
+        }
+      };
+      createNew  = async (currentData :{
+        vehicleName:string,
+        capacity:string,
+        status:boolean
+      }) => {
+        try {
+          const data= await this.prisma.vehicle.create({
+            data :{
+                vehicleName:currentData.vehicleName,
+                capacity:currentData.capacity,
+                status:currentData.status
+
+            }
+          });
+          if(data){
+            return {
+                status:' Success',
+                statusCode:201,
+                data:data
+               
+           }
+
+          }
+         
+        } catch (error) {
+          return {
+            status:'Internal server error',
+            statusCode:500
+          }
+        } finally {
+          await this.prisma.$disconnect;
+        }
+      };
+      updateNew  = async (currentData :{
+        vehicleName:string,
+        capacity:string,
+        status:boolean,
+        id:number
+      }) => {
+        try {
+          const data= await this.prisma.vehicle.update({
+            data :{
+                vehicleName:currentData.vehicleName,
+                capacity:currentData.capacity,
+                status:currentData.status
+
+            },
+            where:{
+                id:currentData.id
+            }
+          });
+          if(data){
+            return {
+                status:' Success',
+                statusCode:201,
+                data:data
+               
+           }
+
+          }
+         
+        } catch (error) {
+          return {
+            status:'Internal server error',
+            statusCode:500
+          }
+        } finally {
+          await this.prisma.$disconnect;
+        }
+      };
+
 }
-
-export const vehicleService = new VehicleService();
+export const vehicleTypeService =new VehicleType()
