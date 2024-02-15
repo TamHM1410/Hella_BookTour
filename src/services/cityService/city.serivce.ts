@@ -23,9 +23,8 @@ class CityService {
         cityName: string;
         country: string;
         status: boolean;
-        createAt: Date;
-        updateAt: Date;
-        deleteAt: Date;
+        
+       
     })=>{
         try{
             console.log("city",cityData.cityName)
@@ -49,10 +48,10 @@ class CityService {
                 cityName: cityData?.cityName,
                 country :cityData?.country,
                 status: cityData?.status,
-                createAt :cityData?.createAt,
-                updateAt :cityData?.updateAt,
-                deleteAt :cityData?.deleteAt
-                }
+                createAt: new Date()
+                
+               
+                  }
                 
 
 
@@ -90,9 +89,8 @@ class CityService {
         cityName: string;
         country: string;
         status: boolean;
-        createAt: Date;
-        updateAt: Date;
-        deleteAt: Date;
+       
+   
       }) => {
         try {
           await this.prisma.city.update({
@@ -103,7 +101,7 @@ class CityService {
               cityName: currentData.cityName,
               country: currentData.country,
               status: currentData.status,
-              updateAt: new Date(),
+             
             }
           });
       

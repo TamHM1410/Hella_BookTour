@@ -16,9 +16,11 @@ class KeyService{
     
             // Check if the key entry exists
             const exist = await keys.findOne({ userId: userId });
+           
     
             if (exist) {
-                const token = await keys.findByIdAndUpdate(
+                
+                const token = await keys.findOneAndUpdate(
                     { userId: userId },
                     {
                         publicKey: publicKeyString,
@@ -28,7 +30,7 @@ class KeyService{
                     { new: true } // To get the updated document
                 );
     
-                console.log(token);
+                // console.log(token);
                 return token ?(await token.save()) && publicKeyString : null;
             }else{
                 const newToken = new keys({

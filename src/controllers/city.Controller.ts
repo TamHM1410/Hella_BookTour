@@ -3,13 +3,19 @@ import { Request, Response } from "express";
 class CityController{
     getAllCity=async(req: Request, res: Response)=>{
         const result=await cityService.getCity()
-        console.log('result',result)
+        
         return res.status(200).json(result)
 
 
     }
     createNewCity =async (req: Request, res: Response)=>{
-        const cityData=req.body
+        const cityData=req.body as {
+            cityName: string;
+            country: string;
+            status: boolean;
+            
+           
+        }
         const  result = await cityService.createNewCity(cityData)
         const status=result?.status
         if(status ==="Error"){
@@ -26,9 +32,7 @@ class CityController{
                 cityName: string;
                 country: string;
                 status: boolean;
-                createAt: Date;
-                updateAt: Date;
-                deleteAt: Date;
+              
             };
           const result=  await cityService.editCity(currentData)
             // const result = await cityService.editCity(currentData);

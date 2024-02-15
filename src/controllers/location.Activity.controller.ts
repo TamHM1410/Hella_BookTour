@@ -28,23 +28,23 @@ class  LocationActivityController{
 
         }
     }
-    getActivityById =async (req: Request, res: Response)=>{
-        try{
+    // getActivityById =async (req: Request, res: Response)=>{
+    //     try{
 
-        const  activity_id:number=req.body.id
-        const result =await location_activity_service.deleteLocationActivityById(activity_id)
-        if(result){
-            return res.status(result.StatusCode).json(result)
-        }
+    //     const  activity_id:number=req.body.id
+    //     const result =await location_activity_service.getActivityById(activity_id)
+    //     if(result){
+    //         return res.status(200).json(result)
+    //     }
       
-         }catch(error){
+    //      }catch(error){
             
-            return res.status(500).json({
-                Message: 'Bad request'
-            })
+    //         return res.status(500).json({
+    //             Message: 'Bad request'
+    //         })
 
-        }
-    }
+    //     }
+    // }
     updateActivityById =async(req: Request, res: Response) =>{
         try{
             const activityData =req.body as {
@@ -89,10 +89,9 @@ class  LocationActivityController{
                 activityDuration:string,
                 activityDescription:string,
                 status:boolean,
-                createAt:Date,
-                updateAt:Date,
-                deleteAt:Date
+              
             }
+             console.log(data,'data')
             const result =await location_activity_service.createActivity(data)
             if(result){
                 return res.status(result.statusCode).json(result)
