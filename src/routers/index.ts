@@ -12,7 +12,7 @@ import { bookingRouter } from './booking/booking.router';
 import { categotyOfPoiRouter } from './categoty_of_poi/poi.router';
 import { paymentMethodRouter } from './paymentMethod/paymentMethod.router';
 import { checkLogin } from '../auth/checkLogin';
-
+import { userRouter } from './user/user.router';
 /**
  * @openapi
  * /ping:
@@ -37,6 +37,7 @@ import { checkLogin } from '../auth/checkLogin';
     app.use('/api/v1',checkLogin,bookingRouter )
     app.use('/api/v1',checkLogin,categotyOfPoiRouter)
     app.use('/api/v1',checkLogin,paymentMethodRouter)
+    app.use('/api/v1',checkLogin,userRouter)
   
    
   }
