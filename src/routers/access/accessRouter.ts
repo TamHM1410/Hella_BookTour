@@ -1,6 +1,6 @@
 import express from 'express'
 import { accessController } from '../../controllers/accessController'
-import { checkLogin } from '../../auth/checkLogin';
+
 
 
 export const accessRouter =express.Router()

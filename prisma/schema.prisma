@@ -40,7 +40,7 @@ model Location{
  }
  model Location_Activity {
   id                     Int @id @default(autoincrement())
-  locationId             Int  @unique
+  locationId             Int  
   activityName           String
   activityDuration       String
   activityDescription    String
@@ -63,8 +63,8 @@ model Point_Of_Interest{
   id                     Int @id @default(autoincrement())
   POIName                String
   POIDescription         String
-  locationId             Int @unique
-  categoryPOI_ID         Int @unique
+  locationId             Int 
+  categoryPOI_ID         Int 
   status                 Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
@@ -101,9 +101,9 @@ model Tour{
 }
 model Location_In_Tour{
   id                     Int @id @default(autoincrement())
-  locationId             Int @unique
+  locationId             Int 
   location               Location @relation(fields: [locationId],references: [id])
-  tourId                 Int @unique
+  tourId                 Int 
   tour                   Tour @relation(fields: [tourId],references: [id])
   status                 Boolean
   duration               String?
@@ -127,9 +127,9 @@ model Tour_Guide{
 }
 model Trip{
   id                     Int @id @default(autoincrement())
-  tourGuideId            Int @unique
+  tourGuideId            Int 
   tour_guide             Tour_Guide @relation(fields: [tourGuideId],references: [id])
-  tourId                 Int @unique
+  tourId                 Int 
   tour                   Tour @relation(fields: [tourId],references: [id])
   totalCustomer          Int
   startDate              DateTime
@@ -166,7 +166,7 @@ model Payment{
   createAt                DateTime @default(now())
   updateAt                DateTime @updatedAt
   deleteAt                DateTime?
-  bookingId               Int @unique
+  bookingId               Int 
   booking                 Booking @relation(fields: [bookingId],references: [id])
 
 
@@ -182,7 +182,7 @@ model Booking{
   totalCustomer           Int
   status                  Boolean
   payment                 Payment[]
-  tripId                  Int @unique
+  tripId                  Int 
   trip                    Trip @relation(fields: [tripId],references: [id])
   createAt                DateTime @default(now())
   updateAt                DateTime @updatedAt
