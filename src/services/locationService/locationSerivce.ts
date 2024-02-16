@@ -36,6 +36,7 @@ class LocationService{
                 data:{
                     cityId: data.cityId,
                     
+                    
                     locationName:data.locationName,
                     locationAddress:data.locationAddress,
                     status:data.status
