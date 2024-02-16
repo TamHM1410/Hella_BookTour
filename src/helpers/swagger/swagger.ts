@@ -17,7 +17,20 @@ const options = {
     },
   },
   // looks for configuration in specified directories
-  apis: ['./src/routers/access/*.ts','./src/routers/City/*.ts','./src/routers/location_activity/*.ts'],
+  apis: [
+    './src/routers/access/*.ts',
+    './src/routers/City/*.ts',
+    './src/routers/location_activity/*.ts',
+    './src/routers/booking/*.ts',
+    './src/routers/categoty_of_poi/*.ts',
+    './src/routers/location/*.ts',
+    './src/routers/locationInTour/*.ts',
+    './src/routers/payment/*.ts',
+    './src/routers/Tour/*.ts',
+    './src/routers/trip/*.ts',
+    './src/routers/vehicle/*.ts',
+    './src/routers/paymentMethod/*.ts'
+  ],
 }   
 
 const swaggerSpec = swaggerJsdoc(options)
