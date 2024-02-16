@@ -108,4 +108,4 @@ accessRouter.post('/signUp', accessController.signUp);
  *       400:
  *         description: Bad request
  */
-accessRouter.post('/signIn',checkLogin, accessController.signIn);
+accessRouter.post('/signIn', accessController.signIn);

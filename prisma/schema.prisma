@@ -27,7 +27,7 @@ model Location{
   cityId                Int 
   city                  City @relation(fields: [cityId],references: [id])
   locationName          String
-  locationAdress        String
+  locationAddress        String
   status                Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt

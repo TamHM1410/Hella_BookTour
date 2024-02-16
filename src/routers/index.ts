@@ -12,7 +12,7 @@ import { categotyOfPoiRouter } from "./categoty_of_poi/poi.router";
 import { paymentMethodRouter } from "./paymentMethod/paymentMethod.router";
 import { checkLogin } from "../auth/checkLogin";
 import { vehicleRouter } from "./vehicle/vehicle.router";
-
+import { userRouter } from "./userRouter/user.router";
 /**
  * @openapi
  * /ping:
@@ -37,4 +37,5 @@ export const initApi = (app: Express) => {
   app.use("/api/v1", checkLogin, categotyOfPoiRouter);
   app.use("/api/v1", checkLogin, paymentMethodRouter);
   app.use("/api/v1", checkLogin, vehicleRouter);
+  app.use("/api/v1", checkLogin, userRouter);
 };
