@@ -68,7 +68,7 @@ model Point_Of_Interest{
   status                 Boolean
   createAt               DateTime @default(now())
   updateAt               DateTime @updatedAt
-  deleteAt               DateTime @default(dbgenerated("('0000-00-00 00:00:00')")) @db.Timestamp(0)
+  deleteAt               DateTime?
   location               Location @relation(fields: [locationId],references: [id])
 
 
