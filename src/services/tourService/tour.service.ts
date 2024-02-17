@@ -1,5 +1,8 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient,TourType } from "@prisma/client";
+
+
 class TourService {
+    
     private prisma= new PrismaClient()
     constructor(){
         this.prisma = new PrismaClient();
@@ -68,7 +71,7 @@ class TourService {
         status:boolean,
         price:number,
         vehicleTypeId:number,
-        tourType:string
+        tourType:TourType
      })=>{
         
         try{
@@ -101,7 +104,7 @@ class TourService {
             await this.prisma.$disconnect
         }
     }
-    getTourByTourType =async (tourType:string)=>{
+    getTourByTourType =async (tourType:TourType)=>{
         
         try{
             await this.prisma.$connect
