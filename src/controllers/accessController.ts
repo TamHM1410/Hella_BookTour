@@ -22,8 +22,8 @@ class AccessController {
       const result=  await accesssService.signIn(req.body as Data)
       
       if(result){
-              res.cookie("token", result.token, { httpOnly: false, secure: true, sameSite: "none" ,domain:"https://hella-booking.onrender.com/"});
-              res.cookie("userData", result.userData, { httpOnly: false, secure: true, sameSite: "none",domain:"https://hella-booking.onrender.com/" });
+              res.cookie("token", result.token, { httpOnly: false, secure: true, sameSite: "none" ,domain:"hella-booking.onrender.com"});
+              res.cookie("userData", result.userData, { httpOnly: false, secure: true, sameSite: "none",domain:"hella-booking.onrender.com" });
 
         return res.status(result.statusCode).json(result)
       }
