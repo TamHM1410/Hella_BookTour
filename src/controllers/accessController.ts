@@ -22,8 +22,9 @@ class AccessController {
       const result=  await accesssService.signIn(req.body as Data)
       
       if(result){
-        res.cookie("token",result.token,{httpOnly:true,secure:true})
-        res.cookie("userData",result.userData,{httpOnly:true,secure:true})
+        res.cookie("token", result.token, { httpOnly: true, secure: true, sameSite: "strict" });
+        res.cookie("userData", result.userData, { httpOnly: true, secure: true, sameSite: "strict" });
+
         return res.status(result.statusCode).json(result)
       }
         
