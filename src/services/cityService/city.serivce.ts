@@ -76,7 +76,7 @@ class CityService {
                     id :cityId
                 }
             })
-            return currentCity
+            return currentCity ? {status:'success!',statusCode:201,data :currentCity} : {status:'City not exist!',statusCode:401}
 
         }catch(error){
             console.log(error)
@@ -116,6 +116,7 @@ class CityService {
       }
       deleteCity =async(cityId:number)=>{
         try{
+            console.log('cityId',cityId)
             await this.prisma.city.delete({
                 where:{
                     id: cityId
@@ -123,7 +124,8 @@ class CityService {
             })
             return {
                 status: 'Success',
-                message: 'Update successfully!',
+                statusCode:201,
+                message: 'delete successfully!',
               };
          
         }catch(error){

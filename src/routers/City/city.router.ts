@@ -248,7 +248,7 @@ cityRouter.get('/city/:id',cityController.getCurrentCity)
 cityRouter.patch(`/city/update/:id`,cityController.updateCity)
 /**
  * @swagger
- * /api/v1/city/delete/{id}:
+ * /api/v1/city/{id}:
  *   delete:
  *     summary: Delete a specific city
  *     tags: [City]
@@ -285,4 +285,4 @@ cityRouter.patch(`/city/update/:id`,cityController.updateCity)
  *               error: Internal Server Error
  */
 
-cityRouter.delete('/city/delete/:id',cityController.deleteCurrentCity)
+cityRouter.delete('/city/:id',cityController.deleteCurrentCity)
