@@ -9,7 +9,7 @@ import { initApi } from './routers';
 
 export const app =express()
 
-
+app.set("trust proxy", 1);
 app.use(helmet()); //ngan chan trang tt3
 app.use(morgan("dev"));
 app.use(compression()); //tang toc van chuyen data
