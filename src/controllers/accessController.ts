@@ -32,7 +32,7 @@ class AccessController {
                 httpOnly: false,
                 secure: true,
                 sameSite: 'none',
-                domain: 'example.com',
+                domain:"hella-booking.onrender.com" ,
                 maxAge: hour // hoặc sử dụng maxAge thay vì expires
             })
         
