@@ -22,12 +22,20 @@ class AccessController {
       const result=  await accesssService.signIn(req.body as Data)
       
       if(result){
+        const hour = 3600000; // 1 giờ tính bằng mili giây
+        const expiryDate = new Date(Date.now() + hour);
+              
               res.cookie("token", result.token, { httpOnly: false, secure: true, sameSite:"strict" ,domain:"hella-booking.onrender.com",maxAge:9999999999});
               res.cookie("userData", result.userData, { httpOnly: false, secure: true, sameSite: "strict",domain:"hella-booking.onrender.com" ,maxAge:9999999999});
-              // res.setHeader('token', `jwt=${result.token}; HttpOnly; Domain=.hella-booking.onrender.com; Path=/; SameSite=none; secure; Max-Age=31536000`) 
-              // res.header('Access-Control-Allow-Origin','https://localhost:3000')
-              // res.header('Access-Control-Allow-Credentials','true')
-              // res.header('Access-Control-Allow-Headers','Origin, X-Requested-With, Content-Type, Accept')
+              res.cookie('myCookie', 'cookieValue', { 
+                expires: expiryDate,
+                httpOnly: false,
+                secure: true,
+                sameSite: 'strict',
+                domain: 'example.com',
+                maxAge: hour // hoặc sử dụng maxAge thay vì expires
+            })
+        
 
         return res.status(result.statusCode).json(result)
       }
