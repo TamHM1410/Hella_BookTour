@@ -8,8 +8,7 @@ import morgan from "morgan";
 import { initApi } from './routers';
 
 export const app =express()
-
-app.set("trust proxy", 1);
+app.set('trust proxy', true);
 app.use(helmet()); //ngan chan trang tt3
 app.use(morgan("dev"));
 app.use(compression()); //tang toc van chuyen data
@@ -22,7 +21,7 @@ app.use(
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.enable('trust proxy')
+
 
 initApi(app)
 ////init router 
