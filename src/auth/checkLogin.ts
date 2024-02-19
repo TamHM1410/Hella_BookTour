@@ -5,18 +5,27 @@ import mongoose from 'mongoose'
 // import keyService from '../services/keyService/keyService'
 import { Request,Response,NextFunction } from 'express'
 import { instanceMongo } from '../dbs/MongoDB/instanceMongo'
+
 import keys from '../models/KeyModel'
+
 export const checkLogin =async (req:Request,res:Response,next:NextFunction)=>{
     try{
         await instanceMongo()
-  
         
-        const id =req.cookies.userData?.id
+        const header= req.headers.authorization
+        const data =req.headers?.id
+        const id =data?.toString()
        
-        if(id){
-            const  refreshToken  = req.cookies.token.refreshToken
-            const  accessToken   =  req.cookies.token.accessToken
+        console.log('id',id)
+       
+        if(header){
+          const token =header.split(' ')[1];
+          const tokenParts = token.split(':');
+          const accessToken = tokenParts[0];
+          const refreshToken = tokenParts[1];
+          if(id){
             const currentUserkey = await keys.findOne({userId:new mongoose.Types.ObjectId(id)})
+            console.log('current',currentUserkey)
             const userPublickey = currentUserkey?.publicKey
             if(userPublickey){
                 const publicKey= await crypto.createPublicKey({
@@ -62,20 +71,26 @@ export const checkLogin =async (req:Request,res:Response,next:NextFunction)=>{
                     } 
                     
                 } catch (error) {
-                    console.log('Xác thực token không thành công:', error);
+                    return res.status(401).json({
+                        status:"You dont have permission!",
+                        statusCode:401
+
+                    })
+                  
                  
                 }
-                //   const decode = await jwt.verify(accessToken,publicKey)
+                
               
             }
            
-        }if(id===undefined){
-            return res.status(401).json({
-                status:" Forbidden!",
-                statusCode:401
-            })
-
         }
+          
+  
+          
+        }
+  
+        
+  
     }catch(error){
         console.log(error)
         return res.status(500).json({
