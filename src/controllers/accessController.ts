@@ -31,7 +31,7 @@ class AccessController {
                 expires: expiryDate,
                 httpOnly: false,
                 secure: true,
-                sameSite: 'strict',
+                sameSite: 'none',
                 domain: 'example.com',
                 maxAge: hour // hoặc sử dụng maxAge thay vì expires
             })
