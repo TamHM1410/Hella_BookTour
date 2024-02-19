@@ -25,8 +25,8 @@ class AccessController {
         const hour = 3600000; // 1 giờ tính bằng mili giây
         const expiryDate = new Date(Date.now() + hour);
               
-              res.cookie("token", result.token, { httpOnly: false, secure: true, sameSite:"strict" ,domain:"hella-booking.onrender.com",maxAge:9999999999});
-              res.cookie("userData", result.userData, { httpOnly: false, secure: true, sameSite: "strict",domain:"hella-booking.onrender.com" ,maxAge:9999999999});
+              res.cookie("token", result.token, { httpOnly: false, secure: true, sameSite:"strict" ,domain:"hella-booking.onrender.com",  expires: expiryDate,maxAge:hour});
+              res.cookie("userData", result.userData, { httpOnly: false, secure: true, sameSite: "strict",domain:"hella-booking.onrender.com" ,  expires: expiryDate,maxAge:hour});
               res.cookie('myCookie', 'cookieValue', { 
                 expires: expiryDate,
                 httpOnly: false,
