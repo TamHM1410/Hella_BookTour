@@ -89,8 +89,8 @@ model Tour {
   createAt         DateTime           @default(now())
   updateAt         DateTime           @updatedAt
   deleteAt         DateTime?
-  location_in_tour Location_In_Tour[]
-  trip             Trip[]
+
+
 }
 
 model Location_In_Tour {
@@ -98,7 +98,7 @@ model Location_In_Tour {
   locationId Int
 
   tourId      Int
-  tour        Tour      @relation(fields: [tourId], references: [id])
+ 
   status      Boolean
   duration    String?
   description String
@@ -117,15 +117,15 @@ model Tour_Guide {
   createAt DateTime     @default(now())
   updateAt DateTime     @updatedAt
   deleteAt DateTime?
-  trip     Trip[]
+
 }
 
 model Trip {
   id            Int        @id @default(autoincrement())
   tourGuideId   Int
-  tour_guide    Tour_Guide @relation(fields: [tourGuideId], references: [id])
+
   tourId        Int
-  tour          Tour       @relation(fields: [tourId], references: [id])
+
   totalCustomer Int
   startDate     DateTime
   endDate       DateTime

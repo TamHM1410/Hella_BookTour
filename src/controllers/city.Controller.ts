@@ -52,14 +52,11 @@ class CityController{
     }
     deleteCurrentCity =async (req:Request,res:Response)=>{
             try{
-                 console.log('debuyg')
+               console.log('debuyg')
                 const cityId=req.body.id
-                 
+               
                 const result= await cityService.deleteCity(cityId)
-                return result ? res.status(result.statusCode).json(result) : res.status(500).json({
-                    error: 'Something wrongs'
-                     })
-            
+                return result ? res.status(result.statusCode).json(result) : res.status(401).json( {status:"Can not delete",statusCode:401})
 
             }catch(error){
                 console.log(error)

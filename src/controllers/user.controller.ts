@@ -11,9 +11,10 @@ class UserController {
             statusCode:501,
         }
     }
-    getAllUser = async (req:Request,res:Response)=>{
+    updateUser = async (req:Request,res:Response) =>{
         try{
-            const result = await userService.getAllUser()
+            const currentData= req.body
+            const result =await userService.updateUser(currentData)
             return result ? res.status(result.statusCode).json(result) : this.errorMessage
 
         }catch(error){
@@ -21,25 +22,35 @@ class UserController {
 
         }
     }
-
-    getUserById = async (req:Request,res:Response)=>{
-        try{ 
-            const id = req.body.id
-            const result =await userService.getUserById(id)
+    getUserById =async (req:Request,res:Response)=>{
+        try{
+            const id     = req.body.id
+            const result = await userService.getUserById(id)
             return result ? res.status(result.statusCode).json(result) :this.errorMessage
 
         }catch(error){
-            return this.errorMessage
+            return  this.errorMessage
+        }
+    }
+    getAllUser =async (req:Request,res:Response)=>{
+        try{
+            const result = await userService.getAllUser()
+            return result ? res.status(result.statusCode).json(result) : this.errorMessage
+
+
+        }catch(error){
+            return  this.errorMessage
         }
     }
     deleteUserById =async (req:Request,res:Response)=>{
         try{
-            const id = req.body.id
+            const id     = req.params.id
             const result = await userService.deleteUserById(id)
             return result ? res.status(result.statusCode).json(result) :this.errorMessage
 
         }catch(error){
             return this.errorMessage
+
         }
     }
     changePassword = async (req:Request,res:Response)=>{
@@ -52,16 +63,6 @@ class UserController {
             return this.errorMessage
         }
     }
-    updateUser= async (req:Request,res:Response)=>{
-        try{
-            const currentData= req.body
-            const result =await userService.updateUser(currentData)
-            return result ? res.status(result.statusCode).json(result) :this.errorMessage
-
-        }catch(error){
-            return this.errorMessage
-        }
-    }
 
 }
-export const userController =new UserController()
+export const userController =new  UserController()
