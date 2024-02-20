@@ -16,7 +16,7 @@ export const checkLogin =async (req:Request,res:Response,next:NextFunction)=>{
         const data =req.headers?.id
         const id =data?.toString()
        
-        console.log('id',id)
+     
        
         if(header){
           const token =header.split(' ')[1];

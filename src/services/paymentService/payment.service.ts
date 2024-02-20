@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient,PaymentType  } from "@prisma/client";
 class PaymentService{
     private prisma= new PrismaClient()
     constructor(){
@@ -114,7 +114,7 @@ class PaymentService{
         refundedAmount:string,
         paymentMethodId:number,
         bookingId:number,
-        paymentName:string
+        paymentName:PaymentType
 
     })=>{
         try{
@@ -163,7 +163,7 @@ class PaymentService{
         refundedAmount:string,
         paymentMethodId:number,
         bookingId:number,
-        paymentName:string
+        paymentName:PaymentType
     })=>{
         try{
             await this.prisma.$connect

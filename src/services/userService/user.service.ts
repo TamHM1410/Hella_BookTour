@@ -1,6 +1,6 @@
 
 import user from "../../models/UserModel"
-import mongoose from "mongoose"
+import mongoose, { now } from "mongoose"
 import { instanceMongo } from "../../dbs/MongoDB/instanceMongo"
 class UserService {
     getAllUser =async ()=>{
@@ -46,7 +46,7 @@ class UserService {
     deleteById = async (id:string) =>{
         try{
             await instanceMongo()
-            await user.findByIdAndDelete({_id: new mongoose.Types.ObjectId(id)})
+            await user.findByIdAndUpdate({_id: new mongoose.Types.ObjectId(id)},{deleteAt:now()})
             return  {
                 status:'Success',
                 statusCode:201,

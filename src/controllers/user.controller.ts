@@ -50,7 +50,7 @@ class UserController {
     }
     deleteUserById =async (req:Request,res:Response)=>{
         try{
-            const id     = req.body.id
+            const id     = req.params.id
             const result = await userService.deleteById(id)
             if(result){
                 return res.status(result.statusCode).json(result)

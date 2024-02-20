@@ -97,7 +97,8 @@ class LocationController{
     }
     deleteLocation =async (req:Request,res:Response)=>{
         try{
-            const currentId= req.body.id
+            const paramId=req.params.id
+            const currentId:number=+paramId
             const result =await locationService.deleteLocationById(currentId)
             if(result){
                 return  res.status(result.statusCode).json(result)

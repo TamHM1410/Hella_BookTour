@@ -285,4 +285,4 @@ cityRouter.patch(`/city/update/:id`,cityController.updateCity)
  *               error: Internal Server Error
  */
 
-cityRouter.delete('/city/delete/:id',cityController.deleteCurrentCity)
+cityRouter.delete('/city/:id',cityController.deleteCurrentCity)

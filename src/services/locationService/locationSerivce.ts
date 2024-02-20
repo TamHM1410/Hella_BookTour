@@ -36,7 +36,7 @@ class LocationService{
                 data:{
                     cityId: data.cityId,
                     locationName:data.locationName,
-                    locationAdress:data.locationAddress,
+                    locationAddress:data.locationAddress,
                     status:data.status
 
                 }
@@ -92,7 +92,7 @@ class LocationService{
             await this.prisma.$connect
             const data =await this.prisma.location.findFirst({
                 where :{
-                    locationAdress:LocationAddress
+                    locationAddress:LocationAddress
 
                 }
             })
@@ -132,7 +132,7 @@ class LocationService{
                 data:{
                     cityId: currentData.cityId,
                     locationName:currentData.locationName,
-                    locationAdress:currentData.locationAddress,
+                    locationAddress:currentData.locationAddress,
                     status:currentData.status
                 }
             })

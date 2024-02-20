@@ -19,7 +19,8 @@ class Payment{
     }
     deletetById =async (req:Request,res:Response)=>{
         try{
-            const id=req.body.id as number
+            const paramId=req.body.id 
+            const id :number=+paramId
             const result=await paymentService.deleteById(id)
             
             if(result){
@@ -67,18 +68,7 @@ class Payment{
     }
     createNewPayment =async (req:Request,res:Response)=>{
         try{
-            const currentData = req.body as {
-                paymentDate:string,
-                amount:number,
-                status:boolean,
-                refunded:boolean,
-                refundedTime:string,
-                refundedAmount:string,
-                paymentMethodId:number,
-                bookingId:number,
-                paymentName:string
-        
-            }
+            const currentData = req.body 
             const result =await paymentService.createNewPayment(currentData)
             if(result){
                 return res.status(result.statusCode).json(result)
@@ -95,19 +85,7 @@ class Payment{
     }
     updateById =async (req:Request,res:Response)=>{
         try{
-            const currentData =req.body as {
-                paymentDate:string,
-                amount:number,
-                status:boolean,
-                refunded:boolean,
-                refundedTime:string,
-                refundedAmount:string,
-                paymentMethodId:number,
-                bookingId:number,
-                paymentName:string,
-                id:number
-        
-            }
+            const currentData =req.body 
             const result =await paymentService.updatePaymentById(currentData)
             if(result){
                 return res.status(result.statusCode).json(result)
