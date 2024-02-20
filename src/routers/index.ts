@@ -10,7 +10,7 @@ import { tripRouter } from "./trip/trip.router";
 import { bookingRouter } from "./booking/booking.router";
 import { categotyOfPoiRouter } from "./categoty_of_poi/poi.router";
 import { paymentMethodRouter } from "./paymentMethod/paymentMethod.router";
-import { checkLogin } from "../auth/checkLogin";
+
 import { vehicleRouter } from "./vehicle/vehicle.router";
 import { userRouter } from "./userRouter/user.router";
 /**
@@ -26,7 +26,7 @@ import { userRouter } from "./userRouter/user.router";
  */
 export const initApi = (app: Express) => {
   app.use("/api/v1", accessRouter);
-  app.use("/api/v1",checkLogin,  cityRouter);
+  app.use("/api/v1",  cityRouter);
   app.use("/api/v1",  locationActivityRouter);
   app.use("/api/v1",  locationRouter);
   app.use("/api/v1",  locationInTourRouter);
