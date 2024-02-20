@@ -2,7 +2,18 @@
 import user from "../../models/UserModel"
 import mongoose, { now } from "mongoose"
 import { instanceMongo } from "../../dbs/MongoDB/instanceMongo"
+import  bcrypt from 'bcryptjs'
 class UserService {
+    private errorMessage = {
+        status:'Internal server',
+        statusCode:501,
+    }
+    constructor(){
+        this.errorMessage= {
+            status:'Internal server',
+            statusCode:501,
+        }
+    }
     getAllUser =async ()=>{
         try{
             const result =await user.find()
@@ -101,6 +112,44 @@ class UserService {
                 status:'Internal Server',
                 statusCode:500
             }
+        }
+    }
+    updatePassword=async (currentData :{
+        fullName:string,
+        id:string,
+        phone:string,
+        gender:string,
+        roleId:number,
+        password:string,
+
+
+    })=>{
+        try{
+            await instanceMongo()
+            const hashPassword =await bcrypt.hash(currentData.password,10)
+            const currentUser = await user.findById({_id:new mongoose.Types.ObjectId(currentData.id)})
+            if(currentUser){
+                const compare = await bcrypt.compare(currentData.password,currentUser.password)
+                if(compare===true){
+                    const data = await user.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(currentData.id)},{password:hashPassword})
+                    return data ? {
+                        status:'Success',
+                        statusCode:201,
+                        data:data
+                    }: this.errorMessage
+        
+
+                }else{
+                    return {
+                        status:'Incorrect Password',
+                        statusCode: 401
+                    }
+                }
+
+            }
+            
+            }catch(error){
+            return this.errorMessage
         }
     }
 

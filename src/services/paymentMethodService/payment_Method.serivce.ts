@@ -1,4 +1,4 @@
-import { PaymentType, PrismaClient } from "@prisma/client";
+import {  PrismaClient ,PaymentType} from "@prisma/client";
 class PaymentMethod {
     private prisma = new PrismaClient();
     constructor() {
