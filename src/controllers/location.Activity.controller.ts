@@ -71,7 +71,8 @@ class  LocationActivityController{
     }
     delete =async (req: Request, res: Response)=>{
         try{
-            const activityId= req.body.id as number
+            const paramId=req.params.id
+            const activityId:number= +paramId
             const result =await location_activity_service.deleteActivity(activityId)
             if(result){
                 return res.status(result.statusCode).json(result)

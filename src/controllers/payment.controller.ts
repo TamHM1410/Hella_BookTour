@@ -19,7 +19,8 @@ class Payment{
     }
     deletetById =async (req:Request,res:Response)=>{
         try{
-            const id=req.body.id as number
+            const params = req.params.id 
+            const id=+params
             const result=await paymentService.deleteById(id)
             
             if(result){

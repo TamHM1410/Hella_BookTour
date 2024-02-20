@@ -48,8 +48,9 @@ class CategotyController {
         }
     }
     deleteById =async (req:Request,res:Response)=>{
-        try{
-            const id =req.body.id 
+        try{ 
+            const paramsId=req.body.id
+            const id:number =+paramsId 
             const result = await categoty.deleteById(id)
             if(result){
                 return res.status(result.statusCode).json(result)
