@@ -42,13 +42,11 @@ class UserService {
             return this.errorMessage
         }
     }
-    deleteUserById=async (currentData:{
-        id:string,
-        deleteAt:string
-    })=>{
+    deleteUserById=async (id:string
+    )=>{
         try{
-            await instanceMongo()
-           await user.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(currentData.id)},{deleteAt:currentData.deleteAt})
+           await instanceMongo()
+           await user.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(id)},{deleteAt:new Date()})
             return  {
                 status:'Success',
                 statusCode:201,
