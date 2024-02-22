@@ -1,5 +1,6 @@
 import express from 'express'
 import { accessController } from '../../controllers/accessController'
+import { checkLogin } from '../../auth/checkLogin';
 
 
 
@@ -66,6 +67,10 @@ export const accessRouter =express.Router()
  *         description: Bad request
  */
 accessRouter.post('/signUp', accessController.signUp);
+
+
+
+accessRouter.post('/logOut',checkLogin, accessController.logOut);
 
 /**
  * @swagger
