@@ -13,6 +13,7 @@ import { paymentMethodRouter } from "./paymentMethod/paymentMethod.router";
 import { vehicleRouter } from "./vehicle/vehicle.router";
 import { userRouter } from "./userRouter/user.router";
 import { checkLogin } from "../auth/checkLogin";
+import { vnPayRouter } from "./vnPay/vnPay.router";
 
 /**
  * @openapi
@@ -27,7 +28,7 @@ import { checkLogin } from "../auth/checkLogin";
  */
 export const initApi = (app: Express) => {
   app.use("/api/v1", accessRouter);
-  app.use("/api/v1",checkLogin,  cityRouter);
+  app.use("/api/v1",  cityRouter);
   app.use("/api/v1",  locationActivityRouter);
   app.use("/api/v1",  locationRouter);
   app.use("/api/v1",  locationInTourRouter);
@@ -39,4 +40,5 @@ export const initApi = (app: Express) => {
   app.use("/api/v1",  paymentMethodRouter);
   app.use("/api/v1",  vehicleRouter);
   app.use("/api/v1",  userRouter);
+  app.use("/api/v1",  vnPayRouter);
 };
