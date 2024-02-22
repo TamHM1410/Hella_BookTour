@@ -5,6 +5,8 @@ import { instanceMongo } from "../../dbs/MongoDB/instanceMongo"
 import crypto from "crypto";
 import { createToken } from "../../auth/createToken";
 import keyService from "../keyService/keyService";
+import keys from "../../models/KeyModel";
+import mongoose from "mongoose";
 
 
 interface Data {
@@ -88,7 +90,7 @@ class AccessService {
               },
             }
           );
-          console.log('privatekey',privateKey,publicKey)
+       
           const refreshKey = await new Promise<string>((resolve, reject) => {
             crypto.generateKey('hmac', { length: 512 }, (err, key) => {
                 if (err) reject(err);
@@ -124,6 +126,22 @@ class AccessService {
      
       }catch(error){
         console.log(error)
+      }
+
+    }
+    logOut =async (userId:string |undefined) =>{
+      try{
+         await keys.findOneAndDelete({userId:new mongoose.Types.ObjectId(userId)})
+         return {
+             status:"Log Out Success",
+             statusCode:201
+         }
+
+      }catch(error){
+        return {
+          status:'Internal Server!',
+          statusCode:500
+        }
       }
 
     }

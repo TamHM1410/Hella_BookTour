@@ -18,14 +18,7 @@ class TourController {
   };
   updateTour = async (req: Request, res: Response) => {
     try {
-      const currentata = req.body as {
-        tourName: string;
-        status: boolean;
-        price: number;
-        vehicleTypeId: number;
-        tourType: string;
-        id: number;
-      };
+      const currentata = req.body;
 
       const result = await tourService.update(currentata);
       if (result) {
@@ -68,7 +61,8 @@ class TourController {
   };
   deleteById = async (req: Request, res: Response) => {
     try {
-      const id = req.body.id;
+      const paramId = req.params.id;
+      const id = +paramId;
       const result = await tourService.deleteById(id);
       if (result) {
         return res.status(result.statusCode).json(result);
@@ -96,13 +90,7 @@ class TourController {
   };
   createNewTour = async (req: Request, res: Response) => {
     try {
-      const currentData = req.body as {
-        tourName: string;
-        status: boolean;
-        price: number;
-        vehicleTypeId: number;
-        tourType: string;
-      };
+      const currentData = req.body;
       const result = await tourService.createNewTour(currentData);
       if (result) {
         return res.status(result.statusCode).json(result);

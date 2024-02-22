@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, PaymentType } from "@prisma/client";
 class PaymentMethod {
   private prisma = new PrismaClient();
   constructor() {
@@ -34,7 +34,7 @@ class PaymentMethod {
       await this.prisma.$disconnect;
     }
   };
-  getByPaymentType = async (paymentType: string) => {
+  getByPaymentType = async (paymentType: PaymentType) => {
     try {
       await this.prisma.$connect;
       const data = await this.prisma.payment_Method.findFirst({
@@ -104,7 +104,7 @@ class PaymentMethod {
     }
   };
   createNew = async (currentData: {
-    paymentType: string;
+    paymentType: PaymentType;
     bankDetails: string;
     note: string;
   }) => {
@@ -133,7 +133,7 @@ class PaymentMethod {
     }
   };
   updatePayment = async (currentData: {
-    paymentType: string;
+    paymentType: PaymentType;
     bankDetails: string;
     note: string;
     id: number;

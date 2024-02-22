@@ -3,6 +3,7 @@ import { accessController } from '../../controllers/accessController'
 import { checkLogin } from '../../auth/checkLogin';
 
 
+
 export const accessRouter =express.Router()
 
 
@@ -67,6 +68,10 @@ export const accessRouter =express.Router()
  */
 accessRouter.post('/signUp', accessController.signUp);
 
+
+
+accessRouter.post('/logOut',checkLogin, accessController.logOut);
+
 /**
  * @swagger
  * /api/v1/signIn:
@@ -108,4 +113,4 @@ accessRouter.post('/signUp', accessController.signUp);
  *       400:
  *         description: Bad request
  */
-accessRouter.post('/signIn',checkLogin, accessController.signIn);
+accessRouter.post('/signIn', accessController.signIn);

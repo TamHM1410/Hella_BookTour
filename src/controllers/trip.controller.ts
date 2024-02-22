@@ -34,7 +34,8 @@ class TripController {
   };
   deleteTripById = async (req: Request, res: Response) => {
     try {
-      const id = req.body.id;
+      const paramId = req.params.id;
+      const id = +paramId;
       const result = await tripService.deleteTripById(id);
       if (result) {
         return res.status(result.statusCode).json(result);

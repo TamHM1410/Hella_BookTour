@@ -6,188 +6,207 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-  relationMode = "prisma"
+  relationMode      = "prisma"
 }
-model City{
-  id                     Int @id @default(autoincrement())
-  cityName               String @unique
-  country                String  
-  status                 Boolean
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt 
-  deleteAt               DateTime?
-  location               Location[]
 
+model City {
+  id       Int       @id @default(autoincrement())
+  cityName String    @unique
+  country  String
+  status   Boolean
+  createAt DateTime  @default(now())
+  updateAt DateTime  @updatedAt
+  deleteAt DateTime?
 }
-model Location{
-  id                    Int @id @default(autoincrement())
-  cityId                Int 
-  city                  City @relation(fields: [cityId],references: [id])
-  locationName          String
-  locationAdress        String
-  status                Boolean
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
-  location_activity      Location_Activity[]
-  point_of_interest      Point_Of_Interest[]
-  location_In_Tour       Location_In_Tour[]
 
+model Location {
+  id     Int @id @default(autoincrement())
+  cityId Int
 
- }
- model Location_Activity {
-  id                     Int @id @default(autoincrement())
-  locationId             Int  @unique
-  activityName           String
-  activityDuration       String
-  activityDescription    String
-  status                 Boolean
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
-  location               Location @relation(fields: [locationId],references: [id])
-
- }
-model Categoty_Of_POI{
-  id                     Int @id @default(autoincrement())
-  categoryName           String
-  status                 Boolean
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
+  locationName    String
+  locationAddress String
+  status          Boolean
+  createAt        DateTime  @default(now())
+  updateAt        DateTime  @updatedAt
+  deleteAt        DateTime?
 }
-model Point_Of_Interest{
-  id                     Int @id @default(autoincrement())
-  POIName                String
-  POIDescription         String
-  locationId             Int @unique
-  categoryPOI_ID         Int @unique
-  status                 Boolean
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime @default(dbgenerated("('0000-00-00 00:00:00')")) @db.Timestamp(0)
-  location               Location @relation(fields: [locationId],references: [id])
 
-
+model Location_Activity {
+  id                  Int       @id @default(autoincrement())
+  locationId          Int
+  activityName        String
+  activityDuration    String
+  activityDescription String
+  status              Boolean
+  createAt            DateTime  @default(now())
+  updateAt            DateTime  @updatedAt
+  deleteAt            DateTime?
 }
-model Vehicle{
-  id                     Int @id @default(autoincrement())
-  vehicleName            String
-  status                 Boolean
-  capacity               String
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
-  tour                   Tour []
 
-
+model Categoty_Of_POI {
+  id           Int       @id @default(autoincrement())
+  categoryName String
+  status       Boolean
+  createAt     DateTime  @default(now())
+  updateAt     DateTime  @updatedAt
+  deleteAt     DateTime?
 }
-model Tour{
-  id                     Int @id @default(autoincrement())
-  tourName               String
-  status                 Boolean
-  price                  Float
-  vehicleTypeId          Int  @unique
-  tourType               String
-  vehicle                Vehicle @relation(fields: [vehicleTypeId],references: [id])
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
-  location_in_tour       Location_In_Tour[] 
-  trip                   Trip[]
-}
-model Location_In_Tour{
-  id                     Int @id @default(autoincrement())
-  locationId             Int @unique
-  location               Location @relation(fields: [locationId],references: [id])
-  tourId                 Int @unique
-  tour                   Tour @relation(fields: [tourId],references: [id])
-  status                 Boolean
-  duration               String?
-  description            String
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
-  startCity              String
-  endCity                String
-}
-model Tour_Guide{
-  id                     Int @id @default(autoincrement())
-  userId                 String @unique
-  status                 Boolean
-  language               String
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
-  trip                   Trip[]
 
+model Point_Of_Interest {
+  id             Int       @id @default(autoincrement())
+  POIName        String
+  POIDescription String
+  locationId     Int
+  categoryPOI_ID Int
+  status         Boolean
+  createAt       DateTime  @default(now())
+  updateAt       DateTime  @updatedAt
+  deleteAt       DateTime?
 }
-model Trip{
-  id                     Int @id @default(autoincrement())
-  tourGuideId            Int @unique
-  tour_guide             Tour_Guide @relation(fields: [tourGuideId],references: [id])
-  tourId                 Int @unique
-  tour                   Tour @relation(fields: [tourId],references: [id])
-  totalCustomer          Int
-  startDate              DateTime
-  endDate                DateTime
-  status                 Boolean
-  booking                Booking[]
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
 
-} 
-model Payment_Method{
-  id                     Int @id @default(autoincrement())
-  paymentType            String
-  bankDetails            String
-  note                   String?
-  createAt               DateTime @default(now())
-  updateAt               DateTime @updatedAt
-  deleteAt               DateTime?
-  payment                Payment[]
-
+model Vehicle {
+  id          Int         @id @default(autoincrement())
+  vehicleName VehicleName
+  status      Boolean
+  capacity    String
+  createAt    DateTime    @default(now())
+  updateAt    DateTime    @updatedAt
+  deleteAt    DateTime?
+  tour        Tour[]
 }
-model Payment{
-  id                      Int @id @default(autoincrement())
-  paymentName             String
-  paymentDate             DateTime
-  amount                  Float
-  status                  Boolean
-  refunded                Boolean
-  refundedTime            DateTime?
-  refundedAmount          DateTime?
-  paymentMethodId         Int @unique
-  payment_method          Payment_Method @relation(fields: [paymentMethodId],references: [id])
-  createAt                DateTime @default(now())
-  updateAt                DateTime @updatedAt
-  deleteAt                DateTime?
-  bookingId               Int @unique
-  booking                 Booking @relation(fields: [bookingId],references: [id])
 
+model Tour {
+  id               Int                @id @default(autoincrement())
+  tourName         String
+  status           Boolean
+  price            Float
+  vehicleTypeId    Int                @unique
+  tourType         TourType
+  vehicle          Vehicle            @relation(fields: [vehicleTypeId], references: [id])
+  createAt         DateTime           @default(now())
+  updateAt         DateTime           @updatedAt
+  deleteAt         DateTime?
 
 
 }
-model Booking{
-  id                      Int @id @default(autoincrement())
-  bookingDate             String
-  fromDate                String
-  toDate                  String
-  userId                  String 
-  totalAmount             Float
-  totalCustomer           Int
-  status                  Boolean
-  payment                 Payment[]
-  tripId                  Int @unique
-  trip                    Trip @relation(fields: [tripId],references: [id])
-  createAt                DateTime @default(now())
-  updateAt                DateTime @updatedAt
-  deleteAt                DateTime?
 
+model Location_In_Tour {
+  id         Int @id @default(autoincrement())
+  locationId Int
 
+  tourId      Int
+ 
+  status      Boolean
+  duration    String?
+  description String
+  createAt    DateTime  @default(now())
+  updateAt    DateTime  @updatedAt
+  deleteAt    DateTime?
+  startCity   String
+  endCity     String
+}
 
+model Tour_Guide {
+  id       Int          @id @default(autoincrement())
+  userId   String       @unique
+  status   Boolean
+  language LanguageType
+  createAt DateTime     @default(now())
+  updateAt DateTime     @updatedAt
+  deleteAt DateTime?
+
+}
+
+model Trip {
+  id            Int        @id @default(autoincrement())
+  tourGuideId   Int
+
+  tourId        Int
+
+  totalCustomer Int
+  startDate     DateTime
+  endDate       DateTime
+  status        Boolean
+
+  createAt DateTime  @default(now())
+  updateAt DateTime  @updatedAt
+  deleteAt DateTime?
+}
+
+model Payment_Method {
+  id          Int         @id @default(autoincrement())
+  paymentType PaymentType
+  bankDetails String
+  note        String?
+  createAt    DateTime    @default(now())
+  updateAt    DateTime    @updatedAt
+  deleteAt    DateTime?
+  payment     Payment[]
+}
+
+model Payment {
+  id              Int            @id @default(autoincrement())
+  paymentName     String
+  paymentDate     DateTime
+  amount          Float
+  status          Boolean
+  refunded        Boolean
+  refundedTime    DateTime?
+  refundedAmount  DateTime?
+  paymentMethodId Int            @unique
+  payment_method  Payment_Method @relation(fields: [paymentMethodId], references: [id])
+  createAt        DateTime       @default(now())
+  updateAt        DateTime       @updatedAt
+  deleteAt        DateTime?
+  bookingId       Int
+}
+
+model Booking {
+  id            Int     @id @default(autoincrement())
+  bookingDate   String
+  fromDate      String
+  toDate        String
+  userId        String
+  totalAmount   Float
+  totalCustomer Int
+  status        Boolean
+
+  tripId Int
+
+  createAt DateTime  @default(now())
+  updateAt DateTime  @updatedAt
+  deleteAt DateTime?
+}
+
+enum TourType {
+  Adventure
+  Historical
+  Cultural
+  Nature
+  Food
+}
+
+enum VehicleName {
+  Car
+  Bus
+  Bike
+}
+
+enum LanguageType {
+  English
+  Vietnamese
+  French
+  Italy
+  Japanese
+  Chinese
+  Thai
+}
+
+enum PaymentType {
+  CreditCard
+  DebitCard
+  PayPal
 }

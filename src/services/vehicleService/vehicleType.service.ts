@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, VehicleName } from "@prisma/client";
 class VehicleType {
   private prisma = new PrismaClient();
   constructor() {
@@ -31,7 +31,7 @@ class VehicleType {
       await this.prisma.$disconnect;
     }
   };
-  getByName = async (vehicalName: string) => {
+  getByName = async (vehicalName: VehicleName) => {
     try {
       const allData = await this.prisma.vehicle.findFirst({
         where: {
@@ -94,7 +94,7 @@ class VehicleType {
     }
   };
   createNew = async (currentData: {
-    vehicleName: string;
+    vehicleName: VehicleName;
     capacity: string;
     status: boolean;
   }) => {
@@ -123,7 +123,7 @@ class VehicleType {
     }
   };
   updateNew = async (currentData: {
-    vehicleName: string;
+    vehicleName: VehicleName;
     capacity: string;
     status: boolean;
     id: number;

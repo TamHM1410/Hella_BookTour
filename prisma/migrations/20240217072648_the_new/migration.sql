@@ -6,8 +6,9 @@ CREATE TABLE `City` (
     `status` BOOLEAN NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
+    UNIQUE INDEX `City_cityName_key`(`cityName`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -16,13 +17,12 @@ CREATE TABLE `Location` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `cityId` INTEGER NOT NULL,
     `locationName` VARCHAR(191) NOT NULL,
-    `locationAdress` VARCHAR(191) NOT NULL,
+    `locationAddress` VARCHAR(191) NOT NULL,
     `status` BOOLEAN NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
-    UNIQUE INDEX `Location_cityId_key`(`cityId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -36,9 +36,8 @@ CREATE TABLE `Location_Activity` (
     `status` BOOLEAN NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
-    UNIQUE INDEX `Location_Activity_locationId_key`(`locationId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -49,7 +48,7 @@ CREATE TABLE `Categoty_Of_POI` (
     `status` BOOLEAN NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -64,21 +63,20 @@ CREATE TABLE `Point_Of_Interest` (
     `status` BOOLEAN NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
-    UNIQUE INDEX `Point_Of_Interest_locationId_key`(`locationId`),
-    UNIQUE INDEX `Point_Of_Interest_categoryPOI_ID_key`(`categoryPOI_ID`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Vehicle` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `vehicleName` VARCHAR(191) NOT NULL,
+    `vehicleName` ENUM('Car', 'Bus', 'Bike') NOT NULL,
     `status` BOOLEAN NOT NULL,
+    `capacity` VARCHAR(191) NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -89,13 +87,13 @@ CREATE TABLE `Tour` (
     `tourName` VARCHAR(191) NOT NULL,
     `status` BOOLEAN NOT NULL,
     `price` DOUBLE NOT NULL,
-    `vehicleId` INTEGER NOT NULL,
-    `tourType` VARCHAR(191) NOT NULL,
+    `vehicleTypeId` INTEGER NOT NULL,
+    `tourType` ENUM('Adventure', 'Historical', 'Cultural', 'Nature', 'Food') NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
-    UNIQUE INDEX `Tour_vehicleId_key`(`vehicleId`),
+    UNIQUE INDEX `Tour_vehicleTypeId_key`(`vehicleTypeId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -109,10 +107,10 @@ CREATE TABLE `Location_In_Tour` (
     `description` VARCHAR(191) NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
+    `startCity` VARCHAR(191) NOT NULL,
+    `endCity` VARCHAR(191) NOT NULL,
 
-    UNIQUE INDEX `Location_In_Tour_locationId_key`(`locationId`),
-    UNIQUE INDEX `Location_In_Tour_tourId_key`(`tourId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -121,10 +119,10 @@ CREATE TABLE `Tour_Guide` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userId` VARCHAR(191) NOT NULL,
     `status` BOOLEAN NOT NULL,
-    `language` VARCHAR(191) NOT NULL,
+    `language` ENUM('English', 'Vietnamese', 'French', 'Italy', 'Japanese', 'Chinese', 'Thai') NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
     UNIQUE INDEX `Tour_Guide_userId_key`(`userId`),
     PRIMARY KEY (`id`)
@@ -141,21 +139,20 @@ CREATE TABLE `Trip` (
     `status` BOOLEAN NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
-    UNIQUE INDEX `Trip_tourGuideId_key`(`tourGuideId`),
-    UNIQUE INDEX `Trip_tourId_key`(`tourId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Payment_Method` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `paymentType` VARCHAR(191) NOT NULL,
+    `paymentType` ENUM('CreditCard', 'DebitCard', 'PayPal') NOT NULL,
+    `bankDetails` VARCHAR(191) NOT NULL,
     `note` VARCHAR(191) NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -163,6 +160,7 @@ CREATE TABLE `Payment_Method` (
 -- CreateTable
 CREATE TABLE `Payment` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `paymentName` VARCHAR(191) NOT NULL,
     `paymentDate` DATETIME(3) NOT NULL,
     `amount` DOUBLE NOT NULL,
     `status` BOOLEAN NOT NULL,
@@ -172,20 +170,19 @@ CREATE TABLE `Payment` (
     `paymentMethodId` INTEGER NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
     `bookingId` INTEGER NOT NULL,
 
     UNIQUE INDEX `Payment_paymentMethodId_key`(`paymentMethodId`),
-    UNIQUE INDEX `Payment_bookingId_key`(`bookingId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Booking` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `bookingDate` DATETIME(3) NOT NULL,
-    `fromDate` DATETIME(3) NOT NULL,
-    `toDate` DATETIME(3) NOT NULL,
+    `bookingDate` VARCHAR(191) NOT NULL,
+    `fromDate` VARCHAR(191) NOT NULL,
+    `toDate` VARCHAR(191) NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
     `totalAmount` DOUBLE NOT NULL,
     `totalCustomer` INTEGER NOT NULL,
@@ -193,9 +190,7 @@ CREATE TABLE `Booking` (
     `tripId` INTEGER NOT NULL,
     `createAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updateAt` DATETIME(3) NOT NULL,
-    `deleteAt` TIMESTAMP(0) NOT NULL DEFAULT ('0000-00-00 00:00:00'),
+    `deleteAt` DATETIME(3) NULL,
 
-    UNIQUE INDEX `Booking_userId_key`(`userId`),
-    UNIQUE INDEX `Booking_tripId_key`(`tripId`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

@@ -13,14 +13,14 @@ export const createToken = async ({payload,privateKey,refreshKey} :tokenParams) 
         algorithm: "RS256",
         expiresIn: "1day",
       });
-      const refreshToKen = await jwt.sign({refreshKey}, privateKey, {
+      const refreshToken = await jwt.sign({refreshKey}, privateKey, {
         algorithm: "RS256",
        
         expiresIn: "7day",
       });
       return {
         accessToken,
-        refreshToKen,
+        refreshToken,
       };
    }catch(error){
     console.log(error)
