@@ -16,11 +16,12 @@ app.use(helmet()); //ngan chan trang tt3
 app.use(morgan("dev"));
 app.use(compression()); //tang toc van chuyen data
 app.use(
-    cors({
-      origin: ["http://localhost:3000", "ws://127.0.0.1:58202/Y0K-wQ8gR60=/ws","https://booking-tour-zeta.vercel.app","https://localhost:3000"],
-      credentials: true,
-    })
-  );
+  cors({
+    origin: ["http://localhost:3000", "ws://127.0.0.1:58202/Y0K-wQ8gR60=/ws", "https://booking-tour-zeta.vercel.app", "https://localhost:3000"],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"] // Thêm các phương thức HTTP bạn muốn chấp nhận ở đây,
+  })
+);
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

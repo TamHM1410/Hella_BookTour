@@ -62,86 +62,96 @@ interface VnpParams {
 
 class VnpayController {
     
-    createVnpay =(req:Request,res:Response,next:NextFunction)=>{
-        try{
+    createVnpay = (req:Request, res:Response, next:NextFunction) => {
+        try {
+            const body =req.body
+            
             const ipAddr = req.headers['x-forwarded-for'] ||
-            req.socket.remoteAddress ||
-            (req.socket as any).remoteAddress;
+                req.socket.remoteAddress ||
+                (req.socket as any).remoteAddress;
     
             const tmnCode = process.env.vnp_TmnCode;
             const secretKey = process.env.vnp_HashSecret;
-            let  vnpUrl :string = process.env.vnp_Url || ''; // Assign a default value if vnp_Url is undefined
+            let vnpUrl: string = process.env.vnp_Url || '';
             const returnUrl = process.env.vnp_ReturnUrl;
     
             const date = new Date();
     
             const createDate = format(date, 'yyyymmddHHmmss');
             const orderId = format(date, 'HHmmss');
-            const amount = req.body.amount!;
-            const bankCode = req.body.bankCode!;
-        
-            const orderInfo = req.body.orderDescription!;
-            const orderType = req.body.orderType!;
+            const amount = req.body.amount;
+            const bankCode = req.body.bankCode;
+    
+            const orderInfo = req.body.orderDescription
+            const orderType = req.body.orderType;
             let locale = req.body.language;
-            if(locale === null || locale === ''){
+            if (locale === null || locale === '') {
                 locale = 'vn';
             }
             const currCode = 'VND';
-            
+    
             let vnp_Params: VnpParams = {
                 vnp_Version: '2.1.0',
                 vnp_Command: 'pay',
-                vnp_TmnCode: tmnCode || '', // default to empty string if env variable is undefined
+                vnp_TmnCode: tmnCode || '',
                 vnp_Locale: locale,
                 vnp_CurrCode: currCode,
                 vnp_TxnRef: orderId,
                 vnp_OrderInfo: orderInfo,
-                vnp_OrderType: orderType,
-                vnp_Amount: amount ? amount * 100 : 0, // make sure to handle undefined or null case
+                vnp_OrderType: "other",
+                vnp_Amount: amount ? amount * 100 : 0,
                 vnp_ReturnUrl: returnUrl,
-                vnp_IpAddr: ipAddr || '', // default to empty string if IP address is not found
+                vnp_IpAddr: ipAddr || '',
                 vnp_CreateDate: createDate,
+                vnp_BankCode:bankCode
+                
             };
+            if (bankCode !== null && bankCode !== "") {
+                vnp_Params["vnp_BankCode"] = bankCode;
+              }
+    
             if (!secretKey) {
                 throw new Error("vnp_HashSecret is not defined in environment variables.");
             }
-            
-            if(bankCode !== null && bankCode !== ''){
-                vnp_Params['vnp_BankCode'] = bankCode;
-            }
-            // // const sortObject = (obj: VnpParams): Record<string, string> => {
-            // //     const sorted: Record<string, string> = {};
-            // //     const str: string[] = Object.keys(obj).map(key => encodeURIComponent(key));
-            // //     str.sort();
-            // //     for (const key of str) {
-            // //         const value = obj[key];
-            // //         if (typeof value !== 'undefined') { // Kiểm tra nếu value không phải là undefined
-            // //             sorted[key] = encodeURIComponent(value).replace(/%20/g, "+");
-            // //         }
-            // //     }
-            // //     return sorted;
-            // // }
-            
-            
-            
-            // // You might need to implement sortObject here
-            // vnp_Params = sortObject(vnp_Params);
+    
+           
+            const sortObject = (obj: any): any => {
+                const sorted: any = {};
+                const str: string[] = [];
+                let key: string;
+                for (key in obj) {
+                    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                        str.push(encodeURIComponent(key));
+                    }
+                }
+                str.sort();
+                for (key of str) {
+                    sorted[key] = encodeURIComponent(obj[key]).replace(/%20/g, "+");
+                }
+                return sorted;
+            };
+    
+    
+            vnp_Params = sortObject(vnp_Params);
     
             const signData = querystring.stringify(vnp_Params, { encode: false });
-            
+    
             const hmac = crypto.createHmac("sha512", secretKey);
-            const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest("hex"); 
+            const signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
             vnp_Params['vnp_SecureHash'] = signed;
             vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
+            console.log(body,'test',vnpUrl)
     
-            res.redirect(vnpUrl);
+            res.redirect(vnpUrl)
     
-        } catch(error){
+        } catch (error) {
+            console.log(error)
             return res.status(500).json({
-                status:'internal server',
-                statusCode:500
+                status: 'internal server',
+                statusCode: 500
             });
         }
     }
+    
 }
 export const vnpayController =new VnpayController()
