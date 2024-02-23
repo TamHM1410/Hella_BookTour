@@ -204,6 +204,7 @@ class TourService {
             
 
         }catch(error){
+            console.log(error)
             return {
                 status :'Internal Server Error',
                 statusCode:501
