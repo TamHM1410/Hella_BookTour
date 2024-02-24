@@ -110,7 +110,7 @@ class Categoty_of_poi {
         }
     }
     createNew =async (currentData :{
-        categotyName:string,
+        categoryName:string,
         status:boolean,
 
 
@@ -120,14 +120,14 @@ class Categoty_of_poi {
             const data=  await this.prisma.categoty_Of_POI.create(
                 {
                     data :{
-                        categoryName:currentData.categotyName,
+                        categoryName:currentData.categoryName,
                         status:currentData.status
                     }
                 }
             )
             if(data){
                 return {
-                    status:'Delete success',
+                    status:' success',
                     statusCode:201,
                     data:data
                    
@@ -137,6 +137,7 @@ class Categoty_of_poi {
             
 
         }catch(error){
+            console.log(error)
             return {
                 status:'Internal Server!',
                 statusCode:500,

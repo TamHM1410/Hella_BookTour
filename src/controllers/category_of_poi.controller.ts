@@ -48,13 +48,16 @@ class CategotyController {
         }
     }
     deleteById =async (req:Request,res:Response)=>{
+       
         try{ 
-            const paramsId=req.body.id
+            console.log('vao day')
+            const paramsId=req.params.id
             const id:number =+paramsId 
             const result = await categoty.deleteById(id)
-            if(result){
-                return res.status(result.statusCode).json(result)
-             }
+            return result  ?res.status(result.statusCode).json(result):res.status(500).json({
+                stutus:'Bad request!',
+                statusCode:500
+            })
 
 
         }catch(error){
