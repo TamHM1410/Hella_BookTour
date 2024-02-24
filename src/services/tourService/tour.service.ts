@@ -51,12 +51,17 @@ class TourService {
         try{
             await this.prisma.$connect
             await this.prisma.tour.delete({
-                where:{
+                where :{
                     id:id
                 }
             })
+            return {
+                status :'success',
+                statusCode:200
+            }
 
         }catch(error){
+            console.log(error)
             return {
                 status :'Internal Server Error',
                 statusCode:501
