@@ -118,7 +118,7 @@ tripRouter.get('/trips/:id',tripController.getTripById)
  *       '500':
  *         description: Internal Server Error
  */
-tripRouter.delete('/trips:id',tripController.deleteTripById)
+tripRouter.delete('/trips/:id',tripController.deleteTripById)
 
 /**
  * @swagger

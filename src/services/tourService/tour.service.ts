@@ -49,7 +49,12 @@ class TourService {
           id: id,
         },
       });
+      return {
+        status: "success",
+        statusCode: 200,
+      };
     } catch (error) {
+      console.log(error);
       return {
         status: "Internal Server Error",
         statusCode: 501,
@@ -166,26 +171,19 @@ class TourService {
     }
   };
 
-  getAll = async (page: number, pageSize: number) => {
+  getAll = async () => {
     try {
       await this.prisma.$connect;
-      const startIndex = (page - 1) * pageSize;
-      // Lấy tổng số lượng mục từ cơ sở dữ liệu
-      const totalItems = await this.prisma.tour.count();
-      const data = await this.prisma.tour.findMany({
-        skip: startIndex,
-        take: pageSize,
-      });
-      return {
-        status: "Success",
-        statusCode: 201,
-        data: data,
-        page,
-        pageSize,
-        totalPages: Math.ceil(totalItems / pageSize),
-        totalItems,
-      };
+      const data = await this.prisma.tour.findMany();
+      if (data) {
+        return {
+          status: "Success",
+          statusCode: 201,
+          data: data,
+        };
+      }
     } catch (error) {
+      console.log(error);
       return {
         status: "Internal Server Error",
         statusCode: 501,

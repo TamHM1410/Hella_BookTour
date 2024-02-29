@@ -14,16 +14,12 @@ app.use(morgan("dev"));
 app.use(compression()); //tang toc van chuyen data
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "ws://127.0.0.1:58202/Y0K-wQ8gR60=/ws",
-      "https://booking-tour-zeta.vercel.app",
-      "https://localhost:3000",
-    ],
+    origin: ["http://localhost:3000", "ws://127.0.0.1:58202/Y0K-wQ8gR60=/ws", "https://booking-tour-zeta.vercel.app", "https://localhost:3000"],
     credentials: true,
+    
   })
 );
-app.use(cookieParser());
+app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

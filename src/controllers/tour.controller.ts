@@ -3,13 +3,12 @@ import { Request, Response } from "express";
 class TourController {
   getAll = async (req: Request, res: Response) => {
     try {
-      const page = parseInt(req.query.page as string) || 1;
-      const pageSize = parseInt(req.query.pageSize as string) || 10;
-      const result = await tourService.getAll(page, pageSize);
+      const result = await tourService.getAll();
       if (result) {
         return res.status(result.statusCode).json(result);
       }
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         status: "Internal server",
         statusCode: 500,
@@ -68,6 +67,7 @@ class TourController {
         return res.status(result.statusCode).json(result);
       }
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         status: "Internal server",
         statusCode: 500,

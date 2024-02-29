@@ -83,7 +83,7 @@ categotyOfPoiRouter.get('/pois',categotyController.getAll)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.get('/poi/:id',categotyController.getById)
+categotyOfPoiRouter.get('/pois/:id',categotyController.getById)
 
 /**
  * @swagger
@@ -112,7 +112,7 @@ categotyOfPoiRouter.get('/poi/:id',categotyController.getById)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.get('/poi/:name',categotyController.getByName)
+categotyOfPoiRouter.get('/pois/:name',categotyController.getByName)
 
 /**
  * @swagger
@@ -145,7 +145,7 @@ categotyOfPoiRouter.get('/poi/:name',categotyController.getByName)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.delete('pois/:id',categotyController.deleteById)
+categotyOfPoiRouter.delete('/pois/:id',categotyController.deleteById)
 
 /**
  * @swagger

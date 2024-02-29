@@ -242,4 +242,4 @@ tourRouter.delete('/tours/:id',tourController.deleteById)
  *             example:
  *               error: Internal Server Error
  */
-tourRouter.patch('/tour/:id',tourController.updateTour)
+tourRouter.patch('/tours/:id',tourController.updateTour)

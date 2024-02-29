@@ -32,6 +32,7 @@ model Location {
   createAt        DateTime  @default(now())
   updateAt        DateTime  @updatedAt
   deleteAt        DateTime?
+  image           String?
 }
 
 model Location_Activity {
@@ -65,6 +66,7 @@ model Point_Of_Interest {
   createAt       DateTime  @default(now())
   updateAt       DateTime  @updatedAt
   deleteAt       DateTime?
+  image          String?
 }
 
 model Vehicle {
@@ -75,30 +77,27 @@ model Vehicle {
   createAt    DateTime    @default(now())
   updateAt    DateTime    @updatedAt
   deleteAt    DateTime?
-  tour        Tour[]
 }
 
 model Tour {
-  id               Int                @id @default(autoincrement())
-  tourName         String
-  status           Boolean
-  price            Float
-  vehicleTypeId    Int                @unique
-  tourType         TourType
-  vehicle          Vehicle            @relation(fields: [vehicleTypeId], references: [id])
-  createAt         DateTime           @default(now())
-  updateAt         DateTime           @updatedAt
-  deleteAt         DateTime?
-
-
+  id            Int       @id @default(autoincrement())
+  tourName      String
+  status        Boolean
+  price         Float
+  vehicleTypeId Int
+  tourType      TourType
+  createAt      DateTime  @default(now())
+  updateAt      DateTime  @updatedAt
+  deleteAt      DateTime?
+  image         String?
 }
 
 model Location_In_Tour {
   id         Int @id @default(autoincrement())
   locationId Int
 
-  tourId      Int
- 
+  tourId Int
+
   status      Boolean
   duration    String?
   description String
@@ -117,14 +116,13 @@ model Tour_Guide {
   createAt DateTime     @default(now())
   updateAt DateTime     @updatedAt
   deleteAt DateTime?
-
 }
 
 model Trip {
-  id            Int        @id @default(autoincrement())
-  tourGuideId   Int
+  id          Int @id @default(autoincrement())
+  tourGuideId Int
 
-  tourId        Int
+  tourId Int
 
   totalCustomer Int
   startDate     DateTime
@@ -144,11 +142,10 @@ model Payment_Method {
   createAt    DateTime    @default(now())
   updateAt    DateTime    @updatedAt
   deleteAt    DateTime?
-  payment     Payment[]
 }
 
 model Payment {
-  id              Int            @id @default(autoincrement())
+  id              Int       @id @default(autoincrement())
   paymentName     String
   paymentDate     DateTime
   amount          Float
@@ -156,12 +153,12 @@ model Payment {
   refunded        Boolean
   refundedTime    DateTime?
   refundedAmount  DateTime?
-  paymentMethodId Int            @unique
-  payment_method  Payment_Method @relation(fields: [paymentMethodId], references: [id])
-  createAt        DateTime       @default(now())
-  updateAt        DateTime       @updatedAt
-  deleteAt        DateTime?
-  bookingId       Int
+  paymentMethodId Int
+
+  createAt  DateTime  @default(now())
+  updateAt  DateTime  @updatedAt
+  deleteAt  DateTime?
+  bookingId Int
 }
 
 model Booking {

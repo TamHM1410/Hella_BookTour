@@ -102,25 +102,26 @@ class Categoty_of_poi {
     }
   };
   createNew = async (currentData: {
-    categotyName: string;
+    categoryName: string;
     status: boolean;
   }) => {
     try {
       await this.prisma.$connect;
       const data = await this.prisma.categoty_Of_POI.create({
         data: {
-          categoryName: currentData.categotyName,
+          categoryName: currentData.categoryName,
           status: currentData.status,
         },
       });
       if (data) {
         return {
-          status: "Delete success",
+          status: " success",
           statusCode: 201,
           data: data,
         };
       }
     } catch (error) {
+      console.log(error);
       return {
         status: "Internal Server!",
         statusCode: 500,
