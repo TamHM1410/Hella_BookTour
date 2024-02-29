@@ -1,11 +1,8 @@
-import express from 'express'
-import { accessController } from '../../controllers/accessController'
-import { checkLogin } from '../../auth/checkLogin';
+import express from "express";
+import { accessController } from "../../controllers/accessController";
+import { checkLogin } from "../../auth/checkLogin";
 
-
-
-export const accessRouter =express.Router()
-
+export const accessRouter = express.Router();
 
 /**
  * @swagger
@@ -13,8 +10,6 @@ export const accessRouter =express.Router()
  *   name: Authentication
  *   description: Authentication Api
  */
-
-
 
 /**A
  * @openapi
@@ -66,11 +61,9 @@ export const accessRouter =express.Router()
  *       400:
  *         description: Bad request
  */
-accessRouter.post('/signUp', accessController.signUp);
+accessRouter.post("/signUp", accessController.signUp);
 
-
-
-accessRouter.post('/logOut',checkLogin, accessController.logOut);
+accessRouter.post("/logOut", checkLogin, accessController.logOut);
 
 /**
  * @swagger
@@ -113,4 +106,4 @@ accessRouter.post('/logOut',checkLogin, accessController.logOut);
  *       400:
  *         description: Bad request
  */
-accessRouter.post('/signIn', accessController.signIn);
+accessRouter.post("/signIn", accessController.signIn);
