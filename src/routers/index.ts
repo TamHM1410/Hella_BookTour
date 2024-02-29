@@ -12,7 +12,6 @@ import { categotyOfPoiRouter } from "./categoty_of_poi/poi.router";
 import { paymentMethodRouter } from "./paymentMethod/paymentMethod.router";
 import { vehicleRouter } from "./vehicle/vehicle.router";
 import { userRouter } from "./userRouter/user.router";
-
 import { vnPayRouter } from "./vnPay/vnPay.router";
 
 /**

@@ -96,7 +96,7 @@ class UserService {
             await instanceMongo()
             const hashPassword =await bcrypt.hash(currentData.password,10)
             const currentUser = await user.findById({_id:new mongoose.Types.ObjectId(currentData.id)})
-            if(currentUser){
+            if(currentUser && currentUser.password){
                 const compare = await bcrypt.compare(currentData.password,currentUser.password)
                 if(compare===true){
                     const data = await user.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(currentData.id)},{password:hashPassword})
