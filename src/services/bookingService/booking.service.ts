@@ -81,8 +81,7 @@ class BookingService {
   };
   updatebooking = async (currentData: {
     bookingDate: string;
-    fromDate: string;
-    toDate: string;
+   
     userId: string;
     totalAmount: number;
     status: boolean;
@@ -98,8 +97,7 @@ class BookingService {
         },
         data: {
           bookingDate: currentData.bookingDate,
-          fromDate: currentData.fromDate,
-          toDate: currentData.toDate,
+  
           userId: currentData.userId,
           totalAmount: currentData.totalAmount,
           status: currentData.status,
@@ -126,8 +124,7 @@ class BookingService {
   };
   createBooking = async (currentData: {
     bookingDate: string;
-    fromDate: string;
-    toDate: string;
+  
     userId: string;
     totalAmount: number;
     status: boolean;
@@ -139,8 +136,7 @@ class BookingService {
       const newData = await this.prisma.booking.create({
         data: {
           bookingDate: currentData.bookingDate,
-          fromDate: currentData.fromDate,
-          toDate: currentData.toDate,
+         
           userId: currentData.userId,
           totalAmount: currentData.totalAmount,
           status: currentData.status,
@@ -211,7 +207,7 @@ class BookingService {
             if(!rs){
                 return {
                     status:"No data",
-                    statusCode:200,
+                    statusCode:404,
                 }
             }
            
@@ -223,6 +219,7 @@ class BookingService {
             }
 
         }catch(error){
+            console.log(error)
             return {
                 status:'Internal Server',
                 statusCode: 500

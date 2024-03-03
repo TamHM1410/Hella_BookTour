@@ -5,8 +5,12 @@ import querystring from 'qs'
 import { randomBytes } from 'crypto';
 
 import { bookingService } from "../services/bookingService/booking.service";
+<<<<<<< HEAD
 
 import moment from "moment";
+=======
+>>>>>>> 0172487 (update)
+
 
 
 

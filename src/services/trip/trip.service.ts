@@ -109,8 +109,8 @@ class TripService {
       });
       if (data) {
         return {
-          status: "internal server",
-          statusCode: 200,
+          status: "Update success",
+          statusCode: 201,
           data: data,
         };
       }
