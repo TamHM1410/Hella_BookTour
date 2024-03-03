@@ -219,6 +219,95 @@ class BookingService {
             }
 
         }catch(error){
+
+            return {
+                status:'Internal Server',
+                statusCode: 500
+            }
+        }
+    }
+    updatebooking = async (currentData : {
+        bookingDate:string,
+      
+        userId:string,
+        totalAmount:number,
+        status:boolean,
+        tripId:number,
+        totalCustomer:number,
+        id:number
+
+    })=>{
+        try{
+            await this.prisma.$connect
+            const updateData = await this.prisma.booking.update({
+                where:{
+                    id:currentData.id
+                },
+                data:{
+                    bookingDate:currentData.bookingDate,
+                    
+                    userId:currentData.userId,
+                    totalAmount:currentData.totalAmount,
+                    status :currentData.status,
+                    tripId:currentData.tripId,
+                    totalCustomer:currentData.totalCustomer
+
+                }
+            })
+            if(updateData){
+                return {
+                    status:'Success!',
+                    statusCode:201,
+                    data:updateData
+
+                }
+
+            }
+
+        }catch(error){
+            return {
+                status:'Internal Server',
+                statusCode: 500
+            }
+
+        }finally {
+            await this.prisma.$disconnect
+        }
+    }
+    createBooking = async (currentData : {
+        bookingDate:string,
+      
+        userId:string,
+        totalAmount:number,
+        status:boolean,
+        tripId:number,
+        totalCustomer:number
+
+    })=>{
+        try{
+            await this.prisma.$connect
+            const newData= await this.prisma.booking.create({
+                data:{
+                    bookingDate:currentData.bookingDate,
+                
+                    userId:currentData.userId,
+                    totalAmount:currentData.totalAmount,
+                    status :currentData.status,
+                    tripId:currentData.tripId,
+                    totalCustomer:currentData.totalCustomer
+                }
+            })
+            if(newData){
+                return {
+                    status:'Success!',
+                    statusCode:201,
+                    data:newData
+
+                }
+            }
+
+        }catch(error){
+
             console.log(error)
             return {
                 status:'Internal Server',
