@@ -93,10 +93,10 @@ model Tour {
 }
 
 model Location_In_Tour {
-  id         Int @id @default(autoincrement())
-  locationId Int
+  id         Int  @id @default(autoincrement())
+  locationId Int?
 
-  tourId Int
+  tourId Int?
 
   status      Boolean
   duration    String?
@@ -122,7 +122,9 @@ model Trip {
   id          Int @id @default(autoincrement())
   tourGuideId Int
 
-  tourId Int
+  tourId    Int
+  startDate String?
+  endDate   String?
 
   totalCustomer Int
 
@@ -161,10 +163,9 @@ model Payment {
 }
 
 model Booking {
-  id            Int     @id @default(autoincrement())
-  bookingDate   String
-  fromDate      String
-  toDate        String
+  id          Int    @id @default(autoincrement())
+  bookingDate String
+
   userId        String
   totalAmount   Float
   totalCustomer Int
