@@ -3,6 +3,19 @@ import { Request, Response } from "express";
 class LocationController {
   getAll = async (req: Request, res: Response) => {
     try {
+      console.log(req.query,'qury')
+      if(req.query.locationName){
+        const LocationName =req.query.locationName as string
+        const rs =await locationService.getLocationByLocationName(LocationName)
+        return rs ? res.status(rs.statusCode).json(rs): res.status(500).json({status:'Internal server',statusCode:500})
+
+      }else if(req.query.locationAddress){
+        const LocationAddress = req.query.locationAddress as string
+        const rs =await locationService.getLocationByAddress(LocationAddress)
+        return rs ? res.status(rs.statusCode).json(rs): res.status(500).json({status:'Internal server',statusCode:500})
+
+      }
+      
       const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 10;
       const result = await locationService.getAllLocation(page, pageSize);

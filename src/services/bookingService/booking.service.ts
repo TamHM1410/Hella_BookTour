@@ -122,6 +122,7 @@ class BookingService {
     } finally {
       await this.prisma.$disconnect;
     }
+
   };
   createBooking = async (currentData: {
     bookingDate: string;
@@ -163,5 +164,73 @@ class BookingService {
       await this.prisma.$disconnect;
     }
   };
+
+  updateStatusById =async(id:number,status:boolean)=>{
+        try{
+            await this.prisma.$connect
+            const updateData = await this.prisma.booking.update({
+                where:{
+                    id:id
+                },
+                data:{
+                    status:status
+
+                }})
+            return {
+                status:"success",
+                statusCode:200,
+                data :updateData,
+                
+            }
+
+        }catch(error){
+            console.log(error)
+            return {
+                status:'Internal Server',
+                statusCode: 500
+            }
+        }
+    }
+  deleteBookingByStatusAndCurrentDate =async(userId:string)=>{
+        try{
+            const today = new Date();
+            const day = today.getDate();
+            const month = today.getMonth() + 1; // Tháng bắt đầu từ 0
+            const year = today.getFullYear();
+            const currentDate = `${day}-${month}-${year}`;
+            await this.prisma.$connect
+            const rs= await this.prisma.booking.deleteMany({
+                where:{
+                    status:false,
+                    bookingDate:currentDate,
+                    userId:userId
+                    
+
+                }
+            })
+            if(!rs){
+                return {
+                    status:"No data",
+                    statusCode:200,
+                }
+            }
+           
+            return {
+                status:"success",
+                statusCode:200,
+               
+                
+            }
+
+        }catch(error){
+            return {
+                status:'Internal Server',
+                statusCode: 500
+            }
+        }
+    }
+   
+   
+
 }
 export const bookingService = new BookingService();

@@ -11,7 +11,7 @@ class CategotyController {
       }
     } catch (error) {
       return res.status(500).json({
-        stutus: "Bad request!",
+        stutus: "Internal server!",
         statusCode: 500,
       });
     }
@@ -25,7 +25,7 @@ class CategotyController {
       }
     } catch (error) {
       return res.status(500).json({
-        stutus: "Bad request!",
+        stutus: "Internal server!",
         statusCode: 500,
       });
     }

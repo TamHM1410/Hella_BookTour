@@ -28,8 +28,20 @@ export const paymentMethodRouter=express.Router()
  * @swagger
  * /api/v1/paymentMethods:
  *   get:
- *     summary: Get all payment methods
+ *     summary: Get all payment methods or filter payment methods by type
  *     tags: [Payment Method]
+ *     parameters:
+ *       - name: paymentType
+ *         in: query
+ *         description: Type of payment method (e.g., Vnpay, Paypal)
+ *         schema:
+ *           type: string
+ *       - name: page
+ *         in: query
+ *         description: Page number for pagination
+ *         schema:
+ *           type: integer
+ *           default: 1
  *     responses:
  *       '200':
  *         description: Successful response
@@ -41,7 +53,12 @@ export const paymentMethodRouter=express.Router()
  *                 $ref: '#/components/schemas/PaymentMethod'
  *       '500':
  *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Internal Server Error
  */
+
 paymentMethodRouter.get('/paymentMethods',paymentMethodController.getAll)
 
 /**
@@ -69,30 +86,7 @@ paymentMethodRouter.get('/paymentMethods',paymentMethodController.getAll)
  */
 paymentMethodRouter.get('/paymentMethods/:id',paymentMethodController.getById)
 
-/**
- * @swagger
- * /api/v1/paymentMethods/paymentType:
- *   get:
- *     summary: Get a specific payment method by type
- *     tags: [Payment Method]
- *     parameters:
- *       - in: path
- *         name: paymentType
- *         required: true
- *         description: Type of the payment method
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/PaymentMethod'
- *       '500':
- *         description: Internal Server Error
- */
-paymentMethodRouter.get('/paymentMethods/paymentType',paymentMethodController.getByPaymentType)
+
 
 /**
  * @swagger

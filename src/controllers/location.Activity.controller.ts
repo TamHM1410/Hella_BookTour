@@ -3,6 +3,13 @@ import { Request, Response } from "express";
 class LocationActivityController {
   getAllLocationActivity = async (req: Request, res: Response) => {
     try {
+     const  activityName =req.query.activityName as string
+     if(activityName){
+      const  result = await location_activity_service.getLoctionActivityByName(
+        activityName
+      );
+      return result ? res.status(result.statusCode).json(result) : res.status(500).json('internal')
+     }
       const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 10;
       const result = await location_activity_service.getAll(page, pageSize);
@@ -14,37 +21,39 @@ class LocationActivityController {
       });
     }
   };
-  getActivityByName = async (req: Request, res: Response) => {
-    try {
-      const nameOfActivity: string = req.body.activityName;
-      const result = await location_activity_service.getLoctionActivityByName(
-        nameOfActivity
-      );
-      return res.status(203).json(result);
-    } catch (error) {
-      console.log(error);
-      return res.status(500).json({
-        Message: "Bad request",
-      });
-    }
-  };
-  // getActivityById =async (req: Request, res: Response)=>{
-  //     try{
+  // getActivityByName = async (req: Request, res: Response) => {
+  //   try {
+  //     const nameOfActivity: string = req.body.activityName;
+  //     const result = await location_activity_service.getLoctionActivityByName(
+  //       nameOfActivity
+  //     );
+  //     return res.status(203).json(result);
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(500).json({
+  //       Message: "Bad request",
+  //     });
+  //   }
+  // };
+  getActivityById =async (req: Request, res: Response)=>{
+      try{
 
-  //     const  activity_id:number=req.body.id
-  //     const result =await location_activity_service.getActivityById(activity_id)
-  //     if(result){
-  //         return res.status(200).json(result)
-  //     }
+      const  activity_id:number=req.body.id
+      const result =await location_activity_service.getActivityById(activity_id)
+      if(result){
+          return res.status(200).json(result)
+      }else {
+           return res.status(404).json('not found')
+      }
+       
+       }catch(error){
 
-  //      }catch(error){
+          return res.status(500).json({
+              Message: 'Bad request'
+          })
 
-  //         return res.status(500).json({
-  //             Message: 'Bad request'
-  //         })
-
-  //     }
-  // }
+      }
+  }
   updateActivityById = async (req: Request, res: Response) => {
     try {
       const activityData = req.body as {
@@ -69,6 +78,16 @@ class LocationActivityController {
       });
     }
   };
+  getByLoctionId =async (req:Request,res:Response)=>{
+    try{
+      const locationId=+req.params.id
+      const rs =await location_activity_service.getByLocationId(locationId)
+      return rs ? res.status(rs.statusCode).json(rs) : res.status(500).json('ERROR')
+
+    }catch(error){
+      console.log(error)
+    }
+  }
   delete = async (req: Request, res: Response) => {
     try {
       const paramId = req.params.id;

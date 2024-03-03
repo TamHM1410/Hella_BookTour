@@ -55,22 +55,18 @@ class LocationInTourController {
   };
   createNew = async (req: Request, res: Response) => {
     try {
-      const currentData = req.body as {
-        locationId: number;
-        tourId: number;
-        duration: string;
-        status: boolean;
-        description: string;
-        startCity: string;
-        endCity: string;
-      };
+      const tourId =+req.params.tourId 
+      const locationId =+req.params.locationId
+      console.log(tourId,locationId)
+      const currentData = req.body 
       const result = await locationInTourService.createNewLocationInTour(
-        currentData
+        currentData,locationId,tourId
       );
       if (result) {
         return res.status(result.statusCode).json(result);
       }
     } catch (error) {
+      
       return res.status(500).json({
         status: "Internal Server",
         statusCode: 500,
@@ -92,5 +88,21 @@ class LocationInTourController {
       });
     }
   };
+  getLocationInTour =async (req:Request,res:Response)=>{
+    try{
+      const tourId =+req.params.tourId as number
+      const rs = await locationInTourService.getLocationInTour(tourId)
+      return rs ? res.status(rs.statusCode).json(rs) : res.status(500).json({status:'internal'})
+     
+      
+    }catch(error){
+      return res.status(500).json({
+        status: "Internal Server",
+        statusCode: 500,
+        e:error
+      });
+      
+    }
+  }
 }
 export const locationInTourController = new LocationInTourController();

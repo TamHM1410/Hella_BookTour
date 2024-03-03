@@ -46,7 +46,7 @@ export const locationInTourRouter=express.Router()
 
 /**
  * @swagger
- * /api/v1/locationInTours:
+ * /api/v1/tours/locations:
  *   get:
  *     summary: Get all locations in tours
  *     tags: [Location In Tour]
@@ -64,11 +64,11 @@ export const locationInTourRouter=express.Router()
  *             example:
  *               error: Internal Server Error
  */
-locationInTourRouter.get('/locationInTours',locationInTourController.getAll)
+locationInTourRouter.get('/tours/locations',locationInTourController.getAll)
 
 /**
  * @swagger
- * /api/v1/locationInTours/{id}:
+ * /api/v1/tours/locations/{id}:
  *   get:
  *     summary: Get information about a specific location in tour by ID
  *     tags: [Location In Tour]
@@ -100,59 +100,37 @@ locationInTourRouter.get('/locationInTours',locationInTourController.getAll)
  *             example:
  *               error: Internal Server Error
  */
-locationInTourRouter.get('/locationInTours/:id',locationInTourController.getById)
+locationInTourRouter.get('/tours/locations/:id',locationInTourController.getById)
 
 /**
  * @swagger
- * /api/v1/locationInTours/{id}:
- *   delete:
- *     summary: Delete location in tour by ID
+ * /api/v1/tours/{tourId}/locations/{locationId}:
+ *   post:
+ *     summary: Create a new location in a tour
  *     tags: [Location In Tour]
  *     parameters:
- *       - name: id
+ *       - name: tourId
  *         in: path
  *         required: true
- *         description: ID of the location in tour to delete
+ *         description: ID of the tour where the location will be added
  *         schema:
  *           type: integer
- *     responses:
- *       '204':
- *         description: Deletion successful
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: Deletion successful message
- *       '500':
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             example:
- *               error: Internal Server Error
- */
-locationInTourRouter.delete('/locationInTours/:id',locationInTourController.deleteById)
-
-/**
- * @swagger
- * /api/v1/locationInTours:
- *   post:
- *     summary: Create a new location in tour
- *     tags: [Location In Tour]
+ *           format: int64
+ *       - name: locationId
+ *         in: path
+ *         required: true
+ *         description: ID of the new location
+ *         schema:
+ *           type: integer
+ *           format: int64
  *     requestBody:
- *       description: Location in tour data to be created
+ *       description: Location data to be created within the tour
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               locationId:
- *                 type: integer
- *               tourId:
- *                 type: integer
  *               duration:
  *                 type: string
  *               status:
@@ -177,11 +155,12 @@ locationInTourRouter.delete('/locationInTours/:id',locationInTourController.dele
  *             example:
  *               error: Internal Server Error
  */
-locationInTourRouter.post('/locationInTours',locationInTourController.createNew)
+
+    locationInTourRouter.post('/tours/:tourId/locations/:locationId',locationInTourController.createNew)
 
 /**
  * @swagger
- * /api/v1/locationInTours/{id}:
+ * /api/v1/tours/locations/{id}:
  *   patch:
  *     summary: Update location in tour by ID
  *     tags: [Location In Tour]
@@ -228,6 +207,81 @@ locationInTourRouter.post('/locationInTours',locationInTourController.createNew)
  *             example:
  *               error: Internal Server Error
  */
-locationInTourRouter.patch('/locationInTours/:id',locationInTourController.updateById)
+locationInTourRouter.patch('/tours/locations/:id',locationInTourController.updateById)
+
+/**
+ * @swagger
+ * /api/v1/tours/{tourId}/locations:
+ *   get:
+ *     summary: Get all locations in a tour
+ *     tags: [Location In Tour]
+ *     parameters:
+ *       - name: tourId
+ *         in: path
+ *         required: true
+ *         description: ID of the tour
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 tourId:
+ *                   type: string
+ *                   description: ID of the tour
+ *                 locations:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       locationId:
+ *                         type: string
+ *                         description: ID of the location
+ *                       locationName:
+ *                         type: string
+ *                         description: Name of the location
+ *                       locationAddress:
+ *                         type: string
+ *                         description: Address of the location
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Internal Server Error
+ */
+locationInTourRouter.get('/tours/:tourId/locations',locationInTourController.getLocationInTour)
 
 
+/**
+ * @swagger
+ * /api/v1/tours/locations/{id}:
+ *   delete:
+ *     summary: Delete a location from a tour
+ *     tags: [Location In Tour]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the location in the tour to delete
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '204':
+ *         description: Location in tour successfully deleted
+ *       '404':
+ *         description: Location in tour not found
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Internal Server Error
+ */
+
+locationInTourRouter.delete('/tours/locations/:id',locationInTourController.deleteById)

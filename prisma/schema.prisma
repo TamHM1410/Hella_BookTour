@@ -125,9 +125,8 @@ model Trip {
   tourId Int
 
   totalCustomer Int
-  startDate     DateTime
-  endDate       DateTime
-  status        Boolean
+
+  status Boolean
 
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt

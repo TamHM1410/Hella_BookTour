@@ -15,7 +15,7 @@ class VehicleType {
       });
       return {
         status: "Success",
-        statusCode: 201,
+        statusCode: 209,
         data: allData,
         page,
         pageSize,
@@ -31,19 +31,20 @@ class VehicleType {
       await this.prisma.$disconnect;
     }
   };
-  getByName = async (vehicalName: VehicleName) => {
+  getByName = async (vehicleName: VehicleName) => {
     try {
-      const allData = await this.prisma.vehicle.findFirst({
+      const allData = await this.prisma.vehicle.findMany({
         where: {
-          vehicleName: vehicalName,
+          vehicleName: vehicleName,
         },
       });
       return {
         status: "Success",
-        statusCode: 201,
+        statusCode: 200,
         data: allData,
       };
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal server error",
         statusCode: 500,
@@ -61,7 +62,7 @@ class VehicleType {
       });
       return {
         status: "Success",
-        statusCode: 201,
+        statusCode: 200,
         data: allData,
       };
     } catch (error) {
@@ -82,7 +83,7 @@ class VehicleType {
       });
       return {
         status: "Delete Success",
-        statusCode: 201,
+        statusCode: 204,
       };
     } catch (error) {
       return {
@@ -106,6 +107,13 @@ class VehicleType {
           status: currentData.status,
         },
       });
+      if (!data) {
+        return {
+          status: "Not found",
+          statusCode: 404,
+          
+        };
+      }
       if (data) {
         return {
           status: " Success",
@@ -139,10 +147,17 @@ class VehicleType {
           id: currentData.id,
         },
       });
+      if (!data) {
+        return {
+          status: "Success",
+          statusCode: 404,
+          
+        };
+      }
       if (data) {
         return {
           status: " Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }

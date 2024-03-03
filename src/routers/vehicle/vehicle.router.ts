@@ -39,6 +39,12 @@ export const vehicleRouter=express.Router()
  *   get:
  *     summary: Get all vehicles
  *     tags: [Vehicle]
+ *     parameters:
+ *       - name: vehicleName
+ *         in: query
+ *         description: Name of the vehicle
+ *         schema:
+ *           type: string
  *     responses:
  *       '200':
  *         description: Successful response
@@ -50,6 +56,10 @@ export const vehicleRouter=express.Router()
  *                 $ref: '#/components/schemas/Vehicle'
  *       '500':
  *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Internal Server Error
  */
 vehicleRouter.get('/vehicles',vehicleController.getAll)
 
@@ -78,30 +88,7 @@ vehicleRouter.get('/vehicles',vehicleController.getAll)
  */
 vehicleRouter.get('/vehicles/:id',vehicleController.getById)
 
-/**
- * @swagger
- * /api/v1/vehicles/vehicleName:
- *   get:
- *     summary: Get a specific vehicle by name
- *     tags: [Vehicle]
- *     parameters:
- *       - in: path
- *         name: vehicleName
- *         required: true
- *         description: Name of the vehicle
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Vehicle'
- *       '500':
- *         description: Internal Server Error
- */
-vehicleRouter.get('/vehicles/vehicleName',vehicleController.getByName)
+
 
 /**
  * @swagger

@@ -38,8 +38,10 @@ class CityController {
         status: boolean;
       };
       const result = await cityService.editCity(currentData);
-      // const result = await cityService.editCity(currentData);
-      return res.status(200).json(result);
+      if(result){
+        return res.status(result.statusCode).json(result)
+      }
+      
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });

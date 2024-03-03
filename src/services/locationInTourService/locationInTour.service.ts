@@ -17,7 +17,7 @@ class LocationInTourService {
       if (result) {
         return {
           status: "Success!ok",
-          statusCode: 201,
+          statusCode: 200,
           data: result,
           page,
           pageSize,
@@ -45,7 +45,7 @@ class LocationInTourService {
       if (data) {
         return {
           status: "Success!ok",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }
@@ -59,20 +59,20 @@ class LocationInTourService {
     }
   };
   createNewLocationInTour = async (currentData: {
-    locationId: number;
-    tourId: number;
+   
     duration: string;
     status: boolean;
     description: string;
     startCity: string;
     endCity: string;
-  }) => {
+  }, locationId: number,
+  tourId: number) => {
     try {
       await this.prisma.$connect;
       const data = await this.prisma.location_In_Tour.create({
         data: {
-          locationId: currentData.locationId,
-          tourId: currentData.tourId,
+          locationId: locationId,
+          tourId: tourId,
           duration: currentData.duration,
           status: currentData.status,
           description: currentData.description,
@@ -88,6 +88,7 @@ class LocationInTourService {
         };
       }
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal server error",
         statusCode: 500,
@@ -106,7 +107,7 @@ class LocationInTourService {
       });
       return {
         status: "Delete success!",
-        statusCode: 201,
+        statusCode: 204,
       };
     } catch (error) {
       return {
@@ -159,5 +160,30 @@ class LocationInTourService {
       await this.prisma.$disconnect;
     }
   };
+  getLocationInTour =async (tourId:number)=>{
+    try{
+      await this.prisma.$connect
+      const locationInTour =await this.prisma.location_In_Tour.findMany({
+        where :{
+          tourId: tourId
+        }
+      })
+      return locationInTour ? {
+        status:'Success',
+        statusCode:200,
+        data:locationInTour
+      }:{
+        status:'Not found!',
+        statusCode:404
+      }
+
+    }catch(error){
+      return {
+        status: "Internal server error",
+        statusCode: 500,
+      };
+
+    }
+  }
 }
 export const locationInTourService = new LocationInTourService();

@@ -14,16 +14,22 @@ class PaymentMethod {
         skip: startIndex,
         take: pageSize,
       });
-      if (data) {
+      console.log(data)
+      if (data &&data.length>0) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
           page,
           pageSize,
           totalPages: Math.ceil(totalItems / pageSize),
           totalItems,
         };
+      }else{
+        return {
+          status:'Not found!',
+          statusCode:404
+        }
       }
     } catch (error) {
       return {
@@ -37,18 +43,20 @@ class PaymentMethod {
   getByPaymentType = async (paymentType: PaymentType) => {
     try {
       await this.prisma.$connect;
-      const data = await this.prisma.payment_Method.findFirst({
+      const data = await this.prisma.payment_Method.findMany({
         where: {
           paymentType: paymentType,
         },
       });
-      if (data) {
-        return {
-          status: "Success",
-          statusCode: 201,
-          data: data,
-        };
+      return data && data.length>0 ? {
+        status: "Success",
+        statusCode: 200,
+        data: data,
+      } :{
+        status:'Not found',
+        statusCode:404
       }
+      
     } catch (error) {
       return {
         status: "Internal Server",
@@ -69,7 +77,7 @@ class PaymentMethod {
       if (data) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }
@@ -92,7 +100,7 @@ class PaymentMethod {
       });
       return {
         status: "Delete success",
-        statusCode: 201,
+        statusCode: 204,
       };
     } catch (error) {
       return {
@@ -150,7 +158,7 @@ class PaymentMethod {
       if (data) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }
