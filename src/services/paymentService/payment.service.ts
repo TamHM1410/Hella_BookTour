@@ -101,9 +101,11 @@ class PaymentService {
       
       
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal Server Error",
         statusCode: 501,
+        EM:error
       };
     } finally {
       await this.prisma.$disconnect;

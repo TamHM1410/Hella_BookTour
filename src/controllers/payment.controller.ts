@@ -3,6 +3,12 @@ import { Request, Response } from "express";
 class Payment {
   getAll = async (req: Request, res: Response) => {
     try {
+      // const paymentName= req.query.paymentName as string
+      // if(paymentName){
+      //   const result =await paymentService.getPaymentByName(paymentName)
+      //   return result ? res.status(result.statusCode).json(result): { status:'NOT FOUND',statusCode:404}
+
+      // }
       const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 10;
       const result = await paymentService.getAll(page, pageSize);
@@ -10,6 +16,7 @@ class Payment {
         return res.status(result.statusCode).json(result);
       }
     } catch (error) {
+    
       return res.status(500).json({
         status: "Internal Server",
         statusCode: 500,
