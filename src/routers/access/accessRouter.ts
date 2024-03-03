@@ -27,7 +27,7 @@ export const accessRouter = express.Router();
  *             required:
  *               - email
  *               - phone
- *               - name
+ *               - fullName
  *               - password
  *               - gender
  *             properties:
@@ -38,7 +38,7 @@ export const accessRouter = express.Router();
  *               phone:
  *                 type: string
  *                 description: The phone number of the user
- *               name:
+ *               fullName:
  *                 type: string
  *                 description: The name of the user
  *               password:

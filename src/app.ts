@@ -2,6 +2,7 @@ import express from "express";
 import compression from "compression";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import 'dotenv/config'
 
 import helmet from "helmet";
 import morgan from "morgan";
@@ -20,7 +21,7 @@ app.use(
   })
 );
 app.use(cookieParser())
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
 initApi(app);

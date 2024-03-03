@@ -1,9 +1,18 @@
 import { vehicleTypeService } from "../services/vehicleService/vehicleType.service";
 import { Request, Response } from "express";
+import { VehicleName } from "@prisma/client";
 class VehicleController {
   getAll = async (req: Request, res: Response) => {
     try {
       // Lấy các tham số truyền vào từ query string
+      const vehicleName =req.query.vehicleName as VehicleName
+      if(vehicleName){
+        const result = await vehicleTypeService.getByName(vehicleName);
+        if (result) {
+          return res.status(result.statusCode).json(result);
+        }
+
+      }
       const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 10;
       const result = await vehicleTypeService.getAll(page, pageSize);
@@ -11,6 +20,7 @@ class VehicleController {
         return res.status(result.statusCode).json(result);
       }
     } catch (error) {
+     
       return res.status(500).json({
         status: "Internal server",
         statusCode: 500,

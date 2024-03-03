@@ -14,7 +14,7 @@ class TripService {
       });
       return {
         status: "Delete success!",
-        statusCode: 201,
+        statusCode: 204,
       };
     } catch (error) {
       return {
@@ -65,8 +65,7 @@ class TripService {
         data: {
           tourId: currentData.tourId,
           totalCustomer: currentData.totalCustomer,
-          startDate: currentData.startDate,
-          endDate: currentData.endDate,
+          
           status: currentData.status,
           tourGuideId: currentData.tourGuideId,
         },
@@ -74,7 +73,7 @@ class TripService {
       if (data) {
         return {
           status: "success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }
@@ -103,8 +102,7 @@ class TripService {
         data: {
           tourId: currentData.tourId,
           totalCustomer: currentData.totalCustomer,
-          startDate: currentData.startDate,
-          endDate: currentData.endDate,
+       
           status: currentData.status,
           tourGuideId: currentData.tourGuideId,
         },
@@ -112,7 +110,7 @@ class TripService {
       if (data) {
         return {
           status: "internal server",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }
@@ -131,10 +129,17 @@ class TripService {
           id: id,
         },
       });
+      if (!data) {
+        return {
+          status: "Not found",
+          statusCode: 404,
+          
+        };
+      }
       if (data) {
         return {
           status: "Success !",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }

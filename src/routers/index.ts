@@ -1,3 +1,4 @@
+
 import { Express } from "express";
 import { accessRouter } from "./access/accessRouter";
 import { cityRouter } from "./City/city.router";
@@ -13,6 +14,7 @@ import { paymentMethodRouter } from "./paymentMethod/paymentMethod.router";
 import { vehicleRouter } from "./vehicle/vehicle.router";
 import { userRouter } from "./userRouter/user.router";
 import { vnPayRouter } from "./vnPay/vnPay.router";
+import { uploadfileRouter } from './uploadFile/uploadfile.router';
 
 /**
  * @openapi
@@ -40,4 +42,5 @@ export const initApi = (app: Express) => {
   app.use("/api/v1",  vehicleRouter);
   app.use("/api/v1",  userRouter);
   app.use("/api/v1",  vnPayRouter);
+  app.use("/api/v1",  uploadfileRouter);
 };

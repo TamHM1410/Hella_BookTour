@@ -34,10 +34,16 @@ export const locationActivityRouter=express.Router()
 
 /**
  * @swagger
- * /api/v1/location_activity:
+ * /api/v1/locations/activities:
  *   get:
- *     summary: Get all Activity
+ *     summary: Get all activities or filter activities by name
  *     tags: [LocationActivities]
+ *     parameters:
+ *       - name: activityName
+ *         in: query
+ *         description: Name of the activity to filter by
+ *         schema:
+ *           type: string
  *     responses:
  *       '200':
  *         description: Successful response
@@ -60,12 +66,12 @@ export const locationActivityRouter=express.Router()
  *             example:
  *               error: Internal Server Error
  */
-locationActivityRouter.get('/location_activity',locationActivityController.getAllLocationActivity)
+locationActivityRouter.get('/locations/activities',locationActivityController.getAllLocationActivity)
 
 /**
  * @swaggerv1
  * paths:
- *   /api/v1/location_activities/{id}:
+ *   /api/v1/locations/activities{id}:
  *     get:
  *       summary: Get a specific location activity by ID
  *       tags: [LocationActivities]
@@ -88,39 +94,15 @@ locationActivityRouter.get('/location_activity',locationActivityController.getAl
  */
 
 
-// locationActivityRouter.get('/location_activity/:id',locationActivityController.getActivityById)
+locationActivityRouter.get('/locations/activities/:id',locationActivityController.getActivityById)
+
 
 
 
 
 /**
  * @swagger
- * paths:
- *   /api/v1/location_activity/getByActivityName:
- *     get:
- *       summary: Get a specific location activity by name
- *       tags: [LocationActivities]
- *       parameters:
- *         - in: path
- *           name: activityName
- *           required: true
- *           description: Name of the location activity
- *           schema:
- *             type: string
- *       responses:
- *         '200':
- *           description: Successful response
- *           content:
- *             application/json:
- *               schema:
- *                 $ref: '#/components/schemas/LocationActivity'
- *         '404':
- *           description: Location activity not found
- */
-locationActivityRouter.get('/location_activity/getByActivityName',locationActivityController.getActivityByName)
-/**
- * @swagger
- * /api/v1/location_activity/update/{id}:
+ * /api/v1/locations/activities/{id}:
  *   patch:
  *     summary: Update information about a specific city
  *     tags: [LocationActivities]
@@ -192,13 +174,13 @@ locationActivityRouter.get('/location_activity/getByActivityName',locationActivi
  *               error: Internal Server Error
  */
 
-locationActivityRouter.patch('/location_activity/update/:id',locationActivityController.updateActivityById)
+locationActivityRouter.patch('/locations/activities/:id',locationActivityController.updateActivityById)
 
 
 /**
  * @swagger
  * paths:
- *   api/v1/location_activity/delete/:id:
+ *   api/v1/locations/activities/:id:
  *     delete:
  *       summary: Delete a location activity by ID
  *       tags: [LocationActivities]
@@ -223,10 +205,10 @@ locationActivityRouter.patch('/location_activity/update/:id',locationActivityCon
  *         '404':
  *           description: Location activity not found
  */
-locationActivityRouter.delete('/location_activity/delete/:id',locationActivityController.delete)
+locationActivityRouter.delete('/locations/activities/:id',locationActivityController.delete)
 /**
  * @swagger
- * /api/v1/location_activity/create:
+ * /api/v1/locations/activities:
  *   post:
  *     summary: Get information about a specific city
  *     tags: [LocationActivities]
@@ -284,4 +266,47 @@ locationActivityRouter.delete('/location_activity/delete/:id',locationActivityCo
  */
 
 
-locationActivityRouter.post('/location_activity/create',locationActivityController.create)
+locationActivityRouter.post('/locations/activities',locationActivityController.create)
+
+
+/**
+ * @swagger
+ * /api/v1/locations/{id}/activities:
+ *   get:
+ *     summary: Get activities by location ID
+ *     tags: [LocationActivities]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the location
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/LocationActivity'
+ *       '404':
+ *         description: Location not found or no activities found for the location
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Location not found or no activities found for the location
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Internal Server Error
+ */
+
+
+locationActivityRouter.get('/locations/:id/activities',locationActivityController.getByLoctionId)
+
+
+

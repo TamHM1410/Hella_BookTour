@@ -37,6 +37,7 @@ class BookingController {
       if (result) {
         return res.status(result.statusCode).json(result);
       }
+
     } catch (error) {
       return {
         status: "Internal Server!",
@@ -44,29 +45,24 @@ class BookingController {
       };
     }
   };
-  createBooking = async (req: Request, res: Response) => {
-    try {
-      const currentData = req.body as {
-        bookingDate: string;
-        fromDate: string;
-        toDate: string;
-        userId: string;
-        totalAmount: number;
-        status: boolean;
-        tripId: number;
-        totalCustomer: number;
-      };
-      const result = await bookingService.createBooking(currentData);
-      if (result) {
-        return res.status(result.statusCode).json(result);
+
+
+  createBooking =async (req:Request,res:Response)=>{
+        try{
+             const currentData=req.body  
+             const  result = await bookingService.createBooking(currentData)
+             if(result){
+                return res.status(result.statusCode).json(result)
+             }
+            
+        }catch(error){
+            console.log(error)
+            return {
+                status:'Internal Server!',
+                statusCode:500
+            }
+        }
       }
-    } catch (error) {
-      return {
-        status: "Internal Server!",
-        statusCode: 500,
-      };
-    }
-  };
   updateBooking = async (req: Request, res: Response) => {
     try {
       const currentData = req.body as {

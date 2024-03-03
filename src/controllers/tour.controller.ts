@@ -1,8 +1,25 @@
 import { tourService } from "../services/tourService/tour.service";
 import { Request, Response } from "express";
+import {  TourType } from "@prisma/client";
 class TourController {
   getAll = async (req: Request, res: Response) => {
     try {
+      const tourName =req.query.tourName as string 
+      const tourType= req.query.tourType as TourType
+
+      if(tourName){
+        const result = await tourService.getByTourName(tourName);
+        if (result) {
+          return res.status(result.statusCode).json(result);
+        }
+      }
+      if(tourType){
+        const result = await tourService.getTourByTourType(tourType);
+        if (result) {
+          return res.status(result.statusCode).json(result);
+        }
+
+      }
       const result = await tourService.getAll();
       if (result) {
         return res.status(result.statusCode).json(result);

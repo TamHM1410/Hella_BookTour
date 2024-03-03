@@ -46,6 +46,17 @@ export const tourRouter=express.Router()
  *   get:
  *     summary: Get all tours
  *     tags: [Tour]
+ *     parameters:
+ *       - name: tourType
+ *         in: query
+ *         description: Type of the tour (e.g., Adventure, Sightseeing)
+ *         schema:
+ *           type: string
+ *       - name: tourName
+ *         in: query
+ *         description: Name of the tour
+ *         schema:
+ *           type: string
  *     responses:
  *       '200':
  *         description: Successful response
@@ -89,85 +100,7 @@ tourRouter.get('/tours',tourController.getAll)
  */
 tourRouter.get('/tours/:id',tourController.getById)
 
-/**
- * @swagger
- * /api/v1/tours/tourName:
- *   get:
- *     summary: Get a specific tour by name
- *     tags: [Tour]
- *     parameters:
- *       - in: path
- *         name: tourName
- *         required: true
- *         description: Name of the tour
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Tour'
- *       '404':
- *         description: Tour not found
- */
-tourRouter.get('/tours/tourName',tourController.getByName)
 
-/**
- * @swagger
- * /api/v1/tours/tourType:
- *   get:
- *     summary: Get tours by tour type
- *     tags: [Tour]
- *     parameters:
- *       - in: path
- *         name: tourType
- *         required: true
- *         description: Type of the tour
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Tour'
- *       '404':
- *         description: Tours not found
- */
-tourRouter.get('/tours/tourType',tourController.getByTourType)
-
-/**
- * @swagger
- * /api/v1/tours:
- *   post:
- *     summary: Create a new tour
- *     tags: [Tour]
- *     requestBody:
- *       description: Tour data to create
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Tour'
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Tour'
- *       '500':
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             example:
- *               error: Internal Server Error
- */
 tourRouter.post('/tours',tourController.createNewTour)
 
 /**
