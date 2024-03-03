@@ -39,10 +39,16 @@ export const cityRouter=express.Router()
  */
 /**
  * @swagger
- * api/v1/city:
+ * /api/v1/city:
  *   get:
  *     summary: Get all cities
  *     tags: [City]
+ *     parameters:
+ *       - in: query
+ *         name: cityName
+ *         schema:
+ *           type: string
+ *         description: The name of the city to filter by.
  *     responses:
  *       '200':
  *         description: Successful response
@@ -65,6 +71,7 @@ export const cityRouter=express.Router()
  *             example:
  *               error: Internal Server Error
  */
+
 
 cityRouter.get('/cities',cityController.getAllCity)
 /**

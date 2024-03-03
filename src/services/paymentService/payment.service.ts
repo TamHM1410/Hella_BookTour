@@ -86,17 +86,20 @@ class PaymentService {
         skip: startIndex,
         take: pageSize,
       });
-      if (data) {
-        return {
-          status: "Success",
-          statusCode: 201,
-          data: data,
-          page,
-          pageSize,
-          totalPages: Math.ceil(totalItems / pageSize),
-          totalItems,
-        };
+      return data &&data.length> 0 ? {
+        status: "Success",
+        statusCode: 201,
+        data: data,
+        page,
+        pageSize,
+        totalPages: Math.ceil(totalItems / pageSize),
+        totalItems,
+      } :{
+        status:'Not Exist',
+        statusCode:404
       }
+      
+      
     } catch (error) {
       return {
         status: "Internal Server Error",

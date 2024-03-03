@@ -36,7 +36,7 @@ export const categotyOfPoiRouter=express.Router()
 
 /**
  * @swagger
- * /api/v1/pois:
+ * /api/v1/pois/categories:
  *   get:
  *     summary: Get all categories of POI (Points of Interest)
  *     tags: [Categoty Of Poi]
@@ -54,11 +54,11 @@ export const categotyOfPoiRouter=express.Router()
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.get('/pois',categotyController.getAll)
+categotyOfPoiRouter.get('/pois/categories',categotyController.getAll)
 
 /**
  * @swagger
- * /api/v1/poi/{id}:
+ * /api/v1/poi/categories/{id}:
  *   get:
  *     summary: Get a category by ID
  *     tags: [Categoty Of Poi]
@@ -83,40 +83,12 @@ categotyOfPoiRouter.get('/pois',categotyController.getAll)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.get('/pois/:id',categotyController.getById)
+categotyOfPoiRouter.get('/pois/categories/:id',categotyController.getById)
+
 
 /**
  * @swagger
- * /api/v1/poi/{name}:
- *   get:
- *     summary: Get a category by name
- *     tags: [Categoty Of Poi]
- *     parameters:
- *       - name: name
- *         in: query
- *         required: true
- *         description: Name of the category to retrieve
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *       '500':
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             example:
- *               error: Internal Server Error
- */
-categotyOfPoiRouter.get('/pois/:name',categotyController.getByName)
-
-/**
- * @swagger
- * /api/v1/pois/{id}:
+ * /api/v1/pois/categories/{id}:
  *   delete:
  *     summary: Delete a category by ID
  *     tags: [Categoty Of Poi]
@@ -145,11 +117,11 @@ categotyOfPoiRouter.get('/pois/:name',categotyController.getByName)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.delete('/pois/:id',categotyController.deleteById)
+categotyOfPoiRouter.delete('/pois/categories/:id',categotyController.deleteById)
 
 /**
  * @swagger
- * /api/v1/pois:
+ * /api/v1/pois/categories:
  *   post:
  *     summary: Create a new category
  *     tags: [Categoty Of Poi]
@@ -180,7 +152,7 @@ categotyOfPoiRouter.post('/pois',categotyController.create)
 
 /**
  * @swagger
- * /api/v1/pois/{id}:
+ * /api/v1/pois/categories/{id}:
  *   patch:
  *     summary: Update a category by ID
  *     tags: [Categoty Of Poi]
@@ -214,4 +186,4 @@ categotyOfPoiRouter.post('/pois',categotyController.create)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.patch('/pois/:id',categotyController.updateById)
+categotyOfPoiRouter.patch('/pois/categories/:id',categotyController.updateById)

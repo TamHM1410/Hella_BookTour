@@ -59,20 +59,25 @@ class Categoty_of_poi {
       await this.prisma.$disconnect;
     }
   };
-  getByName = async (name: string) => {
+  getByName = async (categoryName: string) => {
     try {
       await this.prisma.$connect;
       const data = await this.prisma.categoty_Of_POI.findFirst({
         where: {
-          categoryName: name,
+          categoryName: categoryName,
         },
       });
       if (data) {
         return {
           status: "Success",
-          statusCode: 200,
+          statusCode: 201,
           data: data,
         };
+      }else {
+        return {
+          status:'Not found',
+          statusCode:404
+        }
       }
     } catch (error) {
       return {
