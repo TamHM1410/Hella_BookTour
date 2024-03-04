@@ -158,7 +158,7 @@ class TourService {
   getByTourName = async (tourName: string) => {
     try {
       await this.prisma.$connect;
-      const data = await this.prisma.tour.findFirst({
+      const data = await this.prisma.tour.findMany({
         where: {
           tourName: tourName,
         },
@@ -170,7 +170,7 @@ class TourService {
           
         };
       }
-      if (data) {
+      if (data &&data.length >0) {
         return {
           status: "Success",
           statusCode: 200,

@@ -3,6 +3,13 @@ import { Request, Response } from "express";
 class CategotyController {
   getAll = async (req: Request, res: Response) => {
     try {
+      const categoryName =req.query.categoryName as string
+      if(categoryName){
+        const result = await categoty.getByName(categoryName);
+      if (result) {
+        return res.status(result.statusCode).json(result);
+      }
+      }
       const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 10;
       const result = await categoty.getAll(page, pageSize);

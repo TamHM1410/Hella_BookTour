@@ -15,7 +15,7 @@ class VehicleType {
       });
       return {
         status: "Success",
-        statusCode: 209,
+        statusCode: 201,
         data: allData,
         page,
         pageSize,
