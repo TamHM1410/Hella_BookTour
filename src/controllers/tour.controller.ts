@@ -49,7 +49,7 @@ class TourController {
   };
   getById = async (req: Request, res: Response) => {
     try {
-      const id = req.body.id;
+      const id = +req.params.id;
       const result = await tourService.getTourById(id);
       if (result) {
         return res.status(result.statusCode).json(result);
