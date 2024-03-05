@@ -33,6 +33,7 @@ class TourService {
         };
       }
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal Server Error",
         statusCode: 501,
@@ -59,6 +60,7 @@ class TourService {
       return {
         status: "Internal Server Error",
         statusCode: 501,
+        
       };
     } finally {
       await this.prisma.$disconnect;
