@@ -1,13 +1,13 @@
-import express from 'express'
-import { tourController } from '../../controllers/tour.controller'
+import express from 'express';
+import { tourController } from '../../controllers/tour.controller';
 
-export const tourRouter=express.Router()
+export const tourRouter = express.Router();
 
 /**
  * @swagger
  * tags:
- *   name: Tour
- *   description: Tours API
+ *   name: Tours
+ *   description: API for managing tours
  */
 
 /**
@@ -45,18 +45,7 @@ export const tourRouter=express.Router()
  * /api/v1/tours:
  *   get:
  *     summary: Get all tours
- *     tags: [Tour]
- *     parameters:
- *       - name: tourType
- *         in: query
- *         description: Type of the tour (e.g., Adventure, Sightseeing)
- *         schema:
- *           type: string
- *       - name: tourName
- *         in: query
- *         description: Name of the tour
- *         schema:
- *           type: string
+ *     tags: [Tours]
  *     responses:
  *       '200':
  *         description: Successful response
@@ -73,14 +62,14 @@ export const tourRouter=express.Router()
  *             example:
  *               error: Internal Server Error
  */
-tourRouter.get('/tours',tourController.getAll)
+tourRouter.get('/', tourController.getAll);
 
 /**
  * @swagger
  * /api/v1/tours/{id}:
  *   get:
  *     summary: Get a specific tour by ID
- *     tags: [Tour]
+ *     tags: [Tours]
  *     parameters:
  *       - in: path
  *         name: id
@@ -98,17 +87,36 @@ tourRouter.get('/tours',tourController.getAll)
  *       '404':
  *         description: Tour not found
  */
-tourRouter.get('/tours/:id',tourController.getById)
+tourRouter.get('/:id', tourController.getById);
 
-
-tourRouter.post('/tours',tourController.createNewTour)
+/**
+ * @swagger
+ * /api/v1/tours:
+ *   post:
+ *     summary: Create a new tour
+ *     tags: [Tours]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Tour'
+ *     responses:
+ *       '200':
+ *         description: Tour created successfully
+ *       '400':
+ *         description: Bad request
+ *       '500':
+ *         description: Internal server error
+ */
+tourRouter.post('/', tourController.createNewTour);
 
 /**
  * @swagger
  * /api/v1/tours/{id}:
  *   delete:
  *     summary: Delete a tour by ID
- *     tags: [Tour]
+ *     tags: [Tours]
  *     parameters:
  *       - in: path
  *         name: id
@@ -132,14 +140,14 @@ tourRouter.post('/tours',tourController.createNewTour)
  *       '500':
  *         description: Internal Server Error
  */
-tourRouter.delete('/tours/:id',tourController.deleteById)
+tourRouter.delete('/:id', tourController.deleteById);
 
 /**
  * @swagger
  * /api/v1/tours/{id}:
  *   patch:
  *     summary: Update information about a specific tour
- *     tags: [Tour]
+ *     tags: [Tours]
  *     parameters:
  *       - name: id
  *         in: path
@@ -147,7 +155,6 @@ tourRouter.delete('/tours/:id',tourController.deleteById)
  *         description: ID of the tour to update
  *         schema:
  *           type: integer
- *           format: int64
  *     requestBody:
  *       description: Updated tour data
  *       required: true
@@ -175,4 +182,5 @@ tourRouter.delete('/tours/:id',tourController.deleteById)
  *             example:
  *               error: Internal Server Error
  */
-tourRouter.patch('/tours/:id',tourController.updateTour)
+tourRouter.patch('/:id', tourController.updateTour);
+
