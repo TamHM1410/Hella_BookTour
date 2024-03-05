@@ -62,7 +62,7 @@ export const tourRouter = express.Router();
  *             example:
  *               error: Internal Server Error
  */
-tourRouter.get('/', tourController.getAll);
+tourRouter.get('/tours', tourController.getAll);
 
 /**
  * @swagger
@@ -87,7 +87,7 @@ tourRouter.get('/', tourController.getAll);
  *       '404':
  *         description: Tour not found
  */
-tourRouter.get('/:id', tourController.getById);
+tourRouter.get('/tours/:id', tourController.getById);
 
 /**
  * @swagger
@@ -109,7 +109,7 @@ tourRouter.get('/:id', tourController.getById);
  *       '500':
  *         description: Internal server error
  */
-tourRouter.post('/', tourController.createNewTour);
+tourRouter.post('/tours', tourController.createNewTour);
 
 /**
  * @swagger
@@ -140,7 +140,7 @@ tourRouter.post('/', tourController.createNewTour);
  *       '500':
  *         description: Internal Server Error
  */
-tourRouter.delete('/:id', tourController.deleteById);
+tourRouter.delete('/tours/:id', tourController.deleteById);
 
 /**
  * @swagger
@@ -182,5 +182,5 @@ tourRouter.delete('/:id', tourController.deleteById);
  *             example:
  *               error: Internal Server Error
  */
-tourRouter.patch('/:id', tourController.updateTour);
+tourRouter.patch('/tours/:id', tourController.updateTour);
 
