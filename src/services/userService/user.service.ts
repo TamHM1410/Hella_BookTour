@@ -46,10 +46,11 @@ class UserService {
     )=>{
         try{
            await instanceMongo()
-           await user.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(id)},{deleteAt:new Date()})
+          const data= await user.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(id)},{deleteAt:new Date(),status:false},{new:true})
             return  {
                 status:'Success',
                 statusCode:201,
+                data:data
                 
             }
 
@@ -84,22 +85,22 @@ class UserService {
     }
     updatePassword=async (currentData :{
         fullName:string,
-        id:string,
+     
         phone:string,
         gender:string,
         roleId:number,
         password:string,
 
 
-    })=>{
+    }, id:string)=>{
         try{
             await instanceMongo()
             const hashPassword =await bcrypt.hash(currentData.password,10)
-            const currentUser = await user.findById({_id:new mongoose.Types.ObjectId(currentData.id)})
+            const currentUser = await user.findById({_id:new mongoose.Types.ObjectId(id)})
             if(currentUser && currentUser.password){
                 const compare = await bcrypt.compare(currentData.password,currentUser.password)
                 if(compare===true){
-                    const data = await user.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(currentData.id)},{password:hashPassword})
+                    const data = await user.findByIdAndUpdate({_id:new mongoose.Types.ObjectId(id)},{password:hashPassword},{new:true})
                     return data ? {
                         status:'Success',
                         statusCode:201,

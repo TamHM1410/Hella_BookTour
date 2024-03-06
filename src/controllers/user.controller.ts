@@ -14,6 +14,15 @@ class UserController {
     updateUser = async (req:Request,res:Response) =>{
         try{
             const currentData= req.body
+            const id =req.params.id
+            const  pass =req.query.pass
+           
+            if(pass){
+                const currentData= req.body
+                const result =await userService.updatePassword(currentData,id)
+                return result ? res.status(result.statusCode).json(result) :this.errorMessage
+
+            }
             const result =await userService.updateUser(currentData)
             return result ? res.status(result.statusCode).json(result) : this.errorMessage
 
@@ -24,7 +33,7 @@ class UserController {
     }
     getUserById =async (req:Request,res:Response)=>{
         try{
-            const id     = req.body.id
+            const id     = req.params.id
             const result = await userService.getUserById(id)
             return result ? res.status(result.statusCode).json(result) :this.errorMessage
 
@@ -54,16 +63,7 @@ class UserController {
 
         }
     }
-    changePassword = async (req:Request,res:Response)=>{
-        try{
-            const currentData= req.body
-            const result =await userService.updatePassword(currentData)
-            return result ? res.status(result.statusCode).json(result) :this.errorMessage
 
-        }catch(error){
-            return this.errorMessage
-        }
-    }
 
 }
 export const userController =new  UserController()
