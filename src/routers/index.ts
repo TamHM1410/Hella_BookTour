@@ -15,6 +15,7 @@ import { vehicleRouter } from "./vehicle/vehicle.router";
 import { userRouter } from "./userRouter/user.router";
 import { vnPayRouter } from "./vnPay/vnPay.router";
 import { uploadfileRouter } from './uploadFile/uploadfile.router';
+import { tourguideRouter } from "./tourguide/tourguide.router";
 
 /**
  * @openapi
@@ -43,4 +44,5 @@ export const initApi = (app: Express) => {
   app.use("/api/v1",  userRouter);
   app.use("/api/v1",  vnPayRouter);
   app.use("/api/v1",  uploadfileRouter);
+  app.use("/api/v1",  tourguideRouter);
 };

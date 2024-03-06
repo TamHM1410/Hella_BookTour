@@ -36,7 +36,7 @@ export const categotyOfPoiRouter=express.Router()
 
 /**
  * @swagger
- * /api/v1/pois/categories:
+ * /api/v1/categories:
  *   get:
  *     summary: Get all categories of POI (Points of Interest)
  *     tags: [Categoty Of Poi]
@@ -54,7 +54,7 @@ export const categotyOfPoiRouter=express.Router()
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.get('/pois/categories',categotyController.getAll)
+categotyOfPoiRouter.get('/categories',categotyController.getAll)
 
 /**
  * @swagger
@@ -83,12 +83,12 @@ categotyOfPoiRouter.get('/pois/categories',categotyController.getAll)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.get('/pois/categories/:id',categotyController.getById)
+categotyOfPoiRouter.get('/categories/:id',categotyController.getById)
 
 
 /**
  * @swagger
- * /api/v1/pois/categories/{id}:
+ * /api/v1/categories/{id}:
  *   delete:
  *     summary: Delete a category by ID
  *     tags: [Categoty Of Poi]
@@ -117,11 +117,11 @@ categotyOfPoiRouter.get('/pois/categories/:id',categotyController.getById)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.delete('/pois/categories/:id',categotyController.deleteById)
+categotyOfPoiRouter.delete('/categories/:id',categotyController.deleteById)
 
 /**
  * @swagger
- * /api/v1/pois/categories:
+ * /api/v1/categories:
  *   post:
  *     summary: Create a new category
  *     tags: [Categoty Of Poi]
@@ -152,7 +152,7 @@ categotyOfPoiRouter.post('/pois',categotyController.create)
 
 /**
  * @swagger
- * /api/v1/pois/categories/{id}:
+ * /api/v1/categories/{id}:
  *   patch:
  *     summary: Update a category by ID
  *     tags: [Categoty Of Poi]
@@ -186,4 +186,4 @@ categotyOfPoiRouter.post('/pois',categotyController.create)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.patch('/pois/categories/:id',categotyController.updateById)
+categotyOfPoiRouter.patch('/categories/:id',categotyController.updateById)
