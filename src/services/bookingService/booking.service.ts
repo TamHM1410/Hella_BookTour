@@ -96,7 +96,7 @@ class BookingService {
                 data:{
                     status:status
 
-                }})
+                },})
             return {
                 status:"success",
                 statusCode:201,

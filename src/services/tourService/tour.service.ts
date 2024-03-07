@@ -163,7 +163,7 @@ class TourService {
       await this.prisma.$connect;
       const data = await this.prisma.tour.findMany();
       const rs= data.filter(item=>item.tourName.includes(tourName))
-      if (!data) {
+      if (!data ||!rs) {
         return {
           status: "Not found",
           statusCode: 404,

@@ -5,6 +5,7 @@ import querystring from 'qs'
 import { randomBytes } from 'crypto';
 
 import { bookingService } from "../services/bookingService/booking.service";
+import { PrismaClient } from "@prisma/client";
 
 
 import moment from "moment";
@@ -31,6 +32,10 @@ interface VnpParams {
 }
 
 class VnpayController {
+  private prisma = new PrismaClient();
+  constructor() {
+    this.prisma = new PrismaClient();
+  }
     returnIPN =async (req:Request, res:Response )=>{
         try{
             
@@ -92,6 +97,12 @@ class VnpayController {
                             const userId = parts[1];
                             const status=true
                             const updateBooking =await bookingService.updateStatusById(id,status)
+                            if(updateBooking){
+                              res.status(200).json({ RspCode: "00", Message: "Success" });
+
+                            }
+                          
+
                             const deleteBooking=  await bookingService.deleteBookingByStatusAndCurrentDate(userId)
                             
                         }
@@ -131,6 +142,50 @@ class VnpayController {
                 statusCode:500
             })
         }
+    }
+     test =async (req:Request, res:Response )=>{
+      try{
+        await this.prisma.$connect
+        const data = await this.prisma.trip.findMany({
+          where: {
+            id: 3
+          },
+          include: {
+            tour: {
+              select: {
+                tourName: true,
+                tourType: true,
+                price: true,
+                image: true,
+                vehicleType: {
+                  select: {
+                    vehicleName: true,
+                    capacity: true
+                  }
+                },
+                locationinTour:{
+                  select:{
+                    locationId:true,
+                     location:{
+                      select:{
+                        id:true,
+                        locationAddress:true,
+                        locationName:true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        });
+        
+        return res.status(200).json(data)
+        
+        
+      }catch(error){
+        console.log(error)
+      }
     }
     
     createVnpay =async  (req:Request, res:Response    ) => {
@@ -230,6 +285,7 @@ class VnpayController {
                 statusCode: 500
             });
         }
+        
     }
     
 }

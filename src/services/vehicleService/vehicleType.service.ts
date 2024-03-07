@@ -33,16 +33,17 @@ class VehicleType {
   };
   getByName = async (vehicleName: VehicleName) => {
     try {
-      const allData = await this.prisma.vehicle.findMany({
-        where: {
-          vehicleName: vehicleName,
-        },
-      });
-      return {
+      const allData = await this.prisma.vehicle.findMany();
+      const rs = allData.filter(item=>item.vehicleName.includes(vehicleName))
+      return rs &&rs.length> 0 ?{
         status: "Success",
-        statusCode: 200,
-        data: allData,
-      };
+        statusCode: 201,
+        data: rs,
+      }:{
+        status:'Not found',
+        statusCode:404
+      }
+     
     } catch (error) {
       console.log(error)
       return {

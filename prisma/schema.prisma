@@ -130,8 +130,8 @@ model Tour_Guide {
 }
 
 model Trip {
-  id          Int @id @default(autoincrement())
-  tourGuideId Int
+  id          Int     @id @default(autoincrement())
+  tourGuideId String?
 
   tourId    Int
   tour      Tour    @relation(fields: [tourId], references: [id])

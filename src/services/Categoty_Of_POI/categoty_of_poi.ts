@@ -65,13 +65,7 @@ class Categoty_of_poi {
       const allData =await this.prisma.categoty_Of_POI.findMany()
       const rs = allData.filter((item)=>item.categoryName.includes(categoryName))
       
-     console.log(rs)
-      
-      // const resultData= await this.prisma.categoty_Of_POI.findMany({
-      //   where: {
-      //     categoryName: categoryName,
-      //   },
-      // });
+     
       if (rs) {
         return {
           status: "Success",
