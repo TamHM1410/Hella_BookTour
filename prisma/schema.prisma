@@ -37,7 +37,8 @@ model Location {
   image           String?
   activityId      Location_Activity[]
 
-  locationInTour Location_In_Tour[]
+  locationInTour    Location_In_Tour[]
+  Point_Of_Interest Point_Of_Interest[]
 }
 
 model Location_Activity {
@@ -54,23 +55,26 @@ model Location_Activity {
 }
 
 model Categoty_Of_POI {
-  id           Int       @id @default(autoincrement())
-  categoryName String
-  status       Boolean
-  createAt     DateTime  @default(now())
-  updateAt     DateTime  @updatedAt
-  deleteAt     DateTime?
+  id                Int                 @id @default(autoincrement())
+  categoryName      String
+  status            Boolean
+  createAt          DateTime            @default(now())
+  updateAt          DateTime            @updatedAt
+  deleteAt          DateTime?
+  Point_Of_Interest Point_Of_Interest[]
 }
 
 model Point_Of_Interest {
-  id             Int       @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   POIName        String
   POIDescription String
+  location       Location        @relation(fields: [locationId], references: [id])
+  categoryPOI    Categoty_Of_POI @relation(fields: [categoryPOI_ID], references: [id])
   locationId     Int
   categoryPOI_ID Int
   status         Boolean
-  createAt       DateTime  @default(now())
-  updateAt       DateTime  @updatedAt
+  createAt       DateTime        @default(now())
+  updateAt       DateTime        @updatedAt
   deleteAt       DateTime?
   image          String?
 }

@@ -49,6 +49,7 @@ export const verifyTokenGoogle = async (
       return res.status(401).send("Authenticate fail");
     }
   } catch (error) {
+    console.log(error);
     return res.status(401).send("Authenticate fail");
   }
 };
@@ -90,12 +91,12 @@ export const CheckExistAccount = async (
           const account = new user({
             fullName: name,
             email: email,
-            phone: phone || null,
-            gender: gender || null,
+            phone: phone,
+            gender: gender,
           });
           account
             .save()
-            .then((result) => {
+            .then((result: any) => {
               const token = jwt.sign(
                 {
                   userId: result._id,
@@ -116,8 +117,7 @@ export const CheckExistAccount = async (
                 msg: "User Register Successfully",
               });
             })
-            .catch((error) => {
-              console.log(error);
+            .catch((error:ErrorCallback) => {
               return res.status(500).send({ error });
             });
         }
