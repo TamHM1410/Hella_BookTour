@@ -4,7 +4,7 @@ class BookingController {
   getAll = async (req: Request, res: Response) => {
     try {
       const page = parseInt(req.query.page as string) || 1;
-      const pageSize = parseInt(req.query.pageSize as string) || 10;
+      const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await bookingService.getAll(page, pageSize);
       if (result) {
         return res.status(result.statusCode).json(result);

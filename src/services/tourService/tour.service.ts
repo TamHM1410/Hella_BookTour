@@ -33,7 +33,7 @@ class TourService {
         };
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
       return {
         status: "Internal Server Error",
         statusCode: 501,
@@ -41,7 +41,6 @@ class TourService {
     } finally {
       await this.prisma.$disconnect;
     }
-
   };
   deleteById = async (id: number) => {
     try {
@@ -60,11 +59,9 @@ class TourService {
       return {
         status: "Internal Server Error",
         statusCode: 501,
-        
       };
     } finally {
       await this.prisma.$disconnect;
-
     }
   };
   createNewTour = async (currentData: {
@@ -138,7 +135,6 @@ class TourService {
         return {
           status: "Not found ",
           statusCode: 404,
-          
         };
       }
       if (data) {
@@ -169,10 +165,9 @@ class TourService {
         return {
           status: "Not found",
           statusCode: 404,
-          
         };
       }
-      if (data &&data.length >0) {
+      if (data && data.length > 0) {
         return {
           status: "Success",
           statusCode: 200,
@@ -189,15 +184,19 @@ class TourService {
     }
   };
 
-  getAll = async () => {
+  getAll = async (page: number, pageSize: number) => {
     try {
       await this.prisma.$connect;
-      const data = await this.prisma.tour.findMany();
+      const startIndex = (page - 1) * pageSize;
+      const totalItems = await this.prisma.tour.count();
+      const data = await this.prisma.tour.findMany({
+        skip: startIndex,
+        take: pageSize,
+      });
       if (!data) {
         return {
           status: "Not found",
           statusCode: 404,
-          
         };
       }
       if (data) {
@@ -205,6 +204,10 @@ class TourService {
           status: "Success",
           statusCode: 200,
           data: data,
+          page,
+          pageSize,
+          totalPages: Math.ceil(totalItems / pageSize),
+          totalItems,
         };
       }
     } catch (error) {

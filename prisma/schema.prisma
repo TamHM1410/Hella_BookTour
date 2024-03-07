@@ -76,6 +76,7 @@ model Point_Of_Interest {
   createAt       DateTime        @default(now())
   updateAt       DateTime        @updatedAt
   deleteAt       DateTime?
+  image          String?
 }
 
 model Vehicle {

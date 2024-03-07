@@ -11,7 +11,7 @@ class LocationActivityController {
       return result ? res.status(result.statusCode).json(result) : res.status(500).json('internal')
      }
       const page = parseInt(req.query.page as string) || 1;
-      const pageSize = parseInt(req.query.pageSize as string) || 10;
+      const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await location_activity_service.getAll(page, pageSize);
       return res.status(202).json(result);
     } catch (error) {

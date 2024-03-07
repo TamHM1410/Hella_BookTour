@@ -17,7 +17,7 @@ class LocationController {
       }
       
       const page = parseInt(req.query.page as string) || 1;
-      const pageSize = parseInt(req.query.pageSize as string) || 10;
+      const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await locationService.getAllLocation(page, pageSize);
       if (result) {
         return res.status(result.statusCode).json(result);
