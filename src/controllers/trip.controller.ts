@@ -55,7 +55,7 @@ class TripController {
         startDate: string;
         endDate: string;
         status: boolean;
-        tourGuideId: number;
+        tourGuideId: string;
       };
       const result = await tripService.createNewTrip(currentData);
       if (result) {
@@ -76,7 +76,7 @@ class TripController {
         startDate: string;
         endDate: string;
         status: boolean;
-        tourGuideId: number;
+        tourGuideId: string;
         id: number;
       };
       const result = await tripService.updateTrip(currentData);

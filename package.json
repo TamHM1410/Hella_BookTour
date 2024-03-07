@@ -8,7 +8,7 @@
     "dev": "nodemon server.ts",
     "start": "npm-run-all --parallel start:prisma start:app",
     "start:prisma": "npx prisma generate",
-    "start:app": "ts-node server.ts"
+    "start:app": "NODE_OPTIONS='--max-old-space-size=8192' ts-node server.ts"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.6",
     "amqplib": "^0.10.3",
+    "arg": "^5.0.2",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.0.1",
     "compression": "^1.7.4",

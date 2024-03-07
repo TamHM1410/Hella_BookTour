@@ -25,4 +25,6 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
 initApi(app);
+const memoryUsage = process.memoryUsage();
+console.log(`Heap Used: ${memoryUsage.heapUsed / 1024 / 1024} MB`);
 ////init router

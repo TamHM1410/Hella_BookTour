@@ -57,7 +57,7 @@ class TripService {
     startDate: string;
     endDate: string;
     status: boolean;
-    tourGuideId: number;
+    tourGuideId: string;
   }) => {
     try {
       await this.prisma.$connect;
@@ -90,7 +90,7 @@ class TripService {
     startDate: string;
     endDate: string;
     status: boolean;
-    tourGuideId: number;
+    tourGuideId: string;
     id: number;
   }) => {
     try {
