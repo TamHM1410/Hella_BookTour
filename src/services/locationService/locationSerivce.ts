@@ -68,15 +68,15 @@ class LocationService {
   getLocationByLocationName = async (LocationName: string) => {
     try {
       await this.prisma.$connect;
-      const data = await this.prisma.location.findFirst({
-        where: {
-          locationName: LocationName,
-        },
-      });
-      return {
+      const data = await this.prisma.location.findMany();
+      const rs =data.filter(item=>item.locationName.includes(LocationName))
+      return rs? {
         status: "Success",
-        statusCode: 200,
-        data: data,
+        statusCode: 201,
+        data: rs,
+      }:{
+        status:'Not found',
+        statusCode:404
       };
     } catch (error) {
       console.log(error);
@@ -168,5 +168,30 @@ class LocationService {
       await this.prisma.$disconnect;
     }
   };
+  getLocationById =async (id:number)=>{
+    try{
+      await this.prisma.$connect
+      const data =await this.prisma.location.findFirst({
+        where:{
+          id:id
+        }
+      })
+      return data ? {
+        status:'Success',
+        statusCode:201,
+        data:data
+      }:{
+        status:'Not found',
+        statusCode:404
+      }
+
+    }catch(error){
+      return {
+        status: "Internal Server Error",
+        statusCode: 501,
+
+      }
+    }
+  }
 }
 export const locationService = new LocationService();

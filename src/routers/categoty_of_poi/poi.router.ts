@@ -148,7 +148,7 @@ categotyOfPoiRouter.delete('/categories/:id',categotyController.deleteById)
  *             example:
  *               error: Internal Server Error
  */
-categotyOfPoiRouter.post('/pois',categotyController.create)
+categotyOfPoiRouter.post('/categories',categotyController.create)
 
 /**
  * @swagger

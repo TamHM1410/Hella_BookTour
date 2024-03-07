@@ -198,3 +198,39 @@ locationRouter.patch('/locations/:id',locationController.updateLocation)
 locationRouter.delete('/locations/:id',locationController.deleteLocation)
 
 
+/**
+ * @swagger
+ * /api/v1/locations/{id}:
+ *   get:
+ *     summary: Get location by ID
+ *     tags: [Location]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the location to retrieve
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       '200':
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Location'
+ *       '404':
+ *         description: Location not found
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Location not found
+ *       '500':
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: Internal Server Error
+ */
+locationRouter.get('/locations/:id',locationController.getLocationbyId)
+
+

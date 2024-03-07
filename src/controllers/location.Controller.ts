@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 class LocationController {
   getAll = async (req: Request, res: Response) => {
     try {
-      console.log(req.query,'qury')
+      
       if(req.query.locationName){
         const LocationName =req.query.locationName as string
         const rs =await locationService.getLocationByLocationName(LocationName)
@@ -118,5 +118,21 @@ class LocationController {
       });
     }
   };
+  getLocationbyId =async (req:Request,res:Response)=>{
+    try{
+      const id =+req.params.id
+      const result =await locationService.getLocationById(id)
+      if (result) {
+        return res.status(result.statusCode).json(result);
+      }
+
+    }catch(error){
+      return res.status(500).json({
+        status: "Internal server error!",
+        statusCode: 500,
+      });
+
+    }
+  }
 }
 export const locationController = new LocationController();

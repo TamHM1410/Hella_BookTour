@@ -32,15 +32,12 @@ class CityService {
   };
   getCityByName =async(cityName:string)=>{
     try{
-      const data = await this.prisma.city.findMany({
-        where:{
-          cityName:cityName
-        }
-      })
+      const data = await this.prisma.city.findMany()
+      const rs =await data.filter(item=>item.cityName.includes(cityName))
       return data ? { 
         status :'Success',
         statusCode:201,
-        data:data
+        data:rs
       
       }:{
         status:'Not found',

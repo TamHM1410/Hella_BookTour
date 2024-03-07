@@ -18,7 +18,7 @@ class Categoty_of_poi {
       if (data) {
         return {
           status: "Success",
-          statusCode: 200,
+          statusCode: 201,
           data: data,
           page,
           pageSize,
@@ -62,16 +62,21 @@ class Categoty_of_poi {
   getByName = async (categoryName: string) => {
     try {
       await this.prisma.$connect;
-      const data = await this.prisma.categoty_Of_POI.findFirst({
-        where: {
-          categoryName: categoryName,
-        },
-      });
-      if (data) {
+      const allData =await this.prisma.categoty_Of_POI.findMany()
+      const rs = allData.filter((item)=>item.categoryName.includes(categoryName))
+      
+     console.log(rs)
+      
+      // const resultData= await this.prisma.categoty_Of_POI.findMany({
+      //   where: {
+      //     categoryName: categoryName,
+      //   },
+      // });
+      if (rs) {
         return {
           status: "Success",
           statusCode: 201,
-          data: data,
+          data: rs,
         };
       }else {
         return {
@@ -118,7 +123,7 @@ class Categoty_of_poi {
       const data = await this.prisma.categoty_Of_POI.create({
         data: {
           categoryName: currentData.categoryName,
-          status: currentData.status,
+          status: currentData.status ||false,
         },
       });
       if (data) {
