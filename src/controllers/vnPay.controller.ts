@@ -165,7 +165,9 @@ class VnpayController {
                 },
                 locationinTour:{
                   select:{
-                    locationId:true,
+                    duration:true,
+                    description:true,
+                   
                      location:{
                       select:{
                         id:true,
