@@ -164,24 +164,26 @@ class VnpayController {
                   }
                 },
                 locationinTour:{
-                  select:{
-                    duration:true,
-                    description:true,
-                   
-                     location:{
-                      select:{
-                        id:true,
-                        locationAddress:true,
-                        locationName:true
-                      }
-                    }
+                  include:{
+                    location:true
                   }
                 }
               }
             }
           }
         });
-        
+        // select:{
+        //   duration:true,
+        //   description:true,
+         
+        //    location:{
+        //     select:{
+        //       id:true,
+        //       locationAddress:true,
+        //       locationName:true
+        //     }
+        //   }
+        // }
         return res.status(200).json(data)
         
         
