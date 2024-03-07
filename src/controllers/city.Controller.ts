@@ -50,7 +50,7 @@ class CityController {
     }
   };
   getCurrentCity = async (req: Request, res: Response) => {
-    const cityId = req.body.id;
+    const cityId =+ req.params.id;
 
     const result = await cityService.getCurrentCity(cityId);
     return res.status(200).json(result);

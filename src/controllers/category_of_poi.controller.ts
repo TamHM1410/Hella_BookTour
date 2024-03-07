@@ -3,10 +3,12 @@ import { Request, Response } from "express";
 class CategotyController {
   getAll = async (req: Request, res: Response) => {
     try {
+      
       const categoryName =req.query.categoryName as string
       if(categoryName){
+        console.log
         const result = await categoty.getByName(categoryName);
-      if (result) {
+         if (result) {
         return res.status(result.statusCode).json(result);
       }
       }
