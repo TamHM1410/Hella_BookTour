@@ -26,6 +26,9 @@ const options = {
     "./src/routers/vehicle/*.ts",
     "./src/routers/paymentMethod/*.ts",
     "./src/routers/pointOfInterest/*.ts",
+    "./src/routers/userRouter/*.ts",
+    "./src/routers/tourguide/*.ts",
+    "./src/routers/uploadFile/*.ts",
   ],
 };
 

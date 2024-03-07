@@ -37,7 +37,7 @@ export const locationActivityRouter=express.Router()
  * /api/v1/locations/activities:
  *   get:
  *     summary: Get all activities or filter activities by name
- *     tags: [LocationActivities]
+ *     tags: [Location Activities]
  *     parameters:
  *       - name: activityName
  *         in: query
@@ -74,7 +74,7 @@ locationActivityRouter.get('/locations/activities',locationActivityController.ge
  *   /api/v1/locations/activities{id}:
  *     get:
  *       summary: Get a specific location activity by ID
- *       tags: [LocationActivities]
+ *       tags: [Location Activities]
  *       parameters:
  *         - in: path
  *           name: id
@@ -105,7 +105,7 @@ locationActivityRouter.get('/locations/activities/:id',locationActivityControlle
  * /api/v1/locations/activities/{id}:
  *   patch:
  *     summary: Update information about a specific city
- *     tags: [LocationActivities]
+ *     tags: [Location Activities]
  *     parameters:
  *       - name: id
  *         in: path
@@ -183,7 +183,7 @@ locationActivityRouter.patch('/locations/activities/:id',locationActivityControl
  *   api/v1/locations/activities/:id:
  *     delete:
  *       summary: Delete a location activity by ID
- *       tags: [LocationActivities]
+ *       tags: [Location Activities]
  *       parameters:
  *         - in: path
  *           name: id
@@ -211,7 +211,7 @@ locationActivityRouter.delete('/locations/activities/:id',locationActivityContro
  * /api/v1/locations/activities:
  *   post:
  *     summary: Get information about a specific city
- *     tags: [LocationActivities]
+ *     tags: [Location Activities]
  *     parameters:
  *       - name: id
  *         in: path
@@ -274,7 +274,7 @@ locationActivityRouter.post('/locations/activities',locationActivityController.c
  * /api/v1/locations/{id}/activities:
  *   get:
  *     summary: Get activities by location ID
- *     tags: [LocationActivities]
+ *     tags: [Location Activities]
  *     parameters:
  *       - name: id
  *         in: path

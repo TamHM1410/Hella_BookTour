@@ -14,7 +14,7 @@ export const pointOfInterestRouter = express.Router();
  * @swagger
  * components:
  *   schemas:
- *     PointOfInterest:
+ *     Point Of Interest:
  *       type: object
  *       properties:
  *         POIName:
