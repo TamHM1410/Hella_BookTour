@@ -102,7 +102,7 @@ bookingRouter.get("/bookings/:id", bookingController.getById);
 
 /**
  * @swagger
- * /api/v1/bookings/create:
+ * /api/v1/bookings:
  *   post:
  *     summary: Create a new booking
  *     tags: [Booking]
@@ -184,7 +184,7 @@ bookingRouter.delete("/bookings/:id", bookingController.deleteById);
 
 /**
  * @swagger
- * /api/v1/bookings/update:
+ * /api/v1/bookings:
  *   patch:
  *     summary: Update a booking
  *     tags: [Booking]

@@ -55,6 +55,12 @@ export const  paymentRouter=express.Router()
  *   get:
  *     summary: Get all payments
  *     tags: [Payment]
+ *     parameters:
+ *       - in: query
+ *         name: paymentName
+ *         schema:
+ *           type: string
+ *         description: The name of the payment method to filter by.
  *     responses:
  *       '200':
  *         description: Successful response
@@ -108,40 +114,7 @@ paymentRouter.get('/payments',paymentController.getAll)
  */
 paymentRouter.get('/payments/:id',paymentController.getPaymentById)
 
-/**
- * @swagger
- * /api/v1/payments/name:
- *   get:
- *     summary: Get a specific payment by name
- *     tags: [Payment]
- *     parameters:
- *       - in: query
- *         name: paymentName
- *         required: true
- *         description: Name of the payment
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Payment'
- *       '404':
- *         description: Payment not found
- *         content:
- *           application/json:
- *             example:
- *               error: Payment not found
- *       '500':
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             example:
- *               error: Internal Server Error
- */
-paymentRouter.get('/payments/name',paymentController.getPaymentByName)
+
 
 /**
  * @swagger

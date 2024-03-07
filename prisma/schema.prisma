@@ -13,31 +13,38 @@ datasource db {
 }
 
 model City {
-  id       Int       @id @default(autoincrement())
-  cityName String    @unique
+  id       Int        @id @default(autoincrement())
+  cityName String     @unique
   country  String
   status   Boolean
-  createAt DateTime  @default(now())
-  updateAt DateTime  @updatedAt
+  createAt DateTime   @default(now())
+  updateAt DateTime   @updatedAt
   deleteAt DateTime?
+  location Location[]
 }
 
 model Location {
-  id     Int @id @default(autoincrement())
+  id     Int  @id @default(autoincrement())
   cityId Int
+  city   City @relation(fields: [cityId], references: [id])
 
   locationName    String
   locationAddress String
   status          Boolean
-  createAt        DateTime  @default(now())
-  updateAt        DateTime  @updatedAt
+  createAt        DateTime            @default(now())
+  updateAt        DateTime            @updatedAt
   deleteAt        DateTime?
   image           String?
+  activityId      Location_Activity[]
+
+  locationInTour    Location_In_Tour[]
+  Point_Of_Interest Point_Of_Interest[]
 }
 
 model Location_Activity {
   id                  Int       @id @default(autoincrement())
   locationId          Int
+  location            Location  @relation(fields: [locationId], references: [id])
   activityName        String
   activityDuration    String
   activityDescription String
@@ -48,25 +55,27 @@ model Location_Activity {
 }
 
 model Categoty_Of_POI {
-  id           Int       @id @default(autoincrement())
-  categoryName String
-  status       Boolean
-  createAt     DateTime  @default(now())
-  updateAt     DateTime  @updatedAt
-  deleteAt     DateTime?
+  id                Int                 @id @default(autoincrement())
+  categoryName      String
+  status            Boolean
+  createAt          DateTime            @default(now())
+  updateAt          DateTime            @updatedAt
+  deleteAt          DateTime?
+  Point_Of_Interest Point_Of_Interest[]
 }
 
 model Point_Of_Interest {
-  id             Int       @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   POIName        String
   POIDescription String
+  location       Location        @relation(fields: [locationId], references: [id])
+  categoryPOI    Categoty_Of_POI @relation(fields: [categoryPOI_ID], references: [id])
   locationId     Int
   categoryPOI_ID Int
   status         Boolean
-  createAt       DateTime  @default(now())
-  updateAt       DateTime  @updatedAt
+  createAt       DateTime        @default(now())
+  updateAt       DateTime        @updatedAt
   deleteAt       DateTime?
-  image          String?
 }
 
 model Vehicle {
@@ -77,27 +86,32 @@ model Vehicle {
   createAt    DateTime    @default(now())
   updateAt    DateTime    @updatedAt
   deleteAt    DateTime?
+  tour        Tour[]
 }
 
 model Tour {
-  id            Int       @id @default(autoincrement())
-  tourName      String
-  status        Boolean
-  price         Float
-  vehicleTypeId Int
-  tourType      TourType
-  createAt      DateTime  @default(now())
-  updateAt      DateTime  @updatedAt
-  deleteAt      DateTime?
-  image         String?
+  id             Int                @id @default(autoincrement())
+  tourName       String
+  status         Boolean
+  price          Float
+  vehicleTypeId  Int
+  tourType       TourType
+  createAt       DateTime           @default(now())
+  updateAt       DateTime           @updatedAt
+  deleteAt       DateTime?
+  image          String?
+  trip           Trip[]
+  locationinTour Location_In_Tour[]
+  vehicleType    Vehicle            @relation(fields: [vehicleTypeId], references: [id])
 }
 
 model Location_In_Tour {
   id         Int @id @default(autoincrement())
   locationId Int
 
-  tourId Int
-
+  tourId      Int
+  tour        Tour      @relation(fields: [tourId], references: [id])
+  location    Location  @relation(fields: [locationId], references: [id])
   status      Boolean
   duration    String?
   description String
@@ -122,16 +136,19 @@ model Trip {
   id          Int @id @default(autoincrement())
   tourGuideId Int
 
-  tourId Int
+  tourId    Int
+  tour      Tour    @relation(fields: [tourId], references: [id])
+  startDate String?
+  endDate   String?
 
   totalCustomer Int
-  startDate     DateTime
-  endDate       DateTime
-  status        Boolean
+
+  status Boolean
 
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt
   deleteAt DateTime?
+  booking  Booking[]
 }
 
 model Payment_Method {
@@ -142,10 +159,11 @@ model Payment_Method {
   createAt    DateTime    @default(now())
   updateAt    DateTime    @updatedAt
   deleteAt    DateTime?
+  payment     Payment[]
 }
 
 model Payment {
-  id              Int       @id @default(autoincrement())
+  id              Int            @id @default(autoincrement())
   paymentName     String
   paymentDate     DateTime
   amount          Float
@@ -154,28 +172,31 @@ model Payment {
   refundedTime    DateTime?
   refundedAmount  DateTime?
   paymentMethodId Int
+  paymentMethod   Payment_Method @relation(fields: [paymentMethodId], references: [id])
 
   createAt  DateTime  @default(now())
   updateAt  DateTime  @updatedAt
   deleteAt  DateTime?
   bookingId Int
+  booking   Booking   @relation(fields: [bookingId], references: [id])
 }
 
 model Booking {
-  id            Int     @id @default(autoincrement())
-  bookingDate   String
-  fromDate      String
-  toDate        String
+  id          Int    @id @default(autoincrement())
+  bookingDate String
+
   userId        String
   totalAmount   Float
   totalCustomer Int
   status        Boolean
 
   tripId Int
+  trip   Trip @relation(fields: [tripId], references: [id])
 
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt
   deleteAt DateTime?
+  payment  Payment[]
 }
 
 enum TourType {

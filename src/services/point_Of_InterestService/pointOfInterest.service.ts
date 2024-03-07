@@ -26,6 +26,8 @@ class PointOfInterestService {
         };
       }
     } catch (error) {
+      console.log(error);
+
       return {
         status: "Internal server error",
         statusCode: 500,
@@ -86,6 +88,8 @@ class PointOfInterestService {
         };
       }
     } catch (error) {
+      console.log(error);
+
       return {
         status: "Internal server error",
         statusCode: 500,

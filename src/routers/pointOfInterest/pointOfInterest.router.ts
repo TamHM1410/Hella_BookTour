@@ -51,7 +51,7 @@ export const pointOfInterestRouter = express.Router();
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.get('/pointOfInterest', point_Of_InterestController.getAll);
+pointOfInterestRouter.get('/pointOfInterest', point_Of_InterestController.getPointOfInterest);
 
 /**
  * @swagger
@@ -80,7 +80,7 @@ pointOfInterestRouter.get('/pointOfInterest', point_Of_InterestController.getAll
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.get('/pointOfInterest/:id', point_Of_InterestController.getById);
+pointOfInterestRouter.get('/pointOfInterest/:id', point_Of_InterestController.getPointOfInterestById);
 
 /**
  * @swagger
@@ -109,7 +109,7 @@ pointOfInterestRouter.get('/pointOfInterest/:id', point_Of_InterestController.ge
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.post('/pointOfInterest/create', point_Of_InterestController.creatNewPointOfInterest);
+pointOfInterestRouter.post('/pointOfInterest', point_Of_InterestController.creatNewPointOfInterest);
 
 /**
  * @swagger
@@ -145,7 +145,7 @@ pointOfInterestRouter.post('/pointOfInterest/create', point_Of_InterestControlle
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.patch('/pointOfInterest/update/:id', point_Of_InterestController.updateById);
+pointOfInterestRouter.patch('/pointOfInterest/:id', point_Of_InterestController.updatePointOfInterestById);
 
 /**
  * @swagger
@@ -178,4 +178,4 @@ pointOfInterestRouter.patch('/pointOfInterest/update/:id', point_Of_InterestCont
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.delete('/pointOfInterest/delete/:id', point_Of_InterestController.deleteById);
+pointOfInterestRouter.delete('/pointOfInterest/:id', point_Of_InterestController.updatePointOfInterestById);

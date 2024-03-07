@@ -16,7 +16,7 @@ class CityService {
       });
       return {
         status: "Success!",
-        statusCode: 201,
+        statusCode: 200,
         data: allCity,
         page,
         pageSize,
@@ -30,13 +30,35 @@ class CityService {
       await this.prisma.$disconnect();
     }
   };
+  getCityByName =async(cityName:string)=>{
+    try{
+      const data = await this.prisma.city.findMany({
+        where:{
+          cityName:cityName
+        }
+      })
+      return data ? { 
+        status :'Success',
+        statusCode:201,
+        data:data
+      
+      }:{
+        status:'Not found',
+        statusCode:404
+      }
+
+
+    }catch(error){
+      console.log(error)
+    }
+  }
   createNewCity = async (cityData: {
     cityName: string;
     country: string;
     status: boolean;
   }) => {
     try {
-      console.log("city", cityData.cityName);
+      // console.log("city", cityData.cityName);
 
       const existCity = await this.prisma.city.findFirst({
         where: {
@@ -45,9 +67,9 @@ class CityService {
       });
       if (existCity) {
         return {
-          status: "Error",
-          message: "City already Exist",
-          data: "null",
+          status: "Existing City",
+          statusCode:409
+         
         };
       }
 
@@ -61,7 +83,7 @@ class CityService {
       });
       return {
         status: "Success",
-        message: "Create new city success !",
+        statusCode:201,
         data: newCity,
       };
     } catch (error) {
@@ -76,8 +98,8 @@ class CityService {
         },
       });
       return currentCity
-        ? { status: "success!", statusCode: 201, data: currentCity }
-        : { status: "City not exist!", statusCode: 401 };
+        ? { status: "success!", statusCode: 200, data: currentCity }
+        : { status: "City not exist!", statusCode: 409 };
     } catch (error) {
       console.log(error);
     }
@@ -89,7 +111,7 @@ class CityService {
     status: boolean;
   }) => {
     try {
-      await this.prisma.city.update({
+     const data= await this.prisma.city.update({
         where: {
           id: currentData.id,
         },
@@ -99,10 +121,18 @@ class CityService {
           status: currentData.status,
         },
       });
+      if(!data){
+        return {
+          status:'Some thing wrong',
+          statusCode: 409
+        }
+      }
 
       return {
-        status: "Success",
-        message: "Update successfully!",
+        status: "Update successfully!",
+        statusCode:201,
+        data:data
+        
       };
     } catch (error) {
       console.log(error);
@@ -119,7 +149,7 @@ class CityService {
       });
       return {
         status: "Success",
-        statusCode: 201,
+        statusCode: 204,
         message: "delete successfully!",
       };
     } catch (error) {

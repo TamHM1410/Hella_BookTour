@@ -3,6 +3,12 @@ import { Request, Response } from "express";
 class CityController {
   getAllCity = async (req: Request, res: Response) => {
     try {
+
+      const cityName =req.query.cityName as string 
+      if(cityName){
+        const result =await cityService.getCityByName(cityName)
+        return result ? res.status(result.statusCode).json(result): res.status(404).json('Not found')
+      }
       const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 10;
       const result = await cityService.getCity(page, pageSize);
@@ -31,15 +37,13 @@ class CityController {
   };
   updateCity = async (req: Request, res: Response) => {
     try {
-      const currentData = req.body as {
-        id: number;
-        cityName: string;
-        country: string;
-        status: boolean;
-      };
+      const currentData = req.body 
+      
       const result = await cityService.editCity(currentData);
-      // const result = await cityService.editCity(currentData);
-      return res.status(200).json(result);
+      if(result){
+        return res.status(result.statusCode).json(result)
+      }
+      
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: "Internal Server Error" });

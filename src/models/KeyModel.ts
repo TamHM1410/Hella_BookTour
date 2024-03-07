@@ -7,7 +7,7 @@ const  keySchema= new mongoose.Schema({
         required:true,
         unique:true,
         index:true,
-        ref:"users"
+        ref:"User"
     },
     publicKey:{
         type:String,

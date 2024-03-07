@@ -9,13 +9,16 @@ class Categoty_of_poi {
     try {
       await this.prisma.$connect;
       const startIndex = (page - 1) * pageSize;
-      // Lấy tổng số lượng mục từ cơ sở dữ liệu
+      
       const totalItems = await this.prisma.categoty_Of_POI.count();
-      const data = await this.prisma.categoty_Of_POI.findMany();
+      const data = await this.prisma.categoty_Of_POI.findMany({
+        skip:startIndex,
+        take:pageSize
+      });
       if (data) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
           page,
           pageSize,
@@ -43,7 +46,7 @@ class Categoty_of_poi {
       if (data) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }
@@ -56,12 +59,12 @@ class Categoty_of_poi {
       await this.prisma.$disconnect;
     }
   };
-  getByName = async (name: string) => {
+  getByName = async (categoryName: string) => {
     try {
       await this.prisma.$connect;
       const data = await this.prisma.categoty_Of_POI.findFirst({
         where: {
-          categoryName: name,
+          categoryName: categoryName,
         },
       });
       if (data) {
@@ -70,6 +73,11 @@ class Categoty_of_poi {
           statusCode: 201,
           data: data,
         };
+      }else {
+        return {
+          status:'Not found',
+          statusCode:404
+        }
       }
     } catch (error) {
       return {
@@ -90,7 +98,7 @@ class Categoty_of_poi {
       });
       return {
         status: "Delete success",
-        statusCode: 201,
+        statusCode: 200,
       };
     } catch (error) {
       return {
@@ -116,7 +124,7 @@ class Categoty_of_poi {
       if (data) {
         return {
           status: " success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }

@@ -43,7 +43,7 @@ export const verifyTokenGoogle = async (
     if (authUser) {
       req.authUser = authUser;
       console.log(req.authUser);
-      
+
       next();
     } else {
       return res.status(401).send("Authenticate fail");
@@ -96,7 +96,7 @@ export const CheckExistAccount = async (
           });
           account
             .save()
-            .then((result) => {
+            .then((result: any) => {
               const token = jwt.sign(
                 {
                   userId: result._id,
@@ -117,8 +117,7 @@ export const CheckExistAccount = async (
                 msg: "User Register Successfully",
               });
             })
-            .catch((error) => {
-              console.log(error);
+            .catch((error:ErrorCallback) => {
               return res.status(500).send({ error });
             });
         }

@@ -1,9 +1,17 @@
 import { paymentMethod } from "../services/paymentMethodService/payment_Method.serivce";
 import { Request, Response } from "express";
+import { PaymentType } from "@prisma/client";
 class PaymentMethodController {
   getAll = async (req: Request, res: Response) => {
     try {
-      const page = parseInt(req.query.page as string) || 1;
+      const paymentType = req.query.paymentType as PaymentType;
+      if(paymentType){
+        const result = await paymentMethod.getByPaymentType(paymentType);
+        return result ? res.status(result.statusCode).json(result) : res.status(500).json('internal server')
+
+      }
+ 
+     const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 10;
       const result = await paymentMethod.getAll(page, pageSize);
       if (result) {

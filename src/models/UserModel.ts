@@ -7,7 +7,6 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: false,
-
       index: true,
     },
     email: {
@@ -15,7 +14,6 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-
     password: {
       type: String,
       required: false,
@@ -42,6 +40,10 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    image:{
+      type:String,
+      default:"https://thinksport.com.au/wp-content/uploads/2020/01/avatar-.jpg"
+    }
   },
   {
     timestamps: true,
@@ -49,5 +51,5 @@ const userSchema = new mongoose.Schema(
 );
 
 //Export the model
-const user = mongoose.model("User", userSchema);
-export default user;
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+export default User;

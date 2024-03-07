@@ -29,10 +29,11 @@ class TourService {
       if (data) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
         };
       }
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal Server Error",
         statusCode: 501,
@@ -40,6 +41,7 @@ class TourService {
     } finally {
       await this.prisma.$disconnect;
     }
+
   };
   deleteById = async (id: number) => {
     try {
@@ -50,17 +52,19 @@ class TourService {
         },
       });
       return {
-        status: "success",
-        statusCode: 200,
+        status: "Delete success!",
+        statusCode: 204,
       };
     } catch (error) {
       console.log(error);
       return {
         status: "Internal Server Error",
         statusCode: 501,
+        
       };
     } finally {
       await this.prisma.$disconnect;
+
     }
   };
   createNewTour = async (currentData: {
@@ -130,10 +134,17 @@ class TourService {
           id: id,
         },
       });
+      if (!data) {
+        return {
+          status: "Not found ",
+          statusCode: 404,
+          
+        };
+      }
       if (data) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }
@@ -149,15 +160,22 @@ class TourService {
   getByTourName = async (tourName: string) => {
     try {
       await this.prisma.$connect;
-      const data = await this.prisma.tour.findFirst({
+      const data = await this.prisma.tour.findMany({
         where: {
           tourName: tourName,
         },
       });
-      if (data) {
+      if (!data) {
+        return {
+          status: "Not found",
+          statusCode: 404,
+          
+        };
+      }
+      if (data &&data.length >0) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }
@@ -175,10 +193,17 @@ class TourService {
     try {
       await this.prisma.$connect;
       const data = await this.prisma.tour.findMany();
+      if (!data) {
+        return {
+          status: "Not found",
+          statusCode: 404,
+          
+        };
+      }
       if (data) {
         return {
           status: "Success",
-          statusCode: 201,
+          statusCode: 200,
           data: data,
         };
       }

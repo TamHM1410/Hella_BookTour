@@ -42,8 +42,28 @@ export const locationRouter=express.Router()
  * @swagger
  * /api/v1/locations:
  *   get:
- *     summary: Get all locations
+ *     summary: Get location 
  *     tags: [Location]
+ *     parameters:
+ *       - name: locationName
+ *         in: query
+ *         required: true
+ *         description: Name of the location to retrieve
+ *         schema:
+ *           type: string
+ *       - name: locationAddress
+ *         in: query
+ *         required: true
+ *         description: Address of the location to retrieve
+ *         schema:
+ *           type: string
+ *       - name: page
+ *         in: query
+ *         description: Page number for pagination
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           default: 1
  *     responses:
  *       '200':
  *         description: Successful response
@@ -98,63 +118,6 @@ locationRouter.get('/locations',locationController.getAll)
  */
 locationRouter.post('/locations/',locationController.createLocation)
 
-/**
- * @swagger
- * /api/v1/locations/name:
- *   get:
- *     summary: Get location by name
- *     tags: [Location]
- *     parameters:
- *       - name: locationName
- *         in: query
- *         required: true
- *         description: Name of the location to retrieve
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *       '500':
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             example:
- *               error: Internal Server Error
- */
-locationRouter.get('/locations/name',locationController.getLocationByName)
-
-/**
- * @swagger
- * /api/v1/locations/address:
- *   get:
- *     summary: Get location by address
- *     tags: [Location]
- *     parameters:
- *       - name: locationAddress
- *         in: query
- *         required: true
- *         description: Address of the location to retrieve
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *       '500':
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             example:
- *               error: Internal Server Error
- */
-locationRouter.get('/locations/address',locationController.getLocationByAdress)
 
 /**
  * @swagger

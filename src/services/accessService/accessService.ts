@@ -23,9 +23,9 @@ class AccessService {
       const checkExistPhone = await user.findOne({ phone: phone });
 
       if (checkExistMail)
-        return { statusCode: 500, status: "Error", message: "Existing email" };
+        return { statusCode: 409 , status: "Error", message: "Existing email" };
       if (checkExistPhone)
-        return { statusCode: 500, status: "Error", message: "Existing phone" };
+        return { statusCode: 409, status: "Error", message: "Existing phone" };
 
       const hassPassword = await bcrypt.hash(password, 10);
       const newUser = new user({
@@ -39,8 +39,9 @@ class AccessService {
       await newUser.save();
 
       return {
-        status: "Success",
-        message: "Sign up successs",
+        status: "Sign up successs!",
+     
+        statusCode:201
       };
     } catch (error) {
       console.log("error", error);
@@ -57,7 +58,7 @@ class AccessService {
       const checkUser = await user.findOne({ email: email });
       if (!checkUser || !checkUser.password) {
         return {
-          statusCode: 500,
+          statusCode: 409,
           status: "Error",
           message: "Incorrect email",
         };
@@ -66,7 +67,7 @@ class AccessService {
 
         if (checkPass === false) {
           return {
-            statusCode: 500,
+            statusCode: 409,
             status: "Error",
             message: "Incorrect password",
           };
@@ -109,8 +110,8 @@ class AccessService {
         const token = await createToken({ payload, privateKey, refreshKey });
 
         return {
-          statusCode: 201,
-          message: "login success",
+          statusCode: 200,
+          status: "Login success",
           token,
           userData: {
             id: checkUser._id,
@@ -129,7 +130,7 @@ class AccessService {
       });
       return {
         status: "Log Out Success",
-        statusCode: 201,
+        statusCode: 200,
       };
     } catch (error) {
       return {

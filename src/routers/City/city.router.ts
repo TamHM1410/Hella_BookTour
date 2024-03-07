@@ -39,10 +39,16 @@ export const cityRouter=express.Router()
  */
 /**
  * @swagger
- * api/v1/city:
+ * /api/v1/city:
  *   get:
  *     summary: Get all cities
  *     tags: [City]
+ *     parameters:
+ *       - in: query
+ *         name: cityName
+ *         schema:
+ *           type: string
+ *         description: The name of the city to filter by.
  *     responses:
  *       '200':
  *         description: Successful response
@@ -66,10 +72,11 @@ export const cityRouter=express.Router()
  *               error: Internal Server Error
  */
 
-cityRouter.get('/city',cityController.getAllCity)
+
+cityRouter.get('/cities',cityController.getAllCity)
 /**
  * @swagger
- * /api/v1/city/create:
+ * /api/v1/cities:
  *   post:
  *     summary: Create a new city
  *     tags: [City]
@@ -116,10 +123,10 @@ cityRouter.get('/city',cityController.getAllCity)
  *             example:
  *               error: Internal Server Error
  */
-cityRouter.post('/city/create',cityController.createNewCity)
+cityRouter.post('/cities',cityController.createNewCity)
 /**
  * @swagger
- * /api/v1/city/{id}:
+ * /api/v1/cities/{id}:
  *   get:
  *     summary: Get information about a specific city
  *     tags: [City]
@@ -170,10 +177,10 @@ cityRouter.post('/city/create',cityController.createNewCity)
  *             example:
  *               error: Internal Server Error
  */
-cityRouter.get('/city/:id',cityController.getCurrentCity)
+cityRouter.get('/cities/:id',cityController.getCurrentCity)
 /**
  * @swagger
- * /api/v1/city/update/{id}:
+ * /api/v1/cities/{id}:
  *   patch:
  *     summary: Update information about a specific city
  *     tags: [City]
@@ -245,10 +252,10 @@ cityRouter.get('/city/:id',cityController.getCurrentCity)
  *               error: Internal Server Error
  */
 
-cityRouter.patch(`/city/update/:id`,cityController.updateCity)
+cityRouter.patch(`/cities/:id`,cityController.updateCity)
 /**
  * @swagger
- * /api/v1/city/{id}:
+ * /api/v1/cities/{id}:
  *   delete:
  *     summary: Delete a specific city
  *     tags: [City]

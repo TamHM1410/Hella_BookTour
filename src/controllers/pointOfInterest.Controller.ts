@@ -2,7 +2,7 @@ import { pointOfInterestService } from "../services/point_Of_InterestService/poi
 import { Request, Response } from "express";
 
 class PointOfInterestController {
-  getAll = async (req: Request, res: Response) => {
+  getPointOfInterest = async (req: Request, res: Response) => {
     try {
       const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 10;
@@ -18,7 +18,7 @@ class PointOfInterestController {
     }
   };
 
-  getById = async (req: Request, res: Response) => {
+  getPointOfInterestById = async (req: Request, res: Response) => {
     try {
       const id = req.body.id as number;
       const result = await pointOfInterestService.getById(id);
@@ -48,7 +48,7 @@ class PointOfInterestController {
       if (result) {
         return res.status(result.statusCode).json(result);
       }
-    } catch (error) {
+    } catch (error) {   
       return res.status(500).json({
         status: "Internal Server",
         statusCode: 500,
@@ -56,7 +56,7 @@ class PointOfInterestController {
     }
   };
 
-  updateById = async (req: Request, res: Response) => {
+  updatePointOfInterestById = async (req: Request, res: Response) => {
     try {
       const currentData = req.body as {
         POIName: string;
@@ -78,7 +78,7 @@ class PointOfInterestController {
     }
   };
 
-  deleteById = async (req: Request, res: Response) => {
+  deletePointOfInterestById = async (req: Request, res: Response) => {
     try {
       const paramId = req.params.id;
       const id = +paramId;
