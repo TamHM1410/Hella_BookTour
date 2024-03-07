@@ -43,12 +43,13 @@ export const verifyTokenGoogle = async (
     if (authUser) {
       req.authUser = authUser;
       console.log(req.authUser);
-
+      
       next();
     } else {
       return res.status(401).send("Authenticate fail");
     }
   } catch (error) {
+    console.log(error);
     return res.status(401).send("Authenticate fail");
   }
 };
@@ -90,8 +91,8 @@ export const CheckExistAccount = async (
           const account = new user({
             fullName: name,
             email: email,
-            phone: phone || null,
-            gender: gender || null,
+            phone: phone,
+            gender: gender,
           });
           account
             .save()
