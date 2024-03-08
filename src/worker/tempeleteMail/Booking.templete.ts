@@ -150,7 +150,7 @@ export const checkOut = (data:any) => {
   </head>
   <body>
     <div style="width:100%;font-family:helvetica,'helvetica neue',arial,verdana,sans-serif;padding:0;Margin:0;background-color:#e5e5e5;margin:0;color:#2a2a2e;box-sizing:border-box;paddingtop:1.2%">
-    <p style="text-align: center;font-weight: bolder; margin-top: 10ch;margin-left:auto;margin-right:auto;font-weight:bolder;">HEBEA</p>
+    <p style="text-align: center;font-weight: bolder; margin-top: 10ch;margin-left:auto;margin-right:auto;font-weight:bolder;">HELLA</p>
     <p class="p1" style="   background-color:3a86ff;"> </p>
   
     <div class=card>
@@ -231,7 +231,7 @@ export const checkOut = (data:any) => {
     <div  style="  width: 50%;
     background-color:#7BD3EA ;margin-left: 25%;text-align: center; border-radius:  5px;">
         <p> Butler email</p>
-        <p>hebeaBooking@gmail.com</p>
+        <p>HellaBooking@gmail.com</p>
   
     </div>
     <h3 style="margin-left: 5%;">Importan information</h3>
@@ -289,7 +289,7 @@ export const checkOut = (data:any) => {
     <div  style="  width: 50%;
     background-color:#7BD3EA ;margin-left: 25%;text-align: center; border-radius:  5px;">
         <p> Butler email</p>
-        <p>hebeaBooking@gmail.com</p>
+        <p>HellaBooking@gmail.com</p>
   
     </div>
     <h3 style="margin-left: 5%;">Importan information</h3>

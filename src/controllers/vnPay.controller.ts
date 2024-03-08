@@ -180,6 +180,7 @@ class VnpayController {
               "https://th.bing.com/th/id/OIP.yVlZzbhOA5kI3MnVBmcPggHaEK?rs=1&pid=ImgDetMain",
           },
         };
+
         await receiveMail(taskName)
         await sendMail({msg,taskName})
         const data = await this.prisma.trip.findMany({
@@ -205,7 +206,8 @@ class VnpayController {
           }
         });
         
-        return res.status(200).json({em:'hihih',data:data})
+        
+        return res.status(200).json({em:'hihih',data:data[0]})
         
         
         
