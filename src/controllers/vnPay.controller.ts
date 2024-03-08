@@ -148,7 +148,7 @@ class VnpayController {
      test =async (req:Request, res:Response )=>{
       try{
         await this.prisma.$connect
-        const taskName='checkOut'
+        const taskName:string='signUp'
         console.log(taskName)
         const msg = {
           userId: 1,
@@ -180,32 +180,33 @@ class VnpayController {
               "https://th.bing.com/th/id/OIP.yVlZzbhOA5kI3MnVBmcPggHaEK?rs=1&pid=ImgDetMain",
           },
         };
-        
+        await receiveMail(taskName)
         await sendMail({msg,taskName})
-        const data = await this.prisma.trip.findMany({
-          where: {
-            id: 3
-          },
-          include: {
-            tour: {
-              select: {
-                tourName: true,
-                tourType: true,
-                price: true,
-                image: true,
-                vehicleType: {
-                  select: {
-                    vehicleName: true,
-                    capacity: true
-                  }
-                },
-                locationinTour:true
-              }
-            }
-          }
-        });
+        // const data = await this.prisma.trip.findMany({
+        //   where: {
+        //     id: 3
+        //   },
+        //   include: {
+        //     tour: {
+        //       select: {
+        //         tourName: true,
+        //         tourType: true,
+        //         price: true,
+        //         image: true,
+        //         vehicleType: {
+        //           select: {
+        //             vehicleName: true,
+        //             capacity: true
+        //           }
+        //         },
+        //         locationinTour:true
+        //       }
+        //     }
+        //   }
+        // });
         
-        return res.status(200).json(data)
+        return res.status(200).json({em:'hihih'})
+        
         
         
       }catch(error){

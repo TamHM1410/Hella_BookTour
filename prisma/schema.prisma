@@ -110,7 +110,7 @@ model Location_In_Tour {
   id         Int @id @default(autoincrement())
   locationId Int
 
-  tourId      Int
+  tourId      Int  
   tour        Tour      @relation(fields: [tourId], references: [id])
   location    Location  @relation(fields: [locationId], references: [id])
   status      Boolean

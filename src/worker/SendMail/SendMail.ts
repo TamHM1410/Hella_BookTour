@@ -6,7 +6,7 @@ export const sendMail =async ({msg ,taskName}:any)=>{
         const connection = await amqplib.connect(amqp_url_cloud); // create connection
         const channel =await connection.createChannel()
         const nameQueue =taskName
-        if(taskName =='checkOut'){
+        if(taskName =='signUp'){
             await channel.assertQueue(nameQueue, {
                 durable: false, 
               });
@@ -16,13 +16,14 @@ export const sendMail =async ({msg ,taskName}:any)=>{
                 expiration: "10000", ///=>TTL time to live
                 persistent: true, /// luu vao disk de backup msg
               }); 
+              setTimeout(() => {
+                connection.close();
+               
+                }, 2000);
 
         }
-        console.log("[X] Send ok ::", msg);
-        setTimeout(() => {
-        connection.close();
-        process.exit(0);
-    }, 2000);
+        
+       
       
 
     }catch(error){
