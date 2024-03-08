@@ -65,6 +65,8 @@ class TripService {
         data: {
           tourId: currentData.tourId,
           totalCustomer: currentData.totalCustomer,
+          startDate:currentData.startDate,
+          endDate:currentData.endDate,
           
           status: currentData.status,
           tourGuideId: currentData.tourGuideId,
@@ -102,6 +104,8 @@ class TripService {
         data: {
           tourId: currentData.tourId,
           totalCustomer: currentData.totalCustomer,
+          startDate:currentData.startDate,
+          endDate:currentData.endDate,
        
           status: currentData.status,
           tourGuideId: currentData.tourGuideId,
