@@ -1,12 +1,12 @@
 import amqplib from 'amqplib'
 import 'dotenv/config'
-export const sendMail =async (msg:any,taskName:string)=>{
+export const sendMail =async ({msg ,taskName}:any)=>{
     try{
         const amqp_url_cloud =process.env.amqp_url_cloud || ''
         const connection = await amqplib.connect(amqp_url_cloud); // create connection
         const channel =await connection.createChannel()
         const nameQueue =taskName
-        if(taskName =='signUp'){
+        if(taskName =='checkOut'){
             await channel.assertQueue(nameQueue, {
                 durable: false, 
               });

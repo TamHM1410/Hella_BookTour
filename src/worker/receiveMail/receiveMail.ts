@@ -28,7 +28,7 @@ export const receiveMail =async (taskName:string)=>{
                     to: "hunhminhtam@gmail.com",
                     subject: "Test Email",
                     text: `Name:${JSON.stringify(msg?.content.toString())}`,
-                    html: checkOut(data[0]),
+                    html: checkOut(data),
                   };
           
                   // Gửi email
@@ -40,7 +40,7 @@ export const receiveMail =async (taskName:string)=>{
                     }
                   });
           
-                  console.log("message", data[0]);
+                  console.log("message", data);
                   setTimeout(() => {
                     connection.close();
                     process.exit(0);

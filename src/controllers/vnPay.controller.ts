@@ -6,6 +6,8 @@ import { randomBytes } from 'crypto';
 
 import { bookingService } from "../services/bookingService/booking.service";
 import { PrismaClient } from "@prisma/client";
+import { receiveMail } from "../worker/receiveMail/receiveMail";
+import { sendMail } from "../worker/SendMail/SendMail";
 
 
 import moment from "moment";
@@ -146,6 +148,40 @@ class VnpayController {
      test =async (req:Request, res:Response )=>{
       try{
         await this.prisma.$connect
+        const taskName='checkOut'
+        console.log(taskName)
+        const msg = {
+          userId: 1,
+          hashed: 123,
+          name: "huynh minh tam dep trai",
+          email: "hunhminhtam@gmail.com",
+          hotel: {
+            image_hotel:
+              "https://cf.bstatic.com/xdata/images/hotel/max1024x768/429295606.jpg?k=5c62aed1bdb662edadb8c6cec2c44d46ee93ae173a43116c7b1845556e66474e&o=&hp=1",
+            address: "FPT,Long Thanh My,district 9,HCM city",
+            checkIn: "21-12-2023",
+            checkOut: "23-12-2023",
+            timecancle: "From 08:29 November 13 Ho Chi Minh time",
+            price: 300000,
+            qualities: 1,
+            period: 1,
+            num_guest: 2,
+          },
+          transportation: {
+            car: "xe lon",
+            rent_start: "27-12-2023",
+            rend_return: "29-12-2023",
+            period: 2,
+            pricePerDay: 180000,
+            qualities: 1,
+            driver: "Nguyen hoang thien",
+        
+            car_image:
+              "https://th.bing.com/th/id/OIP.yVlZzbhOA5kI3MnVBmcPggHaEK?rs=1&pid=ImgDetMain",
+          },
+        };
+        
+        await sendMail({msg,taskName})
         const data = await this.prisma.trip.findMany({
           where: {
             id: 3
@@ -163,27 +199,12 @@ class VnpayController {
                     capacity: true
                   }
                 },
-                locationinTour:{
-                  include:{
-                    location:true
-                  }
-                }
+                locationinTour:true
               }
             }
           }
         });
-        // select:{
-        //   duration:true,
-        //   description:true,
-         
-        //    location:{
-        //     select:{
-        //       id:true,
-        //       locationAddress:true,
-        //       locationName:true
-        //     }
-        //   }
-        // }
+        
         return res.status(200).json(data)
         
         

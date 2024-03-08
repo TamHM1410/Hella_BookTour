@@ -32,11 +32,9 @@ class TourguideService {
       const startIndex = (page - 1) * pageSize;
       const totalItems = await tourguide.countDocuments();
       const data = await tourguide
-        .find({
-          skip: startIndex,
-          take: pageSize,
-        })
+        .find()
         .populate("userId");
+        console.log('data',data)
       return data
         ? {
             status: "Success",
