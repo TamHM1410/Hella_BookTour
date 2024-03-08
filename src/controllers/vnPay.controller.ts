@@ -182,30 +182,30 @@ class VnpayController {
         };
         await receiveMail(taskName)
         await sendMail({msg,taskName})
-        // const data = await this.prisma.trip.findMany({
-        //   where: {
-        //     id: 3
-        //   },
-        //   include: {
-        //     tour: {
-        //       select: {
-        //         tourName: true,
-        //         tourType: true,
-        //         price: true,
-        //         image: true,
-        //         vehicleType: {
-        //           select: {
-        //             vehicleName: true,
-        //             capacity: true
-        //           }
-        //         },
-        //         locationinTour:true
-        //       }
-        //     }
-        //   }
-        // });
+        const data = await this.prisma.trip.findMany({
+          where: {
+            id: 3
+          },
+          include: {
+            tour: {
+              select: {
+                tourName: true,
+                tourType: true,
+                price: true,
+                image: true,
+                vehicleType: {
+                  select: {
+                    vehicleName: true,
+                    capacity: true
+                  }
+                },
+                locationinTour:true
+              }
+            }
+          }
+        });
         
-        return res.status(200).json({em:'hihih'})
+        return res.status(200).json({em:'hihih',data:data})
         
         
         
@@ -236,7 +236,7 @@ class VnpayController {
             const bankCode = req.body.bankCode;
             const orderId =generateRandomString(10);
             const userId =req.headers.userid
-            console.log(userId,'userId')
+            
             const id =req.body.bookingId //bookingId
             const  bookingDate =await bookingService.getById(id)
             const  amount = bookingDate?.data?.totalAmount ??0
