@@ -6,7 +6,7 @@ export const sendMail =async ({msg ,taskName}:any)=>{
         const connection = await amqplib.connect(amqp_url_cloud); // create connection
         const channel =await connection.createChannel()
         const nameQueue =taskName
-        if(taskName =='signUp'){
+        if(taskName =='checkOut'){
             await channel.assertQueue(nameQueue, {
                 durable: false, 
               });

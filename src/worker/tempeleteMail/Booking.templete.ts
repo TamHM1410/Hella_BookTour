@@ -161,7 +161,7 @@ export const checkOut = (data:any) => {
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYvLq6x55RtPhRk2MA2057rRlxaRveIXvzug&usqp=CAU" width="2.5%" height="2.5%" style="border-radius: 50%;margin-left:50%;margin-right:50%">
   </div>
   <h4 style="text-align:center;color: #27ae60" > Thanks for booking!</h4>
-  <p style="text-align:center;">${name}</p>
+  <p style="text-align:center;">${data.userInfor.fullName ?? 'unknown'}</p>
   <p style="text-align:center;">For reference, your reservation number is 1066371804. To view, cancel, or modify your reservation, use our easy self-service options.</p>
   <div style="justify-content: center; align-items: center;margin-left:40%">
   <button style="background-color: #3a86ff;
@@ -187,10 +187,10 @@ export const checkOut = (data:any) => {
     <h3 style="margin-left: 5%;">Your Tour</h3>
     <div style="margin-left: 5%;display: flex; gap:30%">
     <img src=${
-      image
+      data.tripInfor.tour.image ?? 'https://statics.vinpearl.com/du-lich-vinh-Ha-Long-hinh-anh1_1625911963.jpg'
     } alt="Girl in a jacket" width="30%" height="10%">
     <div style="margin-left:30%">
-    <p >%${data.hotel.address}</p>
+    <h1 >${data.tripInfor.tour.tourName}</h1>
     <p>Show direction</p>
     </div>
     </div>
@@ -211,12 +211,12 @@ export const checkOut = (data:any) => {
                     </tr>
                     <tr>
                         <td style="padding:0;Margin:0;padding-right:24px;border-right:1px solid #dddfe2;width:50%;vertical-align:top">
-                            ${startDate}
+                            ${data.tripInfor.startDate}
                             <p>(After 2:00 PM)</p>
   
                         </td>
                         <td style="padding-left: 24px;">
-                        ${endDate}
+                        ${data.tripInfor.endDate}
                           <p>  (Before 12:00 AM)</p>
   
                         </td>
@@ -242,13 +242,13 @@ export const checkOut = (data:any) => {
   
     
     <div class =detail>
-    <h3 style="margin-left: 5%;">Your Car</h3>
+    <h3 style="margin-left: 5%;">Your Vehicle</h3>
     <div style="margin-left: 5%;display: flex; gap:30%">
     <img src=${
-      vehicle.image
+      data.tripInfor.tour.vehicleType?.image ?? "https://vtv1.mediacdn.vn/zoom/640_400/2022/3/13/anh-chup-man-hinh-2022-03-13-luc-165256-16471651872591300529708.png"
     } alt="Girl in a jacket" width="30%" height="10%">
     <div style="margin-left:30%">
-    <p >${data.transportation.car}</p>
+    <h1 >${data.tripInfor.tour.vehicleType.vehicleName}</h1>
   
     </div>
     </div>
@@ -269,12 +269,12 @@ export const checkOut = (data:any) => {
                     </tr>
                     <tr>
                         <td style="padding:0;Margin:0;padding-right:24px;border-right:1px solid #dddfe2;width:50%;vertical-align:top">
-                            ${startDate}
+                            ${data.tripInfor.startDate}
                            
   
                         </td>
                         <td style="padding-left: 24px;">
-                        ${endDate}
+                        ${data.tripInfor.endDate}
                       
   
                         </td>
@@ -304,20 +304,20 @@ export const checkOut = (data:any) => {
   
      <div style="margin-left: 5%;display:flex;flex-direction:column; border-bottom: 1px solid #dddfe2; ;margin-right:5%;margin-bottom:2%">
       <div style="width:30%">
-          Booking rooms
+          Tour
       </div>  
       <div style="width:70%">
-      ${data.hotel.qualities} rooms , ${data.hotel.period} nights
+      ${data.tripInfor.tour.tourName}
       </div>  
       </div>
       
   
       <div style="margin-left: 5%;display:flex;flex-direction:column; border-bottom: 1px solid #dddfe2; ;margin-right:5%;margin-bottom:2%">
       <div style="width:30%">
-          Booking car
+          Vehicle
       </div>  
       <div style="width:70%">
-      ${data.transportation.qualities} cars , ${data.transportation.period} days
+         ${data.tripInfor.tour.vehicleType.vehicleName}
       </div>  
       </div>
   
@@ -327,7 +327,7 @@ export const checkOut = (data:any) => {
           Guests
       </div>  
       <div style="width:70%">
-      ${data.hotel.num_guest} people
+      ${data.tripInfor.totalCustomer} people
       </div>  
       </div>
   
@@ -336,7 +336,7 @@ export const checkOut = (data:any) => {
         Main  Guests
       </div>  
       <div style="width:70%">
-      ${data.name} 
+      ${data.userInfor.fullName ?? "unknown"} 
       </div>  
       </div>
   
@@ -345,7 +345,7 @@ export const checkOut = (data:any) => {
        Extra Guests
       </div>  
       <div style="width:70%">
-      ${data.name} 
+      ${data.userInfor.fullName ?? "unknown"} 
       </div>  
       </div>
   
@@ -371,47 +371,27 @@ export const checkOut = (data:any) => {
         <div class="confirmBooking">
         <h3 style="margin-left: 5%;">Your reservation has been confirmed</h3>
          <div style="display: flex; justify-content: space-between; align-items: center; margin-left:5%;margin-right:5%;  justify-content: space-between;">
-         <p style="margin-right: auto;">1 room x 1 night</p>
+         <p style="margin-right: auto;">Tour </p>
   
-         <p style="margin-left: auto;">VND ${data.hotel.price}</p>
+         <p style="margin-left: auto;">${data.tripInfor.tour.price} VND </p>
          
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-left:5%;margin-right:5%;  justify-content: space-between;">
-         <p style="margin-right: auto;">1 car x ${
-           data.transportation.period
-         } days</p>
+         <p style="margin-right: auto;">Total customer </p>
   
-         <p style="margin-left: auto;">VND ${
-           data.transportation.pricePerDay * data.transportation.period
+         <p style="margin-left: auto;">${
+          data.tripInfor.totalCustomer
          }</p>
          
         </div>
         <div class="thanh-gach"></div>
         <div style="display: flex; justify-content: flex-start; align-items: center; margin-left: 5%; margin-right: 5%; font-weight: bolder;">
         <p style="margin-right: auto;">Total</p>
-        <p style="margin-left: auto;">VND ${
-          data.hotel.price +
-          data.transportation.pricePerDay * data.transportation.period +
-          ((data.hotel.price +
-            data.transportation.pricePerDay * data.transportation.period) *
-            10) /
-            100
-        }</p>
+        <p style="margin-left: auto;">${data.tripInfor.totalCustomer*data.tripInfor.tour.price}VND 
+        </p>
       </div>
-         <p style="margin-left: 5%;font-weight: lighter;font-size: x-small;">Includes: Taxes and fees ${
-           ((data.hotel.price +
-             data.transportation.pricePerDay * data.transportation.period) *
-             10) /
-           100
-         } VND </p>  
-         <p  style="margin-left: 5%;font-weight: lighter;font-size: x-small;">You will be charged ${
-           data.hotel.price +
-           data.transportation.pricePerDay * data.transportation.period +
-           ((data.hotel.price +
-             data.transportation.pricePerDay * data.transportation.period) *
-             10) /
-             100
-         }VND for the accommodation according to the cancellation policy.</p>
+         <p style="margin-left: 5%;font-weight: lighter;font-size: x-small;">Includes: Taxes and fees ${data.tripInfor.totalCustomer*data.tripInfor.tour.price} VND </p>  
+         <p  style="margin-left: 5%;font-weight: lighter;font-size: x-small;">You will be charged ${data.tripInfor.totalCustomer*data.tripInfor.tour.price} VND for the accommodation according to the cancellation policy.</p>
   
   
     </div>
@@ -424,7 +404,7 @@ export const checkOut = (data:any) => {
            <p style="font-weight: bold;">No refunds</p>
          
           
-           <p>${data.hotel.timecancle}</p></div>
+           <p>${data?.hotel?.timecancle ?? ''}</p></div>
             
   
          
