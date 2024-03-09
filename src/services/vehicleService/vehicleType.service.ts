@@ -1,4 +1,5 @@
-import { PrismaClient, VehicleName } from "@prisma/client";
+import { PrismaClient, VehicleName ,Vehicle} from "@prisma/client";
+
 class VehicleType {
   private prisma = new PrismaClient();
   constructor() {
@@ -34,7 +35,7 @@ class VehicleType {
   getByName = async (vehicleName: VehicleName) => {
     try {
       const allData = await this.prisma.vehicle.findMany();
-      const rs = allData.filter(item=>item.vehicleName.includes(vehicleName))
+      const rs = allData.filter((item:Vehicle)=>item.vehicleName.includes(vehicleName))
       return rs &&rs.length> 0 ?{
         status: "Success",
         statusCode: 201,
@@ -99,6 +100,7 @@ class VehicleType {
     vehicleName: VehicleName;
     capacity: string;
     status: boolean;
+    image:string
   }) => {
     try {
       const data = await this.prisma.vehicle.create({
@@ -106,6 +108,7 @@ class VehicleType {
           vehicleName: currentData.vehicleName,
           capacity: currentData.capacity,
           status: currentData.status,
+          image:currentData.image
           
         },
       });
