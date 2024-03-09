@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { City } from "@prisma/client";
 
 class CityService {
   private prisma: PrismaClient;
@@ -32,9 +33,10 @@ class CityService {
   };
   getCityByName =async(cityName:string)=>{
     try{
+      console.log(cityName)
       const data = await this.prisma.city.findMany()
-      const rs =await data.filter(item=>item.cityName.includes(cityName))
-      return data ? { 
+      const rs =await data.filter((item:City)=>item.cityName.includes(cityName))
+      return data &&rs.length >0? { 
         status :'Success',
         statusCode:201,
         data:rs
