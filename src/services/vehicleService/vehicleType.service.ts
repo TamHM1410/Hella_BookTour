@@ -96,12 +96,7 @@ class VehicleType {
       await this.prisma.$disconnect;
     }
   };
-  createNew = async (currentData: {
-    vehicleName: VehicleName;
-    capacity: string;
-    status: boolean;
-    image:string
-  }) => {
+  createNew = async (currentData: Vehicle) => {
     try {
       const data = await this.prisma.vehicle.create({
         data: {
@@ -135,13 +130,7 @@ class VehicleType {
       await this.prisma.$disconnect;
     }
   };
-  updateNew = async (currentData: {
-    vehicleName: VehicleName;
-    capacity: string;
-    status: boolean;
-    id: number;
-    image:string
-  }) => {
+  updateNew = async (currentData: Vehicle) => {
     try {
       const data = await this.prisma.vehicle.update({
         data: {
