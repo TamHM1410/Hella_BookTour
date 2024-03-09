@@ -103,7 +103,7 @@ class VehicleType {
           vehicleName: currentData.vehicleName,
           capacity: currentData.capacity,
           status: currentData.status,
-          image:currentData.image
+          
           
         },
       });
@@ -137,7 +137,7 @@ class VehicleType {
           vehicleName: currentData.vehicleName,
           capacity: currentData.capacity,
           status: currentData.status,
-          image:currentData.image
+     
         },
         where: {
           id: currentData.id,
