@@ -83,13 +83,7 @@ class LocationController {
   };
   updateLocation = async (req: Request, res: Response) => {
     try {
-      const currentData = req.body as {
-        id: number;
-        cityId: number;
-        locationName: string;
-        locationAddress: string;
-        status: boolean;
-      };
+      const currentData = req.body  ;
       const id = req.params.id;
       console.log("id", id);
       const result = await locationService.updateLocationById(currentData);

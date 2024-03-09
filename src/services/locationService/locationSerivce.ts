@@ -117,6 +117,7 @@ class LocationService {
     locationName: string;
     locationAddress: string;
     status: boolean;
+    image:string
   }) => {
     try {
       await this.prisma.$connect;
@@ -129,6 +130,7 @@ class LocationService {
           locationName: currentData.locationName,
           locationAddress: currentData.locationAddress,
           status: currentData.status,
+          image:currentData.image
         },
       });
       return {

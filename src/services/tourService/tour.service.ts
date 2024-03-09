@@ -12,6 +12,7 @@ class TourService {
     vehicleTypeId: number;
     tourType: string;
     id: number;
+    image:string
   }) => {
     try {
       await this.prisma.$connect;
@@ -24,6 +25,7 @@ class TourService {
           status: currentData.status,
           price: currentData.price,
           vehicleTypeId: currentData.vehicleTypeId,
+          image:currentData.image
         },
       });
       if (data) {

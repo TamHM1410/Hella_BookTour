@@ -106,6 +106,7 @@ class VehicleType {
           vehicleName: currentData.vehicleName,
           capacity: currentData.capacity,
           status: currentData.status,
+          
         },
       });
       if (!data) {
@@ -136,6 +137,7 @@ class VehicleType {
     capacity: string;
     status: boolean;
     id: number;
+    image:string
   }) => {
     try {
       const data = await this.prisma.vehicle.update({
@@ -143,6 +145,7 @@ class VehicleType {
           vehicleName: currentData.vehicleName,
           capacity: currentData.capacity,
           status: currentData.status,
+          image:currentData.image
         },
         where: {
           id: currentData.id,

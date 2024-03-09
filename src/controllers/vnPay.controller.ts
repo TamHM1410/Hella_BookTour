@@ -8,9 +8,12 @@ import { bookingService } from "../services/bookingService/booking.service";
 import { PrismaClient } from "@prisma/client";
 import { receiveMail } from "../worker/receiveMail/receiveMail";
 import { sendMail } from "../worker/SendMail/SendMail";
+import User from "../models/UserModel";
+import { instanceMongo } from "../dbs/MongoDB/instanceMongo";
 
 
 import moment from "moment";
+import mongoose from "mongoose";
 
 
 
@@ -147,9 +150,13 @@ class VnpayController {
     }
      test =async (req:Request, res:Response )=>{
       try{
+        await instanceMongo()
+    
         await this.prisma.$connect
         const taskName:string='signUp'
-        console.log(taskName)
+        const id='65e841d6f5cb272f4e90d606'
+        const userData = await User.findById({_id:new mongoose.Types.ObjectId(id)})
+  
         const msg = {
           userId: 1,
           hashed: 123,
@@ -181,11 +188,11 @@ class VnpayController {
           },
         };
 
-        await receiveMail(taskName)
-        await sendMail({msg,taskName})
+        // await receiveMail(taskName)
+        // await sendMail({msg,taskName})
         const data = await this.prisma.trip.findMany({
           where: {
-            id: 3
+            id: 1
           },
           include: {
             tour: {
@@ -205,9 +212,11 @@ class VnpayController {
             }
           }
         });
+        console.log(typeof userData,typeof data)
+        const mergeData = {...data,...userData}
+        console.log(mergeData)
         
-        
-        return res.status(200).json({em:'hihih',data:data[0]})
+        return res.status(200).json({em:'hihih',mergeData})
         
         
         

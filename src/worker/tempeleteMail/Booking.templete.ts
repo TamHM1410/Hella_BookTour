@@ -161,7 +161,7 @@ export const checkOut = (data:any) => {
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYvLq6x55RtPhRk2MA2057rRlxaRveIXvzug&usqp=CAU" width="2.5%" height="2.5%" style="border-radius: 50%;margin-left:50%;margin-right:50%">
   </div>
   <h4 style="text-align:center;color: #27ae60" > Thanks for booking!</h4>
-  <p style="text-align:center;">${data.name}</p>
+  <p style="text-align:center;">${name}</p>
   <p style="text-align:center;">For reference, your reservation number is 1066371804. To view, cancel, or modify your reservation, use our easy self-service options.</p>
   <div style="justify-content: center; align-items: center;margin-left:40%">
   <button style="background-color: #3a86ff;
@@ -184,10 +184,10 @@ export const checkOut = (data:any) => {
            
   
     <div class =detail>
-    <h3 style="margin-left: 5%;">Your Hotel</h3>
+    <h3 style="margin-left: 5%;">Your Tour</h3>
     <div style="margin-left: 5%;display: flex; gap:30%">
     <img src=${
-      data.hotel.image_hotel
+      image
     } alt="Girl in a jacket" width="30%" height="10%">
     <div style="margin-left:30%">
     <p >%${data.hotel.address}</p>
@@ -199,24 +199,24 @@ export const checkOut = (data:any) => {
     <table style="margin: 0 auto; width: 100%;">
                     <tr>
                         <th>
-                            Check in
+                            Start Date
   
                         </th>
                        
                         <th>
-                            Check out
+                            End Date
                             
                         </th>
   
                     </tr>
                     <tr>
                         <td style="padding:0;Margin:0;padding-right:24px;border-right:1px solid #dddfe2;width:50%;vertical-align:top">
-                            ${data.hotel.checkIn}
+                            ${startDate}
                             <p>(After 2:00 PM)</p>
   
                         </td>
                         <td style="padding-left: 24px;">
-                        ${data.hotel.checkOut}
+                        ${endDate}
                           <p>  (Before 12:00 AM)</p>
   
                         </td>
@@ -245,7 +245,7 @@ export const checkOut = (data:any) => {
     <h3 style="margin-left: 5%;">Your Car</h3>
     <div style="margin-left: 5%;display: flex; gap:30%">
     <img src=${
-      data.transportation.car_image
+      vehicle.image
     } alt="Girl in a jacket" width="30%" height="10%">
     <div style="margin-left:30%">
     <p >${data.transportation.car}</p>
@@ -269,12 +269,12 @@ export const checkOut = (data:any) => {
                     </tr>
                     <tr>
                         <td style="padding:0;Margin:0;padding-right:24px;border-right:1px solid #dddfe2;width:50%;vertical-align:top">
-                            ${data.transportation.rent_start}
+                            ${startDate}
                            
   
                         </td>
                         <td style="padding-left: 24px;">
-                        ${data.transportation.rend_return}
+                        ${endDate}
                       
   
                         </td>

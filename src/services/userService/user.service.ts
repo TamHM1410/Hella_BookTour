@@ -18,10 +18,7 @@ class UserService {
       await instanceMongo();
       const startIndex = (page - 1) * pageSize;
       const totalItems = await user.countDocuments();
-      const data = await user.find({
-        skip: startIndex,
-        take: pageSize,
-      });
+      const data = await user.find();
       return data
         ? {
             status: "Success",
@@ -78,6 +75,7 @@ class UserService {
     gender: string;
     roleId: number;
     password: string;
+    image:string
   }) => {
     try {
       await instanceMongo();
@@ -88,6 +86,7 @@ class UserService {
           phone: currentData.phone,
           gender: currentData.gender,
           roleId: currentData.roleId,
+          image:currentData.image
         }
       );
       return data
