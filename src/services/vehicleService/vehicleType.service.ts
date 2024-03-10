@@ -35,7 +35,7 @@ class VehicleType {
   getByName = async (vehicleName: VehicleName) => {
     try {
       const allData = await this.prisma.vehicle.findMany();
-      const rs = allData.filter((item:Vehicle)=>item.vehicleName.includes(vehicleName))
+      const rs = allData.filter((item:Vehicle)=>item.vehicleName.toLowerCase().includes(vehicleName.toLowerCase()))
       return rs &&rs.length> 0 ?{
         status: "Success",
         statusCode: 201,
@@ -105,6 +105,7 @@ class VehicleType {
           status: currentData.status,
           
           
+          
         },
       });
       if (!data) {
@@ -137,6 +138,7 @@ class VehicleType {
           vehicleName: currentData.vehicleName,
           capacity: currentData.capacity,
           status: currentData.status,
+          image:currentData.image
      
         },
         where: {

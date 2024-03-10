@@ -102,9 +102,10 @@ class TourService {
   };
   getTourByTourType = async (tourType: TourType) => {
     try {
+      console.log(tourType,'tour type')
       await this.prisma.$connect;
       const data = await this.prisma.tour.findMany();
-      const rs=data.filter(item=>item.tourType.includes(tourType))
+      const rs=data.filter(item=>item.tourType.toLowerCase().includes(tourType.toLowerCase()))
       return rs &&rs.length >0 ?  {
           status: "Success",
           statusCode: 201,
@@ -160,20 +161,17 @@ class TourService {
     try {
       await this.prisma.$connect;
       const data = await this.prisma.tour.findMany();
-      const rs= data.filter(item=>item.tourName.includes(tourName))
-      if (!data ||!rs) {
-        return {
+      const rs= data.filter(item=>item.tourName.toLowerCase().includes(tourName.toLowerCase()))
+      console.log(rs.length,'rs')
+      return rs &&rs.length > 0 ? {
+        status: "Success",
+          statusCode: 201,
+          data: rs
+      }:{
           status: "Not found",
           statusCode: 404,
-        };
       }
-      if (data &&rs.length >0) {
-        return {
-          status: "Success",
-          statusCode: 200,
-          data: rs,
-        };
-      }
+      
     } catch (error) {
       return {
         status: "Internal Server Error",

@@ -33,7 +33,7 @@ export const pointOfInterestRouter = express.Router();
 
 /**
  * @swagger
- * /api/v1/pointOfInterest:
+ * /api/v1/pois:
  *   get:
  *     summary: Get all points of interest
  *     tags: [Point Of Interest]
@@ -51,11 +51,11 @@ export const pointOfInterestRouter = express.Router();
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.get('/pointOfInterest', point_Of_InterestController.getPointOfInterest);
+pointOfInterestRouter.get('/pois', point_Of_InterestController.getPointOfInterest);
 
 /**
  * @swagger
- * /api/v1/pointOfInterest/{id}:
+ * /api/v1/pois/{id}:
  *   get:
  *     summary: Get a point of interest by ID
  *     tags: [Point Of Interest]
@@ -80,11 +80,11 @@ pointOfInterestRouter.get('/pointOfInterest', point_Of_InterestController.getPoi
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.get('/pointOfInterest/:id', point_Of_InterestController.getPointOfInterestById);
+pointOfInterestRouter.get('/pois/:id', point_Of_InterestController.getPointOfInterestById);
 
 /**
  * @swagger
- * /api/v1/pointOfInterest:
+ * /api/v1/pois:
  *   post:
  *     summary: Create a new point of interest
  *     tags: [Point Of Interest]
@@ -94,7 +94,7 @@ pointOfInterestRouter.get('/pointOfInterest/:id', point_Of_InterestController.ge
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/PointOfInterest'
+ *             $ref: '#/components/schemas/pois'
  *     responses:
  *       '200':
  *         description: Point of interest created successfully
@@ -109,11 +109,11 @@ pointOfInterestRouter.get('/pointOfInterest/:id', point_Of_InterestController.ge
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.post('/pointOfInterest', point_Of_InterestController.creatNewPointOfInterest);
+pointOfInterestRouter.post('/pois', point_Of_InterestController.creatNewPointOfInterest);
 
 /**
  * @swagger
- * /api/v1/pointOfInterest/{id}:
+ * /api/v1/pois/{id}:
  *   patch:
  *     summary: Update a point of interest by ID
  *     tags: [Point Of Interest]
@@ -130,7 +130,7 @@ pointOfInterestRouter.post('/pointOfInterest', point_Of_InterestController.creat
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/PointOfInterest'
+ *             $ref: '#/components/schemas/pois'
  *     responses:
  *       '200':
  *         description: Update successful
@@ -145,11 +145,11 @@ pointOfInterestRouter.post('/pointOfInterest', point_Of_InterestController.creat
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.patch('/pointOfInterest/:id', point_Of_InterestController.updatePointOfInterestById);
+pointOfInterestRouter.patch('/pois/:id', point_Of_InterestController.updatePointOfInterestById);
 
 /**
  * @swagger
- * /api/v1/pointOfInterest/{id}:
+ * /api/v1/pois/{id}:
  *   delete:
  *     summary: Delete a point of interest by ID
  *     tags: [Point Of Interest]
@@ -178,4 +178,4 @@ pointOfInterestRouter.patch('/pointOfInterest/:id', point_Of_InterestController.
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.delete('/pointOfInterest/:id', point_Of_InterestController.updatePointOfInterestById);
+pointOfInterestRouter.delete('/pois/:id', point_Of_InterestController.deletePointOfInterestById);

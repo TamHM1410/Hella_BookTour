@@ -148,7 +148,7 @@ class PointOfInterestService {
       });
       return {
         status: "Delete success!",
-        statusCode: 201,
+        statusCode: 204,
       };
     } catch (error) {
       return {
