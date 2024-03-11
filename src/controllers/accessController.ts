@@ -63,6 +63,20 @@ class AccessController {
       });
     }
   };
+  verifyEmail =async(req: CustomRequest, res: Response)=>{
+    try{
+      const email =req.body.email
+      const result =await accesssService.verifyEmail(email)
+      return res.status(result.statusCode).json(result);
+
+    }catch(error){
+      return res.status(500).json({
+        status: "Internal server",
+        statusCode: 500,
+      });
+
+    }
+  }
 }
 
 export const accessController = new AccessController();

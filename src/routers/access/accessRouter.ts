@@ -107,3 +107,4 @@ accessRouter.post("/logOut", checkLogin, accessController.logOut);
  *         description: Bad request
  */
 accessRouter.post("/signIn", accessController.signIn);
+accessRouter.post("/verify", accessController.verifyEmail);

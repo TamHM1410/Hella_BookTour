@@ -211,36 +211,7 @@ class VnpayController {
         const id='65e841d6f5cb272f4e90d606'
         const userData = await User.findById({_id:new mongoose.Types.ObjectId(id)})
   
-        // const msg = {
-        //   userId: 1,
-        //   hashed: 123,
-        //   name: "huynh minh tam dep trai",
-        //   email: "hunhminhtam@gmail.com",
-        //   hotel: {
-        //     image_hotel:
-        //       "https://cf.bstatic.com/xdata/images/hotel/max1024x768/429295606.jpg?k=5c62aed1bdb662edadb8c6cec2c44d46ee93ae173a43116c7b1845556e66474e&o=&hp=1",
-        //     address: "FPT,Long Thanh My,district 9,HCM city",
-        //     checkIn: "21-12-2023",
-        //     checkOut: "23-12-2023",
-        //     timecancle: "From 08:29 November 13 Ho Chi Minh time",
-        //     price: 300000,
-        //     qualities: 1,
-        //     period: 1,
-        //     num_guest: 2,
-        //   },
-        //   transportation: {
-        //     car: "xe lon",
-        //     rent_start: "27-12-2023",
-        //     rend_return: "29-12-2023",
-        //     period: 2,
-        //     pricePerDay: 180000,
-        //     qualities: 1,
-        //     driver: "Nguyen hoang thien",
-        
-        //     car_image:
-        //       "https://th.bing.com/th/id/OIP.yVlZzbhOA5kI3MnVBmcPggHaEK?rs=1&pid=ImgDetMain",
-        //   },
-        // };
+       
 
       
         const data = await this.prisma.trip.findMany({
@@ -291,6 +262,18 @@ class VnpayController {
     
     createVnpay =async  (req:Request, res:Response    ) => {
         try {
+            const url =req.headers.referer
+           
+            const checkUrl = url?.startsWith('http://') || url?.startsWith('https://');
+            let returnUrl
+     
+          
+            if(checkUrl==true){
+                 returnUrl = process.env.vnp_ReturnUrl;
+            }if(checkUrl==false){
+                returnUrl =process.env.vnp_ReturnUrlM
+            }
+            console.log(returnUrl,'check')
             const date = new Date();
             const createDate = moment(date).format("YYYYMMDDHHmmss");
             const generateRandomString = (length: number): string => {
@@ -307,7 +290,7 @@ class VnpayController {
             const tmnCode = process.env.vnp_TmnCode;
             const secretKey = process.env.vnp_HashSecret;
             let vnpUrl = process.env.vnp_Url ;
-            const returnUrl = process.env.vnp_ReturnUrl;
+           
             const bankCode = req.body.bankCode;
             const orderId =generateRandomString(10);
             const userId =req.headers.userid
@@ -332,7 +315,7 @@ class VnpayController {
                 vnp_TxnRef: orderId,
                 vnp_OrderInfo: orderInfor,
                 vnp_OrderType: "other",
-                vnp_Amount: amount ,    
+                vnp_Amount: amount*100,    
                 vnp_ReturnUrl: returnUrl,
                 vnp_IpAddr: ipAddr ,
                 vnp_CreateDate: createDate,

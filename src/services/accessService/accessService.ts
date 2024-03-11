@@ -6,6 +6,8 @@ import { createToken } from "../../auth/createToken";
 import keyService from "../keyService/keyService";
 import keys from "../../models/KeyModel";
 import mongoose from "mongoose";
+import OtpShcema from "../../models/OTP.model";
+import otpGenerator from 'otp-generator'
 
 interface Data {
   email: string;
@@ -125,6 +127,7 @@ class AccessService {
   };
   logOut = async (userId: string | undefined) => {
     try {
+      await instanceMongo()
       await keys.findOneAndDelete({
         userId: new mongoose.Types.ObjectId(userId),
       });
@@ -139,5 +142,38 @@ class AccessService {
       };
     }
   };
+  verifyEmail =async(email:string)=>{
+    try{
+       await instanceMongo()
+       const dataByEmail = await user.findOne({ email: email });
+
+       if (!dataByEmail) {
+           return {
+               status: 'Not correct Email',
+               statusCode: 409
+           };
+       }
+       
+       const otp = otpGenerator.generate(6, { digits: true, specialChars: false });
+       const createNewOtp = await OtpShcema.create({
+           userId: dataByEmail._id, 
+           otp_code: otp
+       });
+       return {status: 'Success',
+       statusCode: 201,
+       data:createNewOtp
+          
+       }
+       
+
+    }catch(error){
+      console.log(error)
+      return {
+        status: "Internal Server!",
+        statusCode: 500,
+        e:error
+      };
+    }
+  }
 }
 export const accesssService = new AccessService();
