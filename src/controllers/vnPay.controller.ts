@@ -263,6 +263,7 @@ class VnpayController {
     createVnpay =async  (req:Request, res:Response    ) => {
         try {
             const url =req.headers.referer
+            console.log(url,'url')
            
             const checkUrl = url?.startsWith('http://') || url?.startsWith('https://');
             let returnUrl
@@ -270,7 +271,7 @@ class VnpayController {
           
             if(checkUrl==true){
                  returnUrl = process.env.vnp_ReturnUrl;
-            }if(checkUrl==false){
+            }if(checkUrl==false||checkUrl==undefined){
                 returnUrl =process.env.vnp_ReturnUrlM
             }
             console.log(returnUrl,'check',url,'url')
