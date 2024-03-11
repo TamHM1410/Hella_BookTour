@@ -8,6 +8,15 @@ class Location_Activity_Service {
   getAll = async (page: number, pageSize: number) => {
     try {
       await this.prisma.$connect();
+      if(page==0){
+        const allData = await this.prisma.location_Activity.findMany();
+        return {
+          status:'success',
+          statusCode:201,
+          data:allData
+        }
+
+      }
       const startIndex = (page - 1) * pageSize;
       // Lấy tổng số lượng mục từ cơ sở dữ liệu
       const totalItems = await this.prisma.location_Activity.count();

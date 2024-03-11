@@ -9,7 +9,7 @@ class Payment {
       //   return result ? res.status(result.statusCode).json(result): { status:'NOT FOUND',statusCode:404}
 
       // }
-      const page = parseInt(req.query.page as string) || 1;
+      const page = parseInt(req.query.page as string) || 0;
       const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await paymentService.getAll(page, pageSize);
       if (result) {

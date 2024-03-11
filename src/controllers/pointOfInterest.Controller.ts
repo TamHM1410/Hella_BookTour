@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 class PointOfInterestController {
   getPointOfInterest = async (req: Request, res: Response) => {
     try {
-      const page = parseInt(req.query.page as string) || 1;
+      const page = parseInt(req.query.page as string) || 0;
       const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await pointOfInterestService.getAll(page, pageSize);
       if (result) {

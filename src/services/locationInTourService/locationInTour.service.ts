@@ -7,6 +7,16 @@ class LocationInTourService {
   getAll = async (page: number, pageSize: number) => {
     try {
       await this.prisma.$connect;
+      if(page==0){
+        const result = await this.prisma.location_In_Tour.findMany();
+        return {
+          status: "Success!ok",
+          statusCode: 201,
+          data: result,
+       
+        }
+
+      }
       const startIndex = (page - 1) * pageSize;
       // Lấy tổng số lượng mục từ cơ sở dữ liệu
       const totalItems = await this.prisma.location_In_Tour.count();
@@ -17,7 +27,7 @@ class LocationInTourService {
       if (result) {
         return {
           status: "Success!ok",
-          statusCode: 200,
+          statusCode: 201,
           data: result,
           page,
           pageSize,

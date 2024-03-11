@@ -6,7 +6,7 @@ class TourController {
     try {
       const tourName =req.query.tourName as string 
       const tourType= req.query.tourType as TourType
-      const page = parseInt(req.query.page as string) || 1;
+      const page = parseInt(req.query.page as string) || 0;
       const pageSize = parseInt(req.query.pageSize as string) || 5;
       if(tourName){
         const result = await tourService.getByTourName(tourName);

@@ -9,7 +9,7 @@ class TripController {
          const result = await tripService.getTripByTourguide(tourGuideId)
          return res.status(result.statusCode).json(result);
       }
-      const page = parseInt(req.query.page as string) || 1;
+      const page = parseInt(req.query.page as string) || 0;
       const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await tripService.getAllTrip(page, pageSize);
       if (result) {

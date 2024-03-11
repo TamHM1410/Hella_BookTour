@@ -8,6 +8,16 @@ class Categoty_of_poi {
   getAll = async (page: number, pageSize: number) => {
     try {
       await this.prisma.$connect;
+      if (page ==0 ){
+        const data = await this.prisma.categoty_Of_POI.findMany();
+        return {
+          status: "Success",
+          statusCode: 201,
+          data: data,
+         
+ }
+
+      }
       const startIndex = (page - 1) * pageSize;
       
       const totalItems = await this.prisma.categoty_Of_POI.count();

@@ -7,9 +7,20 @@ class BookingService {
     }
     getAll = async (page: number, pageSize: number)=>{
         try{
+            if(page ==0 ){
+                await this.prisma.$connect
+            const data =await this.prisma.booking.findMany()
+            return {
+                status:'Success!',
+                statusCode:201,
+                data:data
+
+            }
+
+            }
             const startIndex = (page - 1) * pageSize;
-            // Lấy tổng số lượng mục từ cơ sở dữ liệu
-            const totalItems = await this.prisma.city.count();
+    
+        
             await this.prisma.$connect
             const data =await this.prisma.booking.findMany({
                 skip: startIndex,

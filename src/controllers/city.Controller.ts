@@ -9,7 +9,7 @@ class CityController {
         const result =await cityService.getCityByName(cityName)
         return result ? res.status(result.statusCode).json(result): res.status(404).json('Not found')
       }
-      const page = parseInt(req.query.page as string) || 1;
+      const page = parseInt(req.query.page as string) || 0;
       const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await cityService.getCity(page, pageSize);
       if (result) {
