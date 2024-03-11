@@ -8,6 +8,8 @@ import keys from "../../models/KeyModel";
 import mongoose from "mongoose";
 import OtpShcema from "../../models/OTP.model";
 import otpGenerator from 'otp-generator'
+import { sendMail } from "../../worker/SendMail/SendMail";
+import { receiveMail } from "../../worker/receiveMail/receiveMail";
 
 interface Data {
   email: string;
@@ -142,6 +144,78 @@ class AccessService {
       };
     }
   };
+  resetPass =async (password:string,email:string)=>{
+    try{
+    
+      const checkEmail = await user.findOne({email:email})
+      if(!checkEmail.verified==false || checkEmail.veried ==null){
+        return {
+          status:'You dont have permission!',
+          statusCode:403
+        }
+      }
+      if(checkEmail.verified ==true){
+        const hassPassword = await bcrypt.hash(password, 10);
+         await user.findByIdAndUpdate({
+          id:checkEmail._id
+        },{
+          password:hassPassword,
+        
+        })
+        return {
+          status:'Success update password',
+          statusCode:200
+        }
+
+      }
+
+    }catch(error){
+      return {
+        status: "Internal Server!",
+        statusCode: 500,
+        e:error
+      };
+    }
+  }
+
+  verifyOtp =async (otp:string,email:string) =>{
+      try{
+        await instanceMongo()
+        const checkOtp= await OtpShcema.find({otp_code:otp})
+        if(!checkOtp){
+          return {
+            status:"Expries Otp or wrong Otp",
+            statusCode:410
+          }
+          
+
+        }
+
+        const updateUser =await user.findOneAndUpdate({
+          email:email
+        },{ verified:true},{new:true})
+
+
+        return  updateUser ? {
+           status:'success',
+           statusCode:200
+        }:{
+          statusCode:404,
+          status:'huhu'
+        }
+      
+
+
+
+         
+      }catch(error){
+        return {
+          status: "Internal Server!",
+          statusCode: 500,
+          e:error
+        };
+      }
+  }
   verifyEmail =async(email:string)=>{
     try{
        await instanceMongo()
@@ -153,17 +227,25 @@ class AccessService {
                statusCode: 409
            };
        }
-       
-       const otp = otpGenerator.generate(6, { digits: true, specialChars: false });
+       const taskName='sendOtp'
+       const otpgenter = otpGenerator.generate(6, { digits: true, specialChars: false });
        const createNewOtp = await OtpShcema.create({
            userId: dataByEmail._id, 
-           otp_code: otp
+           otp_code: otpgenter
        });
+      const msg ={
+        otp:otpgenter,
+        email:email
+       }
+      await receiveMail(taskName,email)
+      await sendMail({msg,taskName})
+       
        return {status: 'Success',
        statusCode: 201,
-       data:createNewOtp
+       data:msg
           
        }
+      
        
 
     }catch(error){

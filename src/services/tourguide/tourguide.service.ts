@@ -34,7 +34,7 @@ class TourguideService {
       const data = await tourguide
         .find()
         .populate("userId");
-        console.log('data',data)
+   
       return data
         ? {
             status: "Success",

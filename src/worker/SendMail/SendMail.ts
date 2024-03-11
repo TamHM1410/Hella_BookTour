@@ -22,6 +22,22 @@ export const sendMail =async ({msg ,taskName}:any)=>{
                 }, 2000);
 
         }
+        if(taskName =='sendOtp'){
+            await channel.assertQueue(nameQueue, {
+                durable: false, 
+              });
+              ///send msg to queue
+            const bufferData = Buffer.from(JSON.stringify(msg));
+            await channel.sendToQueue(nameQueue, bufferData, {
+                expiration: "10000", ///=>TTL time to live
+                persistent: true, /// luu vao disk de backup msg
+              }); 
+              setTimeout(() => {
+                connection.close();
+               
+                }, 2000);
+
+        }
         
        
       
