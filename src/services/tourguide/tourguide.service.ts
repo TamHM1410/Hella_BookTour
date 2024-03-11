@@ -29,7 +29,7 @@ class TourguideService {
   getAllTourguide = async (page: number, pageSize: number) => {
     try {
       await instanceMongo();
-      const startIndex = (page - 1) * pageSize;
+      // const startIndex = (page - 1) * pageSize;
       const totalItems = await tourguide.countDocuments();
       const data = await tourguide
         .find()

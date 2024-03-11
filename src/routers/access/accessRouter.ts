@@ -133,3 +133,4 @@ accessRouter.post("/signIn", accessController.signIn);
 
 accessRouter.post("/verify", accessController.verifyEmail);
 accessRouter.post("/verifyOtp", accessController.verifyOtp);
+accessRouter.post("/resetPass", accessController.resetPass);

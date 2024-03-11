@@ -91,6 +91,23 @@ class AccessController {
 
     }
   }
+  resetPass =async (req:Request,res:Response)=>{
+    try{
+      const email =req.body.email
+      const password=req.body.password
+      const result =await accesssService.resetPass(password,email)
+      return result ? res.status(result.statusCode).json(result) : res.status(404).json({EM:'concho ngu'})
+
+
+
+    }catch(error){
+      return res.status(500).json({
+        status: "Internal server",
+        statusCode: 500,
+      });
+
+    }
+  }
 }
 
 export const accessController = new AccessController();

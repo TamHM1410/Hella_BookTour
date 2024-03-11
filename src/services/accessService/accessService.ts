@@ -146,9 +146,10 @@ class AccessService {
   };
   resetPass =async (password:string,email:string)=>{
     try{
-    
+      await instanceMongo()
       const checkEmail = await user.findOne({email:email})
-      if(!checkEmail.verified==false || checkEmail.veried ==null){
+    
+      if(checkEmail.verified==false || checkEmail.verified ==null){
         return {
           status:'You dont have permission!',
           statusCode:403
@@ -156,12 +157,13 @@ class AccessService {
       }
       if(checkEmail.verified ==true){
         const hassPassword = await bcrypt.hash(password, 10);
-         await user.findByIdAndUpdate({
-          id:checkEmail._id
-        },{
-          password:hassPassword,
+        const idata =await user.findById(checkEmail._id)
+        console.log(idata)
+        await user.findByIdAndUpdate(checkEmail._id, {
+          password: hassPassword,
+          verified: false
+        });
         
-        })
         return {
           status:'Success update password',
           statusCode:200
@@ -170,6 +172,7 @@ class AccessService {
       }
 
     }catch(error){
+      console.log(error)
       return {
         status: "Internal Server!",
         statusCode: 500,
@@ -180,9 +183,11 @@ class AccessService {
 
   verifyOtp =async (otp:string,email:string) =>{
       try{
+        console.log('otp',otp)
         await instanceMongo()
         const checkOtp= await OtpShcema.find({otp_code:otp})
-        if(!checkOtp){
+        console.log(checkOtp.length)
+        if(checkOtp.length ==0){
           return {
             status:"Expries Otp or wrong Otp",
             statusCode:410
