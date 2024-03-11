@@ -4,6 +4,11 @@ import { Request, Response } from "express";
 class TripController {
   getAll = async (req: Request, res: Response) => {
     try {
+      const tourGuideId =req.query.tourGuideId as string
+      if(tourGuideId){
+         const result = await tripService.getTripByTourguide(tourGuideId)
+         return res.status(result.statusCode).json(result);
+      }
       const page = parseInt(req.query.page as string) || 1;
       const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await tripService.getAllTrip(page, pageSize);
@@ -49,14 +54,8 @@ class TripController {
   };
   createTrip = async (req: Request, res: Response) => {
     try {
-      const currentData = req.body as {
-        tourId: number;
-        totalCustomer: number;
-        startDate: string;
-        endDate: string;
-        status: boolean;
-        tourGuideId: string;
-      };
+     
+      const currentData = req.body 
       const result = await tripService.createNewTrip(currentData);
       if (result) {
         return res.status(result.statusCode).json(result);

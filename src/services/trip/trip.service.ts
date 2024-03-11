@@ -156,5 +156,29 @@ class TripService {
       await this.prisma.$disconnect;
     }
   };
+  getTripByTourguide =async ( tourGuideId:string)=>{
+    try{
+      await this.prisma.$connect
+      const result =await this.prisma.trip.findMany({
+        where:{
+          tourGuideId:tourGuideId
+        }
+      })
+      return result && result.length>0 ? {
+        status:"success",
+        statusCode:201,
+        data:result
+}:{
+   status:"Not found!",
+   statusCode:404
+}
+
+    }catch(error){
+      return {
+        status: "Internal server",
+        statusCode: 500,
+      }
+    }
+  }
 }
 export const tripService = new TripService();

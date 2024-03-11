@@ -241,6 +241,31 @@ class BookingService {
             await this.prisma.$disconnect
         }
     }
+    getByUserId=async (userId:string)=>{
+        try{
+            await this.prisma.$connect
+            const result = await this.prisma.booking.findMany({
+                where:{
+                  userId:userId
+                }
+            })
+            return result && result.length>0 ? {
+                     status:"success",
+                     statusCode:201,
+                     data:result
+            }:{
+                status:"Not found!",
+                statusCode:404
+            }
+
+
+        }catch(error){
+            return {
+                status:'Internal Server',
+                statusCode:500
+            }
+        }
+    }
    
 }
 

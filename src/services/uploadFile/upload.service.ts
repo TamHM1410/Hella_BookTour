@@ -23,11 +23,13 @@ export const getAllimage =async (folderName :string)=>{
      
         if(result.resources){
             const arr =result.resources 
+         
             const  data = arr.map((item:any)=>item.url)
             return {
                 status:200,
                 statusCode:200,
-                data:data
+                data:data,
+             
               
             }
         }

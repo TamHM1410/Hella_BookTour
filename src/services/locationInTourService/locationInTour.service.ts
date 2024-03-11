@@ -185,5 +185,6 @@ class LocationInTourService {
 
     }
   }
+  
 }
 export const locationInTourService = new LocationInTourService();

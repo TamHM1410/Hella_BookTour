@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import tourguide from "../../models/Tourguild";
 import { instanceMongo } from "../../dbs/MongoDB/instanceMongo";
+import User from "../../models/UserModel";
 class TourguideService {
   createTourguide = async (currentData: { userId: string }) => {
     try {
@@ -8,6 +9,14 @@ class TourguideService {
       const createNewTourguide = await tourguide.create({
         userId: new mongoose.Types.ObjectId(currentData.userId),
       });
+      await  User.findByIdAndUpdate({
+        _id:new mongoose.Types.ObjectId(currentData.userId)
+      },{
+        roleId:1
+      },{
+        new :true
+      })
+      
       return createNewTourguide
         ? {
             status: "Success",
@@ -19,6 +28,7 @@ class TourguideService {
             statusCode: 409,
           };
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal server",
         statusCode: 500,
@@ -93,7 +103,7 @@ class TourguideService {
         _id: new mongoose.Types.ObjectId(id),
       });
       const checkLan = findData?.language.includes(language);
-      console.log(checkLan);
+      
       if (checkLan === true) {
         const data = await tourguide.findByIdAndUpdate(
           {
