@@ -183,14 +183,16 @@ class AccessService {
 
   verifyOtp =async (otp:string,email:string) =>{
       try{
-        console.log('otp',otp)
+        
         await instanceMongo()
         const dataEmail = await user.findOne({
           email:email
         })
         const id =dataEmail._id
-        const checkOtp= await OtpShcema.find(id)
-       
+        const checkOtp= await OtpShcema.find({
+          userId:id
+        })
+        
         if( checkOtp.length == 0){
           return {
             status:"Some thing wrong tan ngu",

@@ -110,7 +110,11 @@ class VnpayController {
                                       }
           
                                       await instanceMongo();
+
+                                      
                                       const userData = await User.findById({_id:new mongoose.Types.ObjectId(userId)});
+                                      
+
                                       const data = await this.prisma.trip.findMany({
                                           where: {
                                               id: storeBooking?.tripId
