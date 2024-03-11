@@ -185,16 +185,21 @@ class AccessService {
       try{
         console.log('otp',otp)
         await instanceMongo()
-        const checkOtp= await OtpShcema.find({otp_code:otp})
-        console.log(checkOtp.length)
-        if(checkOtp.length ==0){
+        const dataEmail = await user.findOne({
+          email:email
+        })
+        const id =dataEmail._id
+        const checkOtp= await OtpShcema.find(id)
+       
+        if( checkOtp.length == 0){
           return {
-            status:"Expries Otp or wrong Otp",
+            status:"Some thing wrong tan ngu",
             statusCode:410
           }
           
 
         }
+
 
         const updateUser =await user.findOneAndUpdate({
           email:email
