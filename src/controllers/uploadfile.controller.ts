@@ -23,7 +23,14 @@ class UploadfileController{
     }
     getAllImage =async (req:Request,res:Response)=>{
         try{
-            const folderName =req.body.folderName
+            
+            const folderName =req.params.folderName
+            if(!folderName){
+                return res.status(404).json({
+                    status:'Not found folder Name',
+                    statusCode:404
+                })
+            }
             const result =await getAllimage(folderName)
             return res.status(200).json(result)
 
