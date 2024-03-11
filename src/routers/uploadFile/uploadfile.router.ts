@@ -85,4 +85,4 @@ uploadfileRouter.get("/upload", upload.any(), uploadfileController.uploadFile);
  *               error: Internal Server Error
  */
 uploadfileRouter.post("/files", upload.any(), uploadfileController.uploadFiles);
-uploadfileRouter.get("/getimage",  uploadfileController.getAllImage);
+uploadfileRouter.get("/files",  uploadfileController.getAllImage);
