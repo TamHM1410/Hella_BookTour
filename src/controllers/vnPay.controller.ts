@@ -273,7 +273,7 @@ class VnpayController {
             }if(checkUrl==false){
                 returnUrl =process.env.vnp_ReturnUrlM
             }
-            console.log(returnUrl,'check')
+            console.log(returnUrl,'check',url,'url')
             const date = new Date();
             const createDate = moment(date).format("YYYYMMDDHHmmss");
             const generateRandomString = (length: number): string => {
