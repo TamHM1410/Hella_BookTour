@@ -7,7 +7,5 @@ import {
 export const firebaseRouter = express.Router();
 
 firebaseRouter.post(
-  "/Firebase/verifyGoogle",
-  verifyTokenGoogle,
-  CheckExistAccount
+  "/Firebase/verifyGoogle", verifyTokenGoogle, CheckExistAccount
 );
