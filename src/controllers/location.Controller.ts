@@ -16,7 +16,7 @@ class LocationController {
 
       }
       
-      const page = parseInt(req.query.page as string) || 1;
+      const page = parseInt(req.query.page as string) || 0;
       const pageSize = parseInt(req.query.pageSize as string) || 5;
       const result = await locationService.getAllLocation(page, pageSize);
       if (result) {
@@ -83,13 +83,7 @@ class LocationController {
   };
   updateLocation = async (req: Request, res: Response) => {
     try {
-      const currentData = req.body as {
-        id: number;
-        cityId: number;
-        locationName: string;
-        locationAddress: string;
-        status: boolean;
-      };
+      const currentData = req.body  ;
       const id = req.params.id;
       console.log("id", id);
       const result = await locationService.updateLocationById(currentData);

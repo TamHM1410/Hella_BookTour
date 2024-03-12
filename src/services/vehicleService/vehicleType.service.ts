@@ -1,4 +1,5 @@
-import { PrismaClient, VehicleName } from "@prisma/client";
+import { PrismaClient, VehicleName ,Vehicle} from "@prisma/client";
+
 class VehicleType {
   private prisma = new PrismaClient();
   constructor() {
@@ -33,16 +34,17 @@ class VehicleType {
   };
   getByName = async (vehicleName: VehicleName) => {
     try {
-      const allData = await this.prisma.vehicle.findMany({
-        where: {
-          vehicleName: vehicleName,
-        },
-      });
-      return {
+      const allData = await this.prisma.vehicle.findMany();
+      const rs = allData.filter((item:Vehicle)=>item.vehicleName.toLowerCase().includes(vehicleName.toLowerCase()))
+      return rs &&rs.length> 0 ?{
         status: "Success",
-        statusCode: 200,
-        data: allData,
-      };
+        statusCode: 201,
+        data: rs,
+      }:{
+        status:'Not found',
+        statusCode:404
+      }
+     
     } catch (error) {
       console.log(error)
       return {
@@ -94,17 +96,16 @@ class VehicleType {
       await this.prisma.$disconnect;
     }
   };
-  createNew = async (currentData: {
-    vehicleName: VehicleName;
-    capacity: string;
-    status: boolean;
-  }) => {
+  createNew = async (currentData: Vehicle) => {
     try {
       const data = await this.prisma.vehicle.create({
         data: {
           vehicleName: currentData.vehicleName,
           capacity: currentData.capacity,
           status: currentData.status,
+          
+          
+          
         },
       });
       if (!data) {
@@ -130,18 +131,15 @@ class VehicleType {
       await this.prisma.$disconnect;
     }
   };
-  updateNew = async (currentData: {
-    vehicleName: VehicleName;
-    capacity: string;
-    status: boolean;
-    id: number;
-  }) => {
+  updateNew = async (currentData: Vehicle) => {
     try {
       const data = await this.prisma.vehicle.update({
         data: {
           vehicleName: currentData.vehicleName,
           capacity: currentData.capacity,
           status: currentData.status,
+          
+     
         },
         where: {
           id: currentData.id,

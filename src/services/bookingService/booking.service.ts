@@ -7,9 +7,20 @@ class BookingService {
     }
     getAll = async (page: number, pageSize: number)=>{
         try{
+            if(page ==0 ){
+                await this.prisma.$connect
+            const data =await this.prisma.booking.findMany()
+            return {
+                status:'Success!',
+                statusCode:201,
+                data:data
+
+            }
+
+            }
             const startIndex = (page - 1) * pageSize;
-            // Lấy tổng số lượng mục từ cơ sở dữ liệu
-            const totalItems = await this.prisma.city.count();
+    
+        
             await this.prisma.$connect
             const data =await this.prisma.booking.findMany({
                 skip: startIndex,
@@ -96,7 +107,7 @@ class BookingService {
                 data:{
                     status:status
 
-                }})
+                },})
             return {
                 status:"success",
                 statusCode:201,
@@ -239,6 +250,31 @@ class BookingService {
 
         }finally {
             await this.prisma.$disconnect
+        }
+    }
+    getByUserId=async (userId:string)=>{
+        try{
+            await this.prisma.$connect
+            const result = await this.prisma.booking.findMany({
+                where:{
+                  userId:userId
+                }
+            })
+            return result && result.length>0 ? {
+                     status:"success",
+                     statusCode:201,
+                     data:result
+            }:{
+                status:"Not found!",
+                statusCode:404
+            }
+
+
+        }catch(error){
+            return {
+                status:'Internal Server',
+                statusCode:500
+            }
         }
     }
    

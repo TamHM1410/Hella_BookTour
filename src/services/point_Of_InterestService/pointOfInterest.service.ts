@@ -8,6 +8,14 @@ class PointOfInterestService {
   getAll = async (page: number, pageSize: number) => {
     try {
       await this.prisma.$connect;
+      if(page==0){
+        const result = await this.prisma.point_Of_Interest.findMany();
+        return {
+          status: "success",
+          statusCode: 201,
+          data:result
+        };
+      }
       const startIndex = (page - 1) * pageSize;
       const totalItems = await this.prisma.point_Of_Interest.count();
       const result = await this.prisma.point_Of_Interest.findMany({
@@ -148,7 +156,7 @@ class PointOfInterestService {
       });
       return {
         status: "Delete success!",
-        statusCode: 201,
+        statusCode: 204,
       };
     } catch (error) {
       return {

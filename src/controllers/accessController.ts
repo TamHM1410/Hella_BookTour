@@ -63,6 +63,51 @@ class AccessController {
       });
     }
   };
+  verifyEmail =async(req: CustomRequest, res: Response)=>{
+    try{
+      const email =req.body.email
+      const result =await accesssService.verifyEmail(email)
+      return res.status(result.statusCode).json(result);
+
+    }catch(error){
+      return res.status(500).json({
+        status: "Internal server",
+        statusCode: 500,
+      });
+
+    }
+  }
+  verifyOtp =async (req:Request,res:Response)=>{
+    try{
+       const email =req.body.email
+       const otp =req.body.otp
+       const result =await accesssService.verifyOtp(otp,email)
+       return result ? res.status(result.statusCode).json(result) : res.status(404).json({EM:'concho ngu'})
+    }catch(error){
+      return res.status(500).json({
+        status: "Internal server",
+        statusCode: 500,
+      });
+
+    }
+  }
+  resetPass =async (req:Request,res:Response)=>{
+    try{
+      const email =req.body.email
+      const password=req.body.password
+      const result =await accesssService.resetPass(password,email)
+      return result ? res.status(result.statusCode).json(result) : res.status(404).json({EM:'concho ngu'})
+
+
+
+    }catch(error){
+      return res.status(500).json({
+        status: "Internal server",
+        statusCode: 500,
+      });
+
+    }
+  }
 }
 
 export const accessController = new AccessController();

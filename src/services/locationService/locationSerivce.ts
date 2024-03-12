@@ -7,6 +7,15 @@ class LocationService {
   getAllLocation = async (page: number, pageSize: number) => {
     try {
       await this.prisma.$connect;
+      if(page ==0){
+        const data = await this.prisma.location.findMany();
+        return{
+          status: "Success",
+          statusCode: 201,
+          data: data
+        
+        }
+      }
       const startIndex = (page - 1) * pageSize;
       // Lấy tổng số lượng mục từ cơ sở dữ liệu
       const totalItems = await this.prisma.location.count();
@@ -16,7 +25,7 @@ class LocationService {
       });
       return {
         status: "Success",
-        statusCode: 202,
+        statusCode: 201,
         data: data,
         page,
         pageSize,
@@ -117,6 +126,7 @@ class LocationService {
     locationName: string;
     locationAddress: string;
     status: boolean;
+    image:string
   }) => {
     try {
       await this.prisma.$connect;
@@ -129,6 +139,7 @@ class LocationService {
           locationName: currentData.locationName,
           locationAddress: currentData.locationAddress,
           status: currentData.status,
+          image:currentData.image
         },
       });
       return {

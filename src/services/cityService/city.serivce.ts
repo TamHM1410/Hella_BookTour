@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { City } from "@prisma/client";
 
 class CityService {
   private prisma: PrismaClient;
@@ -7,8 +8,16 @@ class CityService {
   }
   getCity = async (page: number, pageSize: number) => {
     try {
+      if(page==0){
+        const allCity = await this.prisma.city.findMany();
+        return {
+          status:"success",
+          statusCode:201,
+          data:allCity
+        }
+      }
       const startIndex = (page - 1) * pageSize;
-      // Lấy tổng số lượng mục từ cơ sở dữ liệu
+       
       const totalItems = await this.prisma.city.count();
       const allCity = await this.prisma.city.findMany({
         skip: startIndex,
@@ -16,7 +25,7 @@ class CityService {
       });
       return {
         status: "Success!",
-        statusCode: 200,
+        statusCode: 201,
         data: allCity,
         page,
         pageSize,
@@ -32,9 +41,10 @@ class CityService {
   };
   getCityByName =async(cityName:string)=>{
     try{
+      
       const data = await this.prisma.city.findMany()
-      const rs =await data.filter(item=>item.cityName.includes(cityName))
-      return data ? { 
+      const rs =await data.filter((item:City)=>item.cityName.includes(cityName))
+      return data &&rs.length >0? { 
         status :'Success',
         statusCode:201,
         data:rs

@@ -16,7 +16,31 @@ export const updateImageFromUrl = async ()=>{
         console.log(error)
     }
 }
-export const upLoadFiles = async (files: any[]) => {
+export const getAllimage =async (folderName :string)=>{
+    try{ 
+        
+        const result = await cloudinary.search.expression(`folder:${folderName}`).execute()
+     
+        if(result.resources){
+            const arr =result.resources 
+         
+            const  data = arr.map((item:any)=>item.url)
+            return {
+                status:200,
+                statusCode:200,
+                data:data,
+             
+              
+            }
+        }
+        
+
+    }catch(error){
+        console.error('Error uploading files to Cloudinary:', error);
+        throw error;
+    }
+}
+export const upLoadFiles = async (files: any[],folderName:string) => {
     try {
         if (!files.length) return []; 
 
@@ -26,7 +50,7 @@ export const upLoadFiles = async (files: any[]) => {
 
             await new Promise((resolve, reject) => {
                 const uploadStream = cloudinary.uploader.upload_stream(
-                    { folder: 'hcm' }, 
+                    { folder: folderName }, 
                     (error: any, result: any) => {
                         if (error) {
                             console.error('Error uploading file to Cloudinary:', error);

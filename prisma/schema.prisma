@@ -87,6 +87,7 @@ model Vehicle {
   createAt    DateTime    @default(now())
   updateAt    DateTime    @updatedAt
   deleteAt    DateTime?
+  image       String?
   tour        Tour[]
 }
 
@@ -107,8 +108,9 @@ model Tour {
 }
 
 model Location_In_Tour {
-  id         Int @id @default(autoincrement())
+  id         Int     @id @default(autoincrement())
   locationId Int
+  image      String?
 
   tourId      Int
   tour        Tour      @relation(fields: [tourId], references: [id])
@@ -134,8 +136,8 @@ model Tour_Guide {
 }
 
 model Trip {
-  id          Int @id @default(autoincrement())
-  tourGuideId Int
+  id          Int     @id @default(autoincrement())
+  tourGuideId String?
 
   tourId    Int
   tour      Tour    @relation(fields: [tourId], references: [id])

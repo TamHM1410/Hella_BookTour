@@ -6,6 +6,10 @@ import { createToken } from "../../auth/createToken";
 import keyService from "../keyService/keyService";
 import keys from "../../models/KeyModel";
 import mongoose from "mongoose";
+import OtpShcema from "../../models/OTP.model";
+import otpGenerator from 'otp-generator'
+import { sendMail } from "../../worker/SendMail/SendMail";
+import { receiveMail } from "../../worker/receiveMail/receiveMail";
 
 interface Data {
   email: string;
@@ -125,6 +129,7 @@ class AccessService {
   };
   logOut = async (userId: string | undefined) => {
     try {
+      await instanceMongo()
       await keys.findOneAndDelete({
         userId: new mongoose.Types.ObjectId(userId),
       });
@@ -139,5 +144,130 @@ class AccessService {
       };
     }
   };
+  resetPass =async (password:string,email:string)=>{
+    try{
+      await instanceMongo()
+      const checkEmail = await user.findOne({email:email})
+    
+      if(checkEmail.verified==false || checkEmail.verified ==null){
+        return {
+          status:'You dont have permission!',
+          statusCode:403
+        }
+      }
+      if(checkEmail.verified ==true){
+        const hassPassword = await bcrypt.hash(password, 10);
+        const idata =await user.findById(checkEmail._id)
+        console.log(idata)
+        await user.findByIdAndUpdate(checkEmail._id, {
+          password: hassPassword,
+          verified: false
+        });
+        
+        return {
+          status:'Success update password',
+          statusCode:200
+        }
+
+      }
+
+    }catch(error){
+      console.log(error)
+      return {
+        status: "Internal Server!",
+        statusCode: 500,
+        e:error
+      };
+    }
+  }
+
+  verifyOtp =async (otp:string,email:string) =>{
+      try{
+        
+        await instanceMongo()
+        const dataEmail = await user.findOne({
+          email:email
+        })
+        const id =dataEmail._id
+        const checkOtp= await OtpShcema.find({
+          userId:id
+        })
+        
+        if( checkOtp.length == 0){
+          return {
+            status:"Some thing wrong tan ngu",
+            statusCode:410
+          }
+          
+
+        }
+
+
+        const updateUser =await user.findOneAndUpdate({
+          email:email
+        },{ verified:true},{new:true})
+
+
+        return  updateUser ? {
+           status:'success',
+           statusCode:200
+        }:{
+          statusCode:404,
+          status:'huhu'
+        }
+      
+
+
+
+         
+      }catch(error){
+        return {
+          status: "Internal Server!",
+          statusCode: 500,
+          e:error
+        };
+      }
+  }
+  verifyEmail =async(email:string)=>{
+    try{
+       await instanceMongo()
+       const dataByEmail = await user.findOne({ email: email });
+
+       if (!dataByEmail) {
+           return {
+               status: 'Not correct Email',
+               statusCode: 409
+           };
+       }
+       const taskName='sendOtp'
+       const otpgenter = otpGenerator.generate(6, { digits: true, specialChars: false });
+       const createNewOtp = await OtpShcema.create({
+           userId: dataByEmail._id, 
+           otp_code: otpgenter
+       });
+      const msg ={
+        otp:otpgenter,
+        email:email
+       }
+      await receiveMail(taskName,email)
+      await sendMail({msg,taskName})
+       
+       return {status: 'Success',
+       statusCode: 201,
+       data:msg
+          
+       }
+      
+       
+
+    }catch(error){
+      console.log(error)
+      return {
+        status: "Internal Server!",
+        statusCode: 500,
+        e:error
+      };
+    }
+  }
 }
 export const accesssService = new AccessService();

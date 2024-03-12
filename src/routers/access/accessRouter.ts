@@ -62,6 +62,29 @@ export const accessRouter = express.Router();
  *         description: Bad request
  */
 accessRouter.post("/signUp", accessController.signUp);
+/**
+ * @swagger
+ * /access/logOut:
+ *   post:
+ *     summary: Đăng xuất người dùng.
+ *     description: API này được sử dụng để đăng xuất người dùng khỏi hệ thống.
+ *     tags:
+ *       - Access
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         description: JWT token của người dùng đăng nhập.
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: Đăng xuất thành công.
+ *       '401':
+ *         description: Không được phép truy cập, token không hợp lệ hoặc hết hạn.
+ *       '500':
+ *         description: Lỗi server.
+ */
 
 accessRouter.post("/logOut", checkLogin, accessController.logOut);
 
@@ -107,3 +130,7 @@ accessRouter.post("/logOut", checkLogin, accessController.logOut);
  *         description: Bad request
  */
 accessRouter.post("/signIn", accessController.signIn);
+
+accessRouter.post("/verify", accessController.verifyEmail);
+accessRouter.post("/verifyOtp", accessController.verifyOtp);
+accessRouter.post("/resetPass", accessController.resetPass);

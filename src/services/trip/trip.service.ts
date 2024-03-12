@@ -26,6 +26,15 @@ class TripService {
   getAllTrip = async (page: number, pageSize: number) => {
     try {
       await this.prisma.$connect;
+      if(page==0){
+        const data = await this.prisma.trip.findMany();
+        return {
+          status: "sucess",
+          statusCode: 201,
+          data:data
+        };
+
+      }
       const startIndex = (page - 1) * pageSize;
       // Lấy tổng số lượng mục từ cơ sở dữ liệu
       const totalItems = await this.prisma.trip.count();
@@ -57,7 +66,7 @@ class TripService {
     startDate: string;
     endDate: string;
     status: boolean;
-    tourGuideId: number;
+    tourGuideId: string;
   }) => {
     try {
       await this.prisma.$connect;
@@ -65,6 +74,8 @@ class TripService {
         data: {
           tourId: currentData.tourId,
           totalCustomer: currentData.totalCustomer,
+          startDate:currentData.startDate,
+          endDate:currentData.endDate,
           
           status: currentData.status,
           tourGuideId: currentData.tourGuideId,
@@ -90,7 +101,7 @@ class TripService {
     startDate: string;
     endDate: string;
     status: boolean;
-    tourGuideId: number;
+    tourGuideId: string;
     id: number;
   }) => {
     try {
@@ -102,6 +113,8 @@ class TripService {
         data: {
           tourId: currentData.tourId,
           totalCustomer: currentData.totalCustomer,
+          startDate:currentData.startDate,
+          endDate:currentData.endDate,
        
           status: currentData.status,
           tourGuideId: currentData.tourGuideId,
@@ -152,5 +165,29 @@ class TripService {
       await this.prisma.$disconnect;
     }
   };
+  getTripByTourguide =async ( tourGuideId:string)=>{
+    try{
+      await this.prisma.$connect
+      const result =await this.prisma.trip.findMany({
+        where:{
+          tourGuideId:tourGuideId
+        }
+      })
+      return result && result.length>0 ? {
+        status:"success",
+        statusCode:201,
+        data:result
+}:{
+   status:"Not found!",
+   statusCode:404
+}
+
+    }catch(error){
+      return {
+        status: "Internal server",
+        statusCode: 500,
+      }
+    }
+  }
 }
 export const tripService = new TripService();
