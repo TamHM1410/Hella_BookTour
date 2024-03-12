@@ -79,6 +79,14 @@ class PaymentService {
   getAll = async (page: number, pageSize: number) => {
     try {
       await this.prisma.$connect;
+      if(page==0){
+        const data = await this.prisma.payment.findMany();
+        return {
+          status:'Success',
+          statusCode:201,
+          data:data
+        }
+      }
       const startIndex = (page - 1) * pageSize;
       // Lấy tổng số lượng mục từ cơ sở dữ liệu
       const totalItems = await this.prisma.payment.count();

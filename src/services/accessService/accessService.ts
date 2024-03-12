@@ -239,9 +239,17 @@ class AccessService {
                statusCode: 409
            };
        }
+    
        const taskName='sendOtp'
        const otpgenter = otpGenerator.generate(6, { digits: true, specialChars: false });
-       const createNewOtp = await OtpShcema.create({
+       const checkSendOtp =await OtpShcema.findOne({userId:dataByEmail._id,})
+       if (checkSendOtp) {
+        return {
+            status: 'OTP sendOTP sent. Please check your mailbox or try again after 5 minutes!',
+            statusCode: 409
+        };
+    }
+       await OtpShcema.create({
            userId: dataByEmail._id, 
            otp_code: otpgenter
        });
@@ -253,8 +261,8 @@ class AccessService {
       await sendMail({msg,taskName})
        
        return {status: 'Success',
-       statusCode: 201,
-       data:msg
+       statusCode: 200,
+      
           
        }
       

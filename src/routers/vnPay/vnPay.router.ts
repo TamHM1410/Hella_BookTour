@@ -6,4 +6,3 @@ vnPayRouter.post('/create_vnpayment',vnpayController.createVnpay)
 
 
 vnPayRouter.get('/vnpay_ipn',vnpayController.returnIPN)
-vnPayRouter.get('/test',vnpayController.test)

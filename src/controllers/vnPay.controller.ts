@@ -62,7 +62,7 @@ class VnpayController {
             };
     
             let vnp_Params = req.query;
-            // console.log('quet',req.query)
+            
           
             const secureHash = vnp_Params["vnp_SecureHash"];
           
@@ -84,7 +84,6 @@ class VnpayController {
             const hmac = crypto.createHmac("sha512", secretKey);
             const signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
             const paymentStatus = vnp_Params["vnp_ResponseCode"]
-            console.log(paymentStatus,'payment'); // Giả sử '0' là trạng thái khởi tạo giao dịch, chưa có IPN. Trạng thái này được lưu khi yêu cầu thanh toán chuyển hướng sang Cổng thanh toán VNPAY tại đầu khởi tạo đơn hàng.
             //let paymentStatus = '1'; // Giả sử '1' là trạng thái thành công bạn cập nhật sau IPN được gọi và trả kết quả về nó
             //let paymentStatus = '2'; // Giả sử '2' là trạng thái thất bại bạn cập nhật sau IPN được gọi và trả kết quả về nó
             const checkOrderId = true; // Mã đơn hàng "giá trị của vnp_TxnRef" VNPAY phản hồi tồn tại trong CSDL của bạn
@@ -97,20 +96,21 @@ class VnpayController {
                           if (paymentStatus == "00") {
                               if (rspCode == "00") {
                                   const stringId = vnp_Params['vnp_OrderInfo'];
-                                  console.log(stringId);
+                                  
                                   if (typeof stringId === 'string') {
                                       const parts = stringId.split("%3A");
                                       const id = +parts[0];
                                       const userId = parts[1];
                                       const status = true;
                                       const updateBooking = await bookingService.updateStatusById(id, status);
-                                      let storeBooking: Booking | undefined;
+                                      
+                                      let storeBooking: Booking | undefined= updateBooking.data;;
                                       if (Array.isArray(updateBooking) && updateBooking.length > 0) {
-                                          storeBooking = updateBooking[0];
+                                          storeBooking = updateBooking.data;
                                       }
           
                                       await instanceMongo();
-
+                                      
                                       
                                       const userData = await User.findById({_id:new mongoose.Types.ObjectId(userId)});
                                       
@@ -152,6 +152,7 @@ class VnpayController {
                                       const taskName: string = 'checkOut';
                                       const amount :number =storeBooking?.totalAmount || 0
                                       const bookingId:number=storeBooking?.id ||0
+                                      console.log(storeBooking)
                                       await this.prisma.payment.create({
                                         data:{
                                             status:true,
@@ -160,7 +161,7 @@ class VnpayController {
                                             paymentDate:new Date(),
                                             amount :amount,
                                             paymentName:"VN Pay",
-                                            
+
 
 
                                            
@@ -229,68 +230,12 @@ class VnpayController {
             })
         }
     }
-     test =async (req:Request, res:Response )=>{
-      try{
-        await instanceMongo()
-    
-        await this.prisma.$connect
-        const taskName:string='signUp'
-        const id='65e841d6f5cb272f4e90d606'
-        const userData = await User.findById({_id:new mongoose.Types.ObjectId(id)})
-  
-       
-
-      
-        const data = await this.prisma.trip.findMany({
-          where: {
-            id: 1
-          },
-          include: {
-            tour: {
-              select: {
-                tourName: true,
-                tourType: true,
-                price: true,
-                image: true,
-                vehicleType: {
-                  select: {
-                    vehicleName: true,
-                    capacity: true
-                  }
-                },
-                locationinTour:{
-                  include:{
-                    location:true
-                  }
-                }
-              }
-            }
-          }
-        });
-        
-        const mergeData = {...data,...userData}
-       
-        const msg= {
-          tripInfor:mergeData['0'],
-          userInfor:mergeData._doc
-        }
-        console.log(data[0])
-        //   await receiveMail(taskName)
-        // await sendMail({msg,taskName})
-        
-        return res.status(200).json({em:'hihih',msg})
-        
-        
-        
-      }catch(error){
-        console.log(error)
-      }
-    }
+ 
     
     createVnpay =async  (req:Request, res:Response    ) => {
         try {
             const url =req.headers.referer
-            console.log(url,'url')
+            
            
             const checkUrl = url?.startsWith('http://') || url?.startsWith('https://');
             let returnUrl
@@ -301,7 +246,7 @@ class VnpayController {
             }if(checkUrl==false||checkUrl==undefined){
                 returnUrl =process.env.vnp_ReturnUrlM
             }
-            console.log(returnUrl,'check',url,'url')
+           
             const date = new Date();
             const createDate = moment(date).format("YYYYMMDDHHmmss");
             const generateRandomString = (length: number): string => {
@@ -332,7 +277,7 @@ class VnpayController {
             }
             const currCode = 'VND';
             const orderInfor = `${id}:${userId}`;
-            console.log('orderInfor',orderInfor)
+         
     
             let vnp_Params :VnpParams = {
                 vnp_Version: '2.1.0',
