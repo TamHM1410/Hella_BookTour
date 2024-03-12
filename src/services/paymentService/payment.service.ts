@@ -132,7 +132,7 @@ class PaymentService {
           refunded: currentData.refunded,
           refundedTime: currentData.refundedTime,
           refundedAmount: currentData.refundedAmount,
-          paymentMethodId: currentData.paymentMethodId,
+       
           bookingId: currentData.bookingId,
           paymentName: currentData.paymentName,
         },
@@ -179,7 +179,7 @@ class PaymentService {
           refunded: currentData.refunded,
           refundedTime: currentData.refundedTime,
           refundedAmount: currentData.refundedAmount,
-          paymentMethodId: currentData.paymentMethodId,
+          
           bookingId: currentData.bookingId,
           paymentName: currentData.paymentName,
         },

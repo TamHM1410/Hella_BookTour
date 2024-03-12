@@ -150,6 +150,29 @@ class VnpayController {
                                       };
                                       const email=userData.email ?? "hunhminhtam@gmail.com"
                                       const taskName: string = 'checkOut';
+                                      const amount :number =storeBooking?.totalAmount || 0
+                                      const bookingId:number=storeBooking?.id ||0
+                                      await this.prisma.payment.create({
+                                        data:{
+                                            status:true,
+                                          
+                                            bookingId:bookingId,
+                                            paymentDate:new Date(),
+                                            amount :amount,
+                                            paymentName:"VN Pay",
+                                            
+
+
+                                           
+                                            
+
+                                            
+
+                                        }
+
+
+
+                                      })
                                       await receiveMail(taskName,email);
                                       await sendMail({msg, taskName});
           
