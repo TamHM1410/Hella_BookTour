@@ -87,6 +87,8 @@ class UserService {
           gender: currentData.gender,
           roleId: currentData.roleId,
           image:currentData.image
+        },{
+          new:true
         }
       );
       return data
