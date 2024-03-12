@@ -8,6 +8,14 @@ class VehicleType {
   getAll = async (page: number, pageSize: number) => {
     try {
       const startIndex = (page - 1) * pageSize;
+      if(page== 0){
+        const data = await this.prisma.vehicle.findMany()
+        return {
+          status:'Success',
+          statusCode:201,
+          data:data
+        }
+      }
       // Lấy tổng số lượng mục từ cơ sở dữ liệu
       const totalItems = await this.prisma.vehicle.count();
       const allData = await this.prisma.vehicle.findMany({
@@ -24,9 +32,11 @@ class VehicleType {
         totalItems,
       };
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal server error",
         statusCode: 500,
+        e:error
       };
     } finally {
       await this.prisma.$disconnect;
