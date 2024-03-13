@@ -134,9 +134,9 @@ class PaymentService {
       await this.prisma.$connect;
       const data = await this.prisma.payment.create({
         data: {
-          paymentDate: currentData.paymentDate,
+          paymentDate: new Date(),
           amount: currentData.amount,
-          status: currentData.status,
+          status: true,
           refunded: currentData.refunded,
           refundedTime: currentData.refundedTime,
           refundedAmount: currentData.refundedAmount,
