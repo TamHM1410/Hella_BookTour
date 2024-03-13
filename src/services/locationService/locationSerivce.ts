@@ -174,6 +174,7 @@ class LocationService {
       return {
         status: "Update success",
         statusCode: 201,
+        data:data
        
         
       }

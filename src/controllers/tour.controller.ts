@@ -34,12 +34,17 @@ class TourController {
   };
   updateTour = async (req: Request, res: Response) => {
     try {
-      const currentata = req.body;
-
-      const result = await tourService.update(currentata);
-      if (result) {
-        return res.status(result.statusCode).json(result);
+     
+      const {files} =req
+      const currentData = JSON.parse(req.body.currentData);
+      if(files!== undefined && Array.isArray(files)){
+        const result = await tourService.update(currentData,files);
+        if (result) {
+          return res.status(result.statusCode).json(result);
+        }
+          
       }
+     
     } catch (error) {
       return res.status(500).json({
         status: "Internal server",

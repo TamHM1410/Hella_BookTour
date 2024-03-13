@@ -100,6 +100,11 @@ class Categoty_of_poi {
   deleteById = async (id: number) => {
     try {
       await this.prisma.$connect;
+      await this.prisma.point_Of_Interest.deleteMany({
+        where:{
+          categoryPOI_ID:id
+        }
+      })
       await this.prisma.categoty_Of_POI.delete({
         where: {
           id: id,

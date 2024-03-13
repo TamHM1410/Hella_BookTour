@@ -76,6 +76,11 @@ class BookingService {
     deleteById =async (id:number)=>{
         try{
             await this.prisma.$connect
+            await this.prisma.payment.deleteMany({
+                where:{
+                    bookingId:id
+                }
+            })
             await this.prisma.booking.delete({
                 where :{
                     id:id

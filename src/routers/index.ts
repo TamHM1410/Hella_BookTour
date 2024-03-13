@@ -13,7 +13,7 @@ import { paymentMethodRouter } from "./paymentMethod/paymentMethod.router";
 import { vehicleRouter } from "./vehicle/vehicle.router";
 import { userRouter } from "./userRouter/user.router";
 import { vnPayRouter } from "./vnPay/vnPay.router";
-import { uploadfileRouter } from "./uploadFile/uploadfile.router";
+// import { uploadfileRouter } from "./uploadFile/uploadfile.router";
 import { tourguideRouter } from "./tourguide/tourguide.router";
 import { firebaseRouter } from "./firebase/firebase.router";
 import {pointOfInterestRouter} from "./pointOfInterest/pointOfInterest.router"
@@ -44,7 +44,7 @@ export const initApi = (app: Express) => {
   app.use("/api/v1", vehicleRouter);
   app.use("/api/v1", userRouter);
   app.use("/api/v1", vnPayRouter);
-  app.use("/api/v1", uploadfileRouter);
+  // app.use("/api/v1", uploadfileRouter);
   app.use("/api/v1", tourguideRouter);
   app.use("/api/v1", firebaseRouter);
   app.use("/api/v1", pointOfInterestRouter);
