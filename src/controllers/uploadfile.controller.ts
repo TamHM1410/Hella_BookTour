@@ -9,8 +9,9 @@ declare module 'express' {
 class UploadfileController{
     uploadFile =async (req:Request,res:Response)=>{
         try{
-            const result =await updateImageFromUrl()
-            return res.status(200).json(result)
+            console.log('yes')
+            await updateImageFromUrl()
+            return res.status(200)
 
 
         }catch(error){
@@ -49,7 +50,7 @@ class UploadfileController{
          
             const {files} =req
             const folderName=req.body.folderName
-           
+           console.log('files',files,folderName)
             
             if(!files){
                 return  res.status(401).json({

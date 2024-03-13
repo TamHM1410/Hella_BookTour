@@ -15,7 +15,7 @@ class Categoty_of_poi {
           statusCode: 201,
           data: data,
          
- }
+      }
 
       }
       const startIndex = (page - 1) * pageSize;

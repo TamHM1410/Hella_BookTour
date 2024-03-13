@@ -4,13 +4,11 @@ import stream from 'stream';
 
 export const updateImageFromUrl = async ()=>{
     try{
-        const url ='https://media.vneconomy.vn/w800/images/upload/2023/06/29/sai-gon-ve-dem.jpg'
-        const folderName='hcm'
-        const result =await cloudinary.uploader.upload(url,{
-            folder:folderName
-        })
-        console.log(result,'hihi')
-        return result
+   
+        
+        const rs= await cloudinary.api.delete_folder('hcm')
+        console.log('hihi',rs)
+        return  rs
 
     }catch(error){
         console.log(error)
@@ -59,8 +57,8 @@ export const upLoadFiles = async (files: any[],folderName:string) => {
                             uploadUrls.push({
                                 image_url: result.secure_url,
                                 thumb_url: cloudinary.url(result.public_id, {
-                                    height: 200,
-                                    width: 200,
+                                    height: 500,
+                                    width: 500,
                                     crop: 'thumb',
                                     format: 'jpg'
                                 })

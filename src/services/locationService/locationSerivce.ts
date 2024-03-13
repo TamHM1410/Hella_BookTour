@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { upLoadFiles } from "../uploadFile/upload.service";
 class LocationService {
   private prisma = new PrismaClient();
   constructor() {
@@ -127,9 +128,10 @@ class LocationService {
     locationAddress: string;
     status: boolean;
     image:string
-  }) => {
+  },files :any[]) => {
     try {
       await this.prisma.$connect;
+     if(files.length==0){
       const data = await this.prisma.location.update({
         where: {
           id: currentData.id,
@@ -139,14 +141,42 @@ class LocationService {
           locationName: currentData.locationName,
           locationAddress: currentData.locationAddress,
           status: currentData.status,
-          image:currentData.image
+        
         },
       });
       return {
         status: "Update success",
-        statusCode: 200,
-        data: data,
+        statusCode: 201,
+        data:data
+        
       };
+
+     }
+ 
+      const folderName =`Location/${currentData.id}`
+      
+      const  rs =await upLoadFiles(files,folderName)
+      const data = await this.prisma.location.update({
+        where: {
+          id: currentData.id,
+        },
+        data: {
+          cityId: currentData.cityId,
+          locationName: currentData.locationName,
+          locationAddress: currentData.locationAddress,
+          status: currentData.status,
+          image: rs[0].thumb_url
+        
+        },
+      });
+      return {
+        status: "Update success",
+        statusCode: 201,
+        data:data
+        
+      }
+     
+      
     } catch (error) {
       console.log(error);
       return {

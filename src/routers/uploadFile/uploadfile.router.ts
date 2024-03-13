@@ -43,7 +43,7 @@ export const uploadfileRouter = express.Router();
  *             example:
  *               error: Internal Server Error
  */
-uploadfileRouter.get("/upload", upload.any(), uploadfileController.uploadFile);
+uploadfileRouter.get("/upload",  uploadfileController.uploadFile);
 
 /**
  * @swagger

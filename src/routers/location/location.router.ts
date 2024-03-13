@@ -1,6 +1,7 @@
 import express from 'express'
 import { locationController } from '../../controllers/location.Controller'
-
+import multer from "multer";
+const upload = multer();
 export const locationRouter=express.Router()
 
 /**
@@ -162,7 +163,7 @@ locationRouter.post('/locations/',locationController.createLocation)
  *             example:
  *               error: Internal Server Error
  */
-locationRouter.patch('/locations/:id',locationController.updateLocation)
+locationRouter.patch('/locations/:id',upload.any(),locationController.updateLocation)
 
 /**
  * @swagger
