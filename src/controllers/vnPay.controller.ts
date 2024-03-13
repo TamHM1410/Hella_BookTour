@@ -162,7 +162,7 @@ class VnpayController {
                                             amount :amount,
                                             paymentName:"VN Pay",
                                             refunded:false,
-                                            paymentMethodId:1
+                                            
                                             
 
 

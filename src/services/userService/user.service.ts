@@ -2,6 +2,7 @@ import user from "../../models/UserModel";
 import { instanceMongo } from "../../dbs/MongoDB/instanceMongo";
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import { upLoadFiles } from "../uploadFile/upload.service";
 class UserService {
   private errorMessage = {
     status: "Internal server",
@@ -76,9 +77,30 @@ class UserService {
     roleId: number;
     password: string;
     image:string
-  }) => {
+  },files :any[]) => {
     try {
       await instanceMongo();
+      if(files.length==0){
+        const data = await user.findByIdAndUpdate(
+          { _id: new mongoose.Types.ObjectId(currentData.id) },
+          {
+            fullName: currentData.fullName,
+            phone: currentData.phone,
+            gender: currentData.gender,
+            roleId: currentData.roleId,
+            image:currentData.image
+          },{
+            new:true
+          }
+        );
+        return data
+          ? { status: "Success", statusCode: 201, data: data }
+          : this.errorMessage;
+       }
+   
+      const folderName =`Users/${currentData.id}`
+      
+      const  rs =await upLoadFiles(files,folderName)
       const data = await user.findByIdAndUpdate(
         { _id: new mongoose.Types.ObjectId(currentData.id) },
         {
@@ -86,7 +108,7 @@ class UserService {
           phone: currentData.phone,
           gender: currentData.gender,
           roleId: currentData.roleId,
-          image:currentData.image
+          image:rs[0].thumb_url
         },{
           new:true
         }
@@ -106,21 +128,29 @@ class UserService {
       gender: string;
       roleId: number;
       password: string;
+      newPassword:string
     },
     id: string
   ) => {
     try {
       await instanceMongo();
-      const hashPassword = await bcrypt.hash(currentData.password, 10);
+      const hashPassword = await bcrypt.hash(currentData.newPassword, 10);
       const currentUser = await user.findById({
         _id: new mongoose.Types.ObjectId(id),
       });
       if (currentUser && currentUser.password) {
+        
         const compare = await bcrypt.compare(
           currentData.password,
           currentUser.password
         );
         if (compare === true) {
+          if(currentData.password===currentData.newPassword){
+            return {
+              status:'New password must be different with the old!',
+              statusCode:409
+            }
+          }
           const data = await user.findByIdAndUpdate(
             { _id: new mongoose.Types.ObjectId(id) },
             { password: hashPassword },
