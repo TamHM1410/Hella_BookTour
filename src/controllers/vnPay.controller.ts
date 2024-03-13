@@ -161,6 +161,9 @@ class VnpayController {
                                             paymentDate:new Date(),
                                             amount :amount,
                                             paymentName:"VN Pay",
+                                            refunded:false,
+                                            paymentMethodId:1
+                                            
 
 
 

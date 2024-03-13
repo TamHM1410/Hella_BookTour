@@ -190,8 +190,9 @@ model Booking {
   totalCustomer Int
   status        Boolean
 
-  tripId Int
-  trip   Trip @relation(fields: [tripId], references: [id])
+  tripId          Int
+  trip            Trip @relation(fields: [tripId], references: [id])
+  paymentMethodId Int?
 
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt

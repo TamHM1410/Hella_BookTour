@@ -68,7 +68,7 @@ accessRouter.post("/signUp", accessController.signUp);
  *   post:
  *     summary: Đăng xuất người dùng.
  *     description: API này được sử dụng để đăng xuất người dùng khỏi hệ thống.
- *     tags:
+ *     tags:[Authentication]
  *       - Access
  *     parameters:
  *       - in: header

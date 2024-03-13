@@ -209,51 +209,7 @@ locationInTourRouter.get('/tours/locations/:id',locationInTourController.getById
  */
 locationInTourRouter.patch('/tours/locations/:id',locationInTourController.updateById)
 
-/**
- * @swagger
- * /api/v1/tours/{tourId}/locations:
- *   get:
- *     summary: Get all locations in a tour
- *     tags: [Location In Tour]
- *     parameters:
- *       - name: tourId
- *         in: path
- *         required: true
- *         description: ID of the tour
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: Successful response
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 tourId:
- *                   type: string
- *                   description: ID of the tour
- *                 locations:
- *                   type: array
- *                   items:
- *                     type: object
- *                     properties:
- *                       locationId:
- *                         type: string
- *                         description: ID of the location
- *                       locationName:
- *                         type: string
- *                         description: Name of the location
- *                       locationAddress:
- *                         type: string
- *                         description: Address of the location
- *       '500':
- *         description: Internal Server Error
- *         content:
- *           application/json:
- *             example:
- *               error: Internal Server Error
- */
+
 locationInTourRouter.get('/tours/:tourId/locations',locationInTourController.getLocationInTour)
 
 
