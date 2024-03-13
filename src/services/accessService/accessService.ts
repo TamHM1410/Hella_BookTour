@@ -188,12 +188,14 @@ class AccessService {
         const dataEmail = await user.findOne({
           email:email
         })
-        const id =dataEmail._id
+        
+        
+      
         const checkOtp= await OtpShcema.find({
-          userId:id
-        })
-        console.log(checkOtp,'otp')
-        if( checkOtp.length == 0){
+          userId:dataEmail._id
+         })
+         console.log(checkOtp)
+         if( checkOtp.length == 0){
           return {
             status:"Some thing wrong tan ngu",
             statusCode:410
@@ -201,6 +203,7 @@ class AccessService {
           
 
         }
+       
 
 
         const updateUser =await user.findOneAndUpdate({
@@ -231,9 +234,12 @@ class AccessService {
   verifyEmail =async(email:string)=>{
     try{
        await instanceMongo()
-       const dataByEmail = await user.findOne({ email: email });
+     
+       const data =await user.find({email:email})
 
-       if (!dataByEmail) {
+       const dataByEmail = await user.findOne({ email: email });
+          
+       if (dataByEmail===null) {
            return {
                status: 'Not correct Email',
                statusCode: 409

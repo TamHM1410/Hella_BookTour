@@ -171,7 +171,7 @@ model Payment {
   paymentDate    DateTime
   amount         Float
   status         Boolean
-  refunded       Boolean?
+  refunded       Boolean?  @default(false)
   refundedTime   DateTime?
   refundedAmount DateTime?
   createAt       DateTime  @default(now())
