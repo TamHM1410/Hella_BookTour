@@ -11,7 +11,8 @@ class BookingController {
       }
       const page = parseInt(req.query.page as string) || 0
       const pageSize = parseInt(req.query.pageSize as string) || 5;
-      const result = await bookingService.getAll(page, pageSize);
+      const sortBy = req.query.sortBy as string || 'newest';
+      const result = await bookingService.getAll(page, pageSize, sortBy);
       if (result) {
         return res.status(result.statusCode).json(result);
       }
