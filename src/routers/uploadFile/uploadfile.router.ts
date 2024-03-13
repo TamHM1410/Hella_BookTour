@@ -86,3 +86,4 @@ uploadfileRouter.get("/upload",  uploadfileController.uploadFile);
  */
 uploadfileRouter.post("/files", upload.any(), uploadfileController.uploadFiles);
 uploadfileRouter.get("/files",  uploadfileController.getAllImage);
+

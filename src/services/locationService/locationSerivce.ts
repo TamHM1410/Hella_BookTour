@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { upLoadFiles } from "../uploadFile/upload.service";
+import { upLoadFiles,deleteFolder } from "../uploadFile/upload.service";
+
 class LocationService {
   private prisma = new PrismaClient();
   constructor() {
@@ -190,6 +191,9 @@ class LocationService {
   deleteLocationById = async (currentId: number) => {
     try {
       await this.prisma.$connect;
+      const folderName=`Location/${currentId}`
+      console.log('foldername',folderName)
+      await deleteFolder(folderName)
       await this.prisma.location.delete({
         where: {
           id: currentId,

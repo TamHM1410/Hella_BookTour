@@ -14,6 +14,18 @@ export const updateImageFromUrl = async ()=>{
         console.log(error)
     }
 }
+export const deleteFolder=async (folderName:string)=>{
+    try{
+        const rs =await cloudinary.api.delete_resources_by_prefix(folderName).then(()=> cloudinary.api.delete_folder(folderName))
+        console.log(rs,'rs')
+        return  
+
+    }catch(error){
+        console.error('Error uploading files to Cloudinary:', error);
+        throw error;
+        
+    }
+}
 export const getAllimage =async (folderName :string)=>{
     try{ 
         
