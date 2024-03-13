@@ -152,9 +152,7 @@ class VnpayController {
                                       const taskName: string = 'checkOut';
                                       const amount :number =storeBooking?.totalAmount || 0
                                       const bookingId:number=storeBooking?.id ||0
-                                     try{
-
-                                     }catch(error)
+                                 
                                       await this.prisma.payment.create({
                                         data:{
                                             status:true,
