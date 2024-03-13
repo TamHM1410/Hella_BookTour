@@ -4,6 +4,9 @@ import user from "../../models/UserModel";
 import { Request, Response, NextFunction } from "express";
 import dotenv from "dotenv";
 import { instanceMongo } from "../../dbs/MongoDB/instanceMongo";
+import crypto from "crypto";
+import { createToken } from "../../auth/createToken";
+import keyService from "../../services/keyService/keyService";
 
 dotenv.config();
 
@@ -63,27 +66,52 @@ export const CheckExistAccount = async (
     const { email } = req.authUser;
     const existAccountPromise = user.findOne({ email });
     existAccountPromise
-      .then((existAccount) => {
+      .then(async (existAccount) => {
         if (existAccount) {
           if (existAccount.status) {
-            const token = jwt.sign(
+            const { privateKey, publicKey } = await crypto.generateKeyPairSync(
+              "rsa",
               {
-                userId: existAccount._id,
-                email: existAccount.email,
-                role: existAccount.roleId,
-              },
-              process.env.JWT_SECRET as string,
-              { expiresIn: "24h" }
+                modulusLength: 4096,
+                publicKeyEncoding: {
+                  type: "pkcs1",
+                  format: "pem",
+                },
+                privateKeyEncoding: {
+                  type: "pkcs1",
+                  format: "pem",
+                },
+              }
             );
+            const refreshKey = await new Promise<string>((resolve, reject) => {
+              crypto.generateKey("hmac", { length: 512 }, (err, key) => {
+                if (err) reject(err);
+                const cloneKey: string = key.export().toString("hex");
+                resolve(cloneKey);
+              });
+            });
+            const payload: object = {
+              id: existAccount._id,
+              fullName: existAccount.fullName,
+              phone: existAccount.phone,
+              roleId: existAccount.roleId,
+              email: existAccount.email,
+            };
+            await keyService.createKeyToken({
+              userId: existAccount._id,
+              publicKey,
+              refreshKey,
+            });
+            const token = await createToken({
+              payload,
+              privateKey,
+              refreshKey,
+            });
             return res.status(200).send({
               msg: "Login Successful...!",
-              email: existAccount.email,
               token,
-              fullName: existAccount.fullName,
               _id: existAccount._id,
               roleId: existAccount.roleId,
-              phone: existAccount.phone,
-              gender: existAccount.gender,
             });
           }
         } else {
@@ -96,16 +124,45 @@ export const CheckExistAccount = async (
           });
           account
             .save()
-            .then((result: any) => {
-              const token = jwt.sign(
-                {
-                  userId: result._id,
-                  email: result.email,
-                  roleId: result.roleId,
-                },
-                process.env.JWT_SECRET as string,
-                { expiresIn: "24h" }
+            .then(async (result: any) => {
+              const { privateKey, publicKey } =
+                await crypto.generateKeyPairSync("rsa", {
+                  modulusLength: 4096,
+                  publicKeyEncoding: {
+                    type: "pkcs1",
+                    format: "pem",
+                  },
+                  privateKeyEncoding: {
+                    type: "pkcs1",
+                    format: "pem",
+                  },
+                });
+              const refreshKey = await new Promise<string>(
+                (resolve, reject) => {
+                  crypto.generateKey("hmac", { length: 512 }, (err, key) => {
+                    if (err) reject(err);
+                    const cloneKey: string = key.export().toString("hex");
+                    resolve(cloneKey);
+                  });
+                }
               );
+              const payload: object = {
+                id: result._id,
+                fullName: result.fullName,
+                phone: result.phone,
+                roleId: result.roleId,
+                email: result.email,
+              };
+              await keyService.createKeyToken({
+                userId: result._id,
+                publicKey,
+                refreshKey,
+              });
+              const token = await createToken({
+                payload,
+                privateKey,
+                refreshKey,
+              });
               return res.status(201).send({
                 email: result.email,
                 token,
@@ -117,7 +174,7 @@ export const CheckExistAccount = async (
                 msg: "User Register Successfully",
               });
             })
-            .catch((error:ErrorCallback) => {
+            .catch((error: ErrorCallback) => {
               return res.status(500).send({ error });
             });
         }
