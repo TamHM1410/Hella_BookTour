@@ -192,7 +192,7 @@ class AccessService {
         const checkOtp= await OtpShcema.find({
           userId:id
         })
-        
+        console.log(checkOtp,'otp')
         if( checkOtp.length == 0){
           return {
             status:"Some thing wrong tan ngu",
