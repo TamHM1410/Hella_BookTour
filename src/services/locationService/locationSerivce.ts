@@ -132,6 +132,7 @@ class LocationService {
   },files :any[]) => {
     try {
       await this.prisma.$connect;
+      console.log(currentData,files)
      if(files.length==0){
       const data = await this.prisma.location.update({
         where: {
@@ -173,7 +174,7 @@ class LocationService {
       return {
         status: "Update success",
         statusCode: 201,
-        data:data
+       
         
       }
      
@@ -192,8 +193,24 @@ class LocationService {
     try {
       await this.prisma.$connect;
       const folderName=`Location/${currentId}`
-      console.log('foldername',folderName)
+      
+     
       await deleteFolder(folderName)
+      await this.prisma.location_Activity.deleteMany({
+        where:{
+          locationId:currentId
+        }
+      })
+      await this.prisma.point_Of_Interest.deleteMany({
+        where:{
+          locationId:currentId
+        }
+      })
+      await this.prisma.location_In_Tour.deleteMany({
+        where:{
+          locationId:currentId
+        }
+      })
       await this.prisma.location.delete({
         where: {
           id: currentId,

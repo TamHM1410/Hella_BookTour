@@ -1,3 +1,4 @@
+import { error } from "console";
 import { cloudinary } from "../../config/cloudinary/cloudinary.config"
 import stream from 'stream';
 
@@ -16,9 +17,21 @@ export const updateImageFromUrl = async ()=>{
 }
 export const deleteFolder=async (folderName:string)=>{
     try{
-        const rs =await cloudinary.api.delete_resources_by_prefix(folderName).then(()=> cloudinary.api.delete_folder(folderName))
-        console.log(rs,'rs')
-        return  
+        const folderInfo = await cloudinary.api.resource(folderName).catch((error)=>{
+            console.log(error)
+        })
+    ;
+      
+        console.log(folderInfo,'fikasdsad')
+        if (folderInfo) {
+           
+            await cloudinary.api.delete_resources_by_prefix(folderName).then(()=> cloudinary.api.delete_folder(folderName)).catch((error)=>{
+                console.log(error)
+            })
+        
+        } else {
+            console.log(`Folder '${folderName}' does not exist. Skipping deletion.`);
+        }
 
     }catch(error){
         console.error('Error uploading files to Cloudinary:', error);

@@ -47,6 +47,21 @@ class TourService {
   deleteById = async (id: number) => {
     try {
       await this.prisma.$connect;
+      await this.prisma.location_In_Tour.deleteMany({
+        where:{
+          tourId:id
+        }
+      })
+      await this.prisma.location_In_Tour.deleteMany({
+        where:{
+          tourId:id
+        }
+      })
+      await this.prisma.trip.deleteMany({
+        where:{
+          tourId:id
+        }
+      })
       await this.prisma.tour.delete({
         where: {
           id: id,

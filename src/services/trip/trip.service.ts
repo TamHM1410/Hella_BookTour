@@ -7,6 +7,11 @@ class TripService {
   deleteTripById = async (id: number) => {
     try {
       await this.prisma.$connect;
+      await this.prisma.booking.deleteMany({
+        where:{
+          tripId:id
+        }
+      })
       await this.prisma.trip.delete({
         where: {
           id: id,

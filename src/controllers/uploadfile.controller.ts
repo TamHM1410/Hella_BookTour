@@ -49,8 +49,11 @@ class UploadfileController{
         try{
          
             const {files} =req
+            console.log(req.body)
             const folderName=req.body.folderName
            console.log('files',files,folderName)
+           const parsds= JSON.parse(req.body.currentData)
+           console.log(parsds)
             
             if(!files){
                 return  res.status(401).json({

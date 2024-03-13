@@ -84,16 +84,14 @@ class LocationController {
   updateLocation = async (req: Request, res: Response) => {
     try {
       const {files} =req
-      const currentData = req.body ;
-      console.log(currentData,'bodyfiles')
-      const id = req.params.id;
-
-   
+      const currentData = JSON.parse(req.body.currentData);
+      console.log(currentData.id,files)
       const result = await locationService.updateLocationById(currentData,files);
       if (result) {
         return res.status(result.statusCode).json(result);
       }
     } catch (error) {
+      console.log(error)
       return res.status(500).json({
         status: "Internal server error!",
         statusCode: 500,
