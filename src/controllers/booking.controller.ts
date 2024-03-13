@@ -38,7 +38,7 @@ class BookingController {
   };
   deleteById = async (req: Request, res: Response) => {
     try {
-      const id = req.body.id;
+      const id = +req.params.id;
       const result = await bookingService.deleteById(id);
       if (result) {
         return res.status(result.statusCode).json(result);
