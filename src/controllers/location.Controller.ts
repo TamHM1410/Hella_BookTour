@@ -87,7 +87,7 @@ class LocationController {
       const currentData = req.body ;
       console.log(currentData,'bodyfiles')
       const id = req.params.id;
-      console.log(files.length,'files')
+
    
       const result = await locationService.updateLocationById(currentData,files);
       if (result) {
