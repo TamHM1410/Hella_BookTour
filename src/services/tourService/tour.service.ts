@@ -230,7 +230,11 @@ class TourService {
     try {
       await this.prisma.$connect;
       if(page==0){
-        const data = await this.prisma.tour.findMany()
+        const data = await this.prisma.tour.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        })
         return {
           status: "success",
           statusCode: 201,
@@ -242,6 +246,9 @@ class TourService {
       const data = await this.prisma.tour.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       if (!data) {
         return {

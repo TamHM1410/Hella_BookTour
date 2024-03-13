@@ -11,7 +11,11 @@ class PointOfInterestService {
     try {
       await this.prisma.$connect;
       if(page==0){
-        const result = await this.prisma.point_Of_Interest.findMany();
+        const result = await this.prisma.point_Of_Interest.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return {
           status: "success",
           statusCode: 201,
@@ -23,6 +27,9 @@ class PointOfInterestService {
       const result = await this.prisma.point_Of_Interest.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       if (result) {
         return {

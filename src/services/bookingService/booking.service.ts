@@ -9,7 +9,12 @@ class BookingService {
         try{
             if(page ==0 ){
                 await this.prisma.$connect
-            const data =await this.prisma.booking.findMany()
+            const data =await this.prisma.booking.findMany({
+                orderBy:{
+                    createAt:'desc'
+
+                }
+            })
             return {
                 status:'Success!',
                 statusCode:201,
@@ -25,6 +30,11 @@ class BookingService {
             const data =await this.prisma.booking.findMany({
                 skip: startIndex,
                 take: pageSize,
+                orderBy:{
+                    createAt:'desc'
+
+                }
+
             })
             if(data){
                 return {
