@@ -64,7 +64,7 @@ export const accessRouter = express.Router();
 accessRouter.post("/signUp", accessController.signUp);
 /**
  * @swagger
- * /access/logOut:
+ * /logOut:
  *   post:
  *     summary: Đăng xuất người dùng.
  *     description: API này được sử dụng để đăng xuất người dùng khỏi hệ thống.
