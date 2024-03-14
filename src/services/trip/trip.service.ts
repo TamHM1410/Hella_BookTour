@@ -64,6 +64,7 @@ class TripService {
         totalItems,
       };
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal server",
         statusCode: 500,

@@ -1,6 +1,7 @@
 import { tourService } from "../services/tourService/tour.service";
 import { Request, Response } from "express";
 import {  TourType } from "@prisma/client";
+import { log } from "console";
 class TourController {
   getAll = async (req: Request, res: Response) => {
     try {
@@ -35,7 +36,7 @@ class TourController {
   updateTour = async (req: Request, res: Response) => {
     try {
      
-      const {files} =req
+      const {files} =req ?? []
       const currentData = JSON.parse(req.body.currentData);
       if(files!== undefined && Array.isArray(files)){
         const result = await tourService.update(currentData,files);
@@ -44,8 +45,10 @@ class TourController {
         }
           
       }
+      
      
     } catch (error) {
+      
       return res.status(500).json({
         status: "Internal server",
         statusCode: 500,

@@ -104,7 +104,7 @@ class VnpayController {
                                       const status = true;
                                       const updateBooking = await bookingService.updateStatusById(id, status);
                                       
-                                      let storeBooking: Booking | undefined= updateBooking.data;;
+                                      let storeBooking: Booking | undefined= updateBooking.data;
                                       if (Array.isArray(updateBooking) && updateBooking.length > 0) {
                                           storeBooking = updateBooking.data;
                                       }
@@ -292,7 +292,7 @@ class VnpayController {
                 vnp_TxnRef: orderId,
                 vnp_OrderInfo: orderInfor,
                 vnp_OrderType: "other",
-                vnp_Amount: amount*100,    
+                vnp_Amount: amount*1000,    
                 vnp_ReturnUrl: returnUrl,
                 vnp_IpAddr: ipAddr ,
                 vnp_CreateDate: createDate,
