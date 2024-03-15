@@ -1,6 +1,7 @@
 import express from 'express';
 import { tourController } from '../../controllers/tour.controller';
-
+import multer from "multer";
+const upload = multer();
 export const tourRouter = express.Router();
 
 /**
@@ -182,5 +183,5 @@ tourRouter.delete('/tours/:id', tourController.deleteById);
  *             example:
  *               error: Internal Server Error
  */
-tourRouter.patch('/tours/:id', tourController.updateTour);
+tourRouter.patch('/tours/:id',upload.any(), tourController.updateTour);
 

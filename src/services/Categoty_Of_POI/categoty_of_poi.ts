@@ -9,7 +9,11 @@ class Categoty_of_poi {
     try {
       await this.prisma.$connect;
       if (page ==0 ){
-        const data = await this.prisma.categoty_Of_POI.findMany();
+        const data = await this.prisma.categoty_Of_POI.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return {
           status: "Success",
           statusCode: 201,
@@ -23,7 +27,10 @@ class Categoty_of_poi {
       const totalItems = await this.prisma.categoty_Of_POI.count();
       const data = await this.prisma.categoty_Of_POI.findMany({
         skip:startIndex,
-        take:pageSize
+        take:pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       if (data) {
         return {
@@ -100,6 +107,11 @@ class Categoty_of_poi {
   deleteById = async (id: number) => {
     try {
       await this.prisma.$connect;
+      await this.prisma.point_Of_Interest.deleteMany({
+        where:{
+          categoryPOI_ID:id
+        }
+      })
       await this.prisma.categoty_Of_POI.delete({
         where: {
           id: id,

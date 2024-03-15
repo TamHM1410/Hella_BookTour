@@ -10,7 +10,11 @@ class LocationService {
     try {
       await this.prisma.$connect;
       if(page ==0){
-        const data = await this.prisma.location.findMany();
+        const data = await this.prisma.location.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return{
           status: "Success",
           statusCode: 201,
@@ -24,6 +28,9 @@ class LocationService {
       const data = await this.prisma.location.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       return {
         status: "Success",
@@ -174,6 +181,7 @@ class LocationService {
       return {
         status: "Update success",
         statusCode: 201,
+        data:data
        
         
       }

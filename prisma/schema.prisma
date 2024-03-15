@@ -165,18 +165,19 @@ model Payment_Method {
 }
 
 model Payment {
-  id             Int       @id @default(autoincrement())
-  bookingId      Int
-  paymentName    String
-  paymentDate    DateTime
-  amount         Float
-  status         Boolean
-  refunded       Boolean?  @default(false)
-  refundedTime   DateTime?
-  refundedAmount DateTime?
-  createAt       DateTime  @default(now())
-  updateAt       DateTime  @updatedAt
-  deleteAt       DateTime?
+  id              Int       @id @default(autoincrement())
+  bookingId       Int
+  paymentName     String
+  paymentDate     DateTime
+  amount          Float
+  status          Boolean
+  refunded        Boolean?  @default(false)
+  refundedTime    DateTime?
+  refundedAmount  DateTime?
+  createAt        DateTime  @default(now())
+  updateAt        DateTime  @updatedAt
+  deleteAt        DateTime?
+  paymentMethodId Int?
 
   booking Booking @relation(fields: [bookingId], references: [id])
 }
@@ -190,8 +191,9 @@ model Booking {
   totalCustomer Int
   status        Boolean
 
-  tripId Int
-  trip   Trip @relation(fields: [tripId], references: [id])
+  tripId          Int
+  trip            Trip @relation(fields: [tripId], references: [id])
+  paymentMethodId Int?
 
   createAt DateTime  @default(now())
   updateAt DateTime  @updatedAt

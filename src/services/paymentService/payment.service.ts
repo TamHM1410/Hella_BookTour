@@ -80,7 +80,11 @@ class PaymentService {
     try {
       await this.prisma.$connect;
       if(page==0){
-        const data = await this.prisma.payment.findMany();
+        const data = await this.prisma.payment.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return {
           status:'Success',
           statusCode:201,
@@ -93,6 +97,9 @@ class PaymentService {
       const data = await this.prisma.payment.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       return data &&data.length> 0 ? {
         status: "Success",

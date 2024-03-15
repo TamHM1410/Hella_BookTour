@@ -58,18 +58,17 @@ class PointOfInterestController {
 
   updatePointOfInterestById = async (req: Request, res: Response) => {
     try {
-      const currentData = req.body as {
-        POIName: string;
-        POIDescription: string;
-        locationId: number;
-        categoryPOI_ID: number;
-        status: boolean;
-        id: number;
-      };
-      const result = await pointOfInterestService.updateById(currentData);
-      if (result) {
-        return res.status(result.statusCode).json(result);
+    
+      const {files} =req
+      const currentData = JSON.parse(req.body.currentData);
+      if(files!== undefined && Array.isArray(files)){
+        const result = await pointOfInterestService.updateById(currentData,files);
+        if (result) {
+          return res.status(result.statusCode).json(result);
+        }
+          
       }
+    
     } catch (error) {
       return res.status(500).json({
         status: "Internal Server",

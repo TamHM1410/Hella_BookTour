@@ -64,19 +64,14 @@ export const accessRouter = express.Router();
 accessRouter.post("/signUp", accessController.signUp);
 /**
  * @swagger
- * /access/logOut:
+ * /logOut:
  *   post:
  *     summary: Đăng xuất người dùng.
  *     description: API này được sử dụng để đăng xuất người dùng khỏi hệ thống.
- *     tags:
- *       - Access
- *     parameters:
- *       - in: header
- *         name: Authorization
- *         description: JWT token của người dùng đăng nhập.
- *         required: true
- *         schema:
- *           type: string
+ *     tags: 
+ *       - Authentication
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       '200':
  *         description: Đăng xuất thành công.
@@ -85,7 +80,6 @@ accessRouter.post("/signUp", accessController.signUp);
  *       '500':
  *         description: Lỗi server.
  */
-
 accessRouter.post("/logOut", checkLogin, accessController.logOut);
 
 /**

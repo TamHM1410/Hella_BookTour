@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { upLoadFiles ,deleteFolder} from "../uploadFile/upload.service";
+
 class PointOfInterestService {
   private prisma = new PrismaClient();
   constructor() {
@@ -9,7 +11,11 @@ class PointOfInterestService {
     try {
       await this.prisma.$connect;
       if(page==0){
-        const result = await this.prisma.point_Of_Interest.findMany();
+        const result = await this.prisma.point_Of_Interest.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return {
           status: "success",
           statusCode: 201,
@@ -21,6 +27,9 @@ class PointOfInterestService {
       const result = await this.prisma.point_Of_Interest.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       if (result) {
         return {
@@ -48,6 +57,7 @@ class PointOfInterestService {
   getById = async (id: number) => {
     try {
       await this.prisma.$connect;
+     
       const data = await this.prisma.point_Of_Interest.findFirst({
         where: {
           id: id,
@@ -114,10 +124,36 @@ class PointOfInterestService {
     categoryPOI_ID: number;
     status: boolean;
     id: number;
-  }) => {
+    image:string;
+  },files:any[]) => {
     try {
       await this.prisma.$connect;
-      const dataUpdate = await this.prisma.point_Of_Interest.update({
+      if(files.length == 0){
+        const dataUpdate = await this.prisma.point_Of_Interest.update({
+          where: {
+            id: currentData.id,
+          },
+          data: {
+            POIName: currentData.POIName,
+            POIDescription: currentData.POIDescription,
+            locationId: currentData.locationId,
+            categoryPOI_ID: currentData.categoryPOI_ID,
+            status: currentData.status,
+            image:currentData.image
+          },
+        });
+        if (dataUpdate) {
+          return {
+            status: "Success!",
+            statusCode: 201,
+            data: dataUpdate,
+          };
+        }
+
+      }
+      const folderName =`POI/${currentData.id}`
+      const rs = await upLoadFiles(files,folderName)
+      const  data =this.prisma.point_Of_Interest.update({
         where: {
           id: currentData.id,
         },
@@ -127,15 +163,18 @@ class PointOfInterestService {
           locationId: currentData.locationId,
           categoryPOI_ID: currentData.categoryPOI_ID,
           status: currentData.status,
+          image:rs[0].thumb_url
         },
       });
-      if (dataUpdate) {
-        return {
-          status: "Success!",
-          statusCode: 201,
-          data: dataUpdate,
-        };
+      return {
+        status: "Update success",
+        statusCode: 201,
+        data:data
+       
+        
       }
+
+     
     } catch (error) {
       return {
         status: "Internal server error",
@@ -149,6 +188,8 @@ class PointOfInterestService {
   deleteById = async (id: number) => {
     try {
       await this.prisma.$connect;
+      const folderName=`POI/${id}`
+      await deleteFolder(folderName)
       await this.prisma.point_Of_Interest.delete({
         where: {
           id: id,

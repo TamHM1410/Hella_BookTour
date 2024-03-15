@@ -13,9 +13,11 @@ class UserController {
   }
   updateUser = async (req: Request, res: Response) => {
     try {
-      const currentData = req.body;
+      
       const id = req.params.id;
       const pass = req.query.pass;
+      const {files} =req ?? []
+        const currentData = JSON.parse(req.body.currentData);
 
       if (pass) {
         const currentData = req.body;
@@ -24,10 +26,17 @@ class UserController {
           ? res.status(result.statusCode).json(result)
           : this.errorMessage;
       }
-      const result = await userService.updateUser(currentData);
-      return result
+      if(files!== undefined && Array.isArray(files)){
+     
+        const result = await userService.updateUser(currentData,files);
+        return result
         ? res.status(result.statusCode).json(result)
         : this.errorMessage;
+        
+      }
+      
+      
+      
     } catch (error) {
       return this.errorMessage;
     }

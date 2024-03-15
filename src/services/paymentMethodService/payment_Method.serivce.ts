@@ -8,7 +8,11 @@ class PaymentMethod {
     try {
       await this.prisma.$connect;
       if(page==0){
-        const data = await this.prisma.payment_Method.findMany();
+        const data = await this.prisma.payment_Method.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return {
           status:'success!',
           statusCode:201,
@@ -21,6 +25,9 @@ class PaymentMethod {
       const data = await this.prisma.payment_Method.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
    
       if (data &&data.length>0) {

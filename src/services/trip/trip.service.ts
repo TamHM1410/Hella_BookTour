@@ -32,7 +32,11 @@ class TripService {
     try {
       await this.prisma.$connect;
       if(page==0){
-        const data = await this.prisma.trip.findMany();
+        const data = await this.prisma.trip.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return {
           status: "sucess",
           statusCode: 201,
@@ -46,6 +50,9 @@ class TripService {
       const data = await this.prisma.trip.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       return {
         status: "Success !",
@@ -57,6 +64,7 @@ class TripService {
         totalItems,
       };
     } catch (error) {
+      console.log(error)
       return {
         status: "Internal server",
         statusCode: 500,

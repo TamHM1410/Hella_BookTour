@@ -9,7 +9,11 @@ class Location_Activity_Service {
     try {
       await this.prisma.$connect();
       if(page==0){
-        const allData = await this.prisma.location_Activity.findMany();
+        const allData = await this.prisma.location_Activity.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return {
           status:'success',
           statusCode:201,
@@ -23,7 +27,10 @@ class Location_Activity_Service {
       const allData = await this.prisma.location_Activity.findMany({
         skip: startIndex,
         take: pageSize,
-      } );
+        orderBy:{
+          createAt:'desc'
+        }
+      } ,);
       return {
         status: "Success !",
         statusCode: 200,

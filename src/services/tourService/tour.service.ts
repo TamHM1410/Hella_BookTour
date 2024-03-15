@@ -1,5 +1,5 @@
 import { PrismaClient, TourType } from "@prisma/client";
-
+import { upLoadFiles,deleteFolder } from "../uploadFile/upload.service";
 class TourService {
   private prisma = new PrismaClient();
   constructor() {
@@ -13,9 +13,32 @@ class TourService {
     tourType: string;
     id: number;
     image:string
-  }) => {
+  },files:any[]) => {
     try {
       await this.prisma.$connect;
+      if(files.length == 0){
+        const data = await this.prisma.tour.update({
+          where: {
+            id: currentData.id,
+          },
+          data: {
+            tourName: currentData.tourName,
+            status: currentData.status,
+            price: currentData.price,
+            vehicleTypeId: currentData.vehicleTypeId,
+            image:currentData.image
+          },
+        });
+        if (data) {
+          return {
+            status: "Success",
+            statusCode: 200,
+          };
+        }
+
+      }
+      const folderName =`Tour/${currentData.id}`
+      const  rs =await upLoadFiles(files,folderName)
       const data = await this.prisma.tour.update({
         where: {
           id: currentData.id,
@@ -25,15 +48,19 @@ class TourService {
           status: currentData.status,
           price: currentData.price,
           vehicleTypeId: currentData.vehicleTypeId,
-          image:currentData.image
+          image:rs[0].thumb_url
         },
       });
-      if (data) {
-        return {
-          status: "Success",
-          statusCode: 200,
-        };
+      return {
+        status: "Update success",
+        statusCode: 201,
+        data:data
+       
+        
       }
+
+
+      
     } catch (error) {
       console.log(error);
       return {
@@ -47,6 +74,8 @@ class TourService {
   deleteById = async (id: number) => {
     try {
       await this.prisma.$connect;
+      const folderName=`Tour/${id}`
+      await deleteFolder(folderName)
       await this.prisma.location_In_Tour.deleteMany({
         where:{
           tourId:id
@@ -201,7 +230,11 @@ class TourService {
     try {
       await this.prisma.$connect;
       if(page==0){
-        const data = await this.prisma.tour.findMany()
+        const data = await this.prisma.tour.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        })
         return {
           status: "success",
           statusCode: 201,
@@ -213,6 +246,9 @@ class TourService {
       const data = await this.prisma.tour.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       if (!data) {
         return {

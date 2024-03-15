@@ -9,7 +9,11 @@ class CityService {
   getCity = async (page: number, pageSize: number) => {
     try {
       if(page==0){
-        const allCity = await this.prisma.city.findMany();
+        const allCity = await this.prisma.city.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        });
         return {
           status:"success",
           statusCode:201,
@@ -22,6 +26,9 @@ class CityService {
       const allCity = await this.prisma.city.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       return {
         status: "Success!",

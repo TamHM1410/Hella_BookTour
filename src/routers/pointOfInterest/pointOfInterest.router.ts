@@ -1,6 +1,7 @@
 import express from 'express';
 import { point_Of_InterestController } from '../../controllers/pointOfInterest.Controller';
-
+import multer from "multer";
+const upload = multer();
 export const pointOfInterestRouter = express.Router();
 
 /**
@@ -145,7 +146,7 @@ pointOfInterestRouter.post('/pois', point_Of_InterestController.creatNewPointOfI
  *             example:
  *               error: Internal Server Error
  */
-pointOfInterestRouter.patch('/pois/:id', point_Of_InterestController.updatePointOfInterestById);
+pointOfInterestRouter.patch('/pois/:id',upload.any(), point_Of_InterestController.updatePointOfInterestById);
 
 /**
  * @swagger

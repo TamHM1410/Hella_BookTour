@@ -9,7 +9,11 @@ class VehicleType {
     try {
       const startIndex = (page - 1) * pageSize;
       if(page== 0){
-        const data = await this.prisma.vehicle.findMany()
+        const data = await this.prisma.vehicle.findMany({
+          orderBy:{
+            createAt:'desc'
+          }
+        })
         return {
           status:'Success',
           statusCode:201,
@@ -21,6 +25,9 @@ class VehicleType {
       const allData = await this.prisma.vehicle.findMany({
         skip: startIndex,
         take: pageSize,
+        orderBy:{
+          createAt:'desc'
+        }
       });
       return {
         status: "Success",

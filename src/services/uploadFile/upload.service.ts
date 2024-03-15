@@ -1,4 +1,4 @@
-import { error } from "console";
+
 import { cloudinary } from "../../config/cloudinary/cloudinary.config"
 import stream from 'stream';
 
@@ -22,7 +22,7 @@ export const deleteFolder=async (folderName:string)=>{
         })
     ;
       
-        console.log(folderInfo,'fikasdsad')
+      
         if (folderInfo) {
            
             await cloudinary.api.delete_resources_by_prefix(folderName).then(()=> cloudinary.api.delete_folder(folderName)).catch((error)=>{
