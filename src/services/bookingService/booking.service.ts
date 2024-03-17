@@ -24,9 +24,9 @@ class BookingService {
             }
 
             }
-            //   const startIndex = (page - 1) * pageSize;
+              const startIndex = (page - 1) * pageSize;
        
-            // const totalItems = await this.prisma.city.count();
+            const totalItems = await this.prisma.city.count();
     
         
             await this.prisma.$connect
@@ -43,7 +43,9 @@ class BookingService {
                 return {
                     status:'Success!',
                     statusCode:201,
-                    data:data
+                    data:data,
+                        totalPages: Math.ceil(totalItems / pageSize),
+        totalItems,
 
                 }
             }
