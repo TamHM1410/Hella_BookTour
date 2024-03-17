@@ -16,7 +16,8 @@ import { vnPayRouter } from "./vnPay/vnPay.router";
 // import { uploadfileRouter } from "./uploadFile/uploadfile.router";
 import { tourguideRouter } from "./tourguide/tourguide.router";
 import { firebaseRouter } from "./firebase/firebase.router";
-import {pointOfInterestRouter} from "./pointOfInterest/pointOfInterest.router"
+import { pointOfInterestRouter } from "./pointOfInterest/pointOfInterest.router";
+import { scheduleRouter } from "./schedule/scheduleRouter";
 
 /**
  * @openapi
@@ -48,4 +49,5 @@ export const initApi = (app: Express) => {
   app.use("/api/v1", tourguideRouter);
   app.use("/api/v1", firebaseRouter);
   app.use("/api/v1", pointOfInterestRouter);
+  app.use("/api/v1", scheduleRouter);
 };
