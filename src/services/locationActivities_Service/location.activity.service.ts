@@ -172,6 +172,7 @@ class Location_Activity_Service {
           activityDescription: activityData.activityDescription,
           status: activityData.status,
           updateAt: new Date(),
+          activityDuration:activityData.activityDuration,
         },
       });
       return {
