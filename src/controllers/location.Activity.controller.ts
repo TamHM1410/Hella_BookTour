@@ -56,16 +56,7 @@ class LocationActivityController {
   }
   updateActivityById = async (req: Request, res: Response) => {
     try {
-      const activityData = req.body as {
-        id: number;
-        locationId: number;
-        activityName: string;
-        activityDescription: string;
-        status: boolean;
-        createAt: Date;
-        updateAt: Date;
-        deleteAt: Date;
-      };
+      const activityData = req.body 
       const result = await location_activity_service.updateActivity(
         activityData
       );

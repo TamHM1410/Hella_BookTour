@@ -39,7 +39,7 @@ export const cityRouter=express.Router()
  */
 /**
  * @swagger
- * /api/v1/city:
+ * /api/v1/cities:
  *   get:
  *     summary: Get all cities
  *     tags: [City]

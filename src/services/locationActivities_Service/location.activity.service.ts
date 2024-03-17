@@ -155,6 +155,7 @@ class Location_Activity_Service {
     locationId: number;
     activityName: string;
     activityDescription: string;
+    activityDuration:string;
     status: boolean;
     createAt: Date;
     updateAt: Date;
