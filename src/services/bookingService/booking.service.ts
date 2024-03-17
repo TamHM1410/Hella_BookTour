@@ -7,6 +7,7 @@ class BookingService {
     }
     getAll = async (page: number, pageSize: number)=>{
         try{
+            
             if(page ==0 ){
                 await this.prisma.$connect
             const data =await this.prisma.booking.findMany({
@@ -23,7 +24,9 @@ class BookingService {
             }
 
             }
-            const startIndex = (page - 1) * pageSize;
+            //   const startIndex = (page - 1) * pageSize;
+       
+            // const totalItems = await this.prisma.city.count();
     
         
             await this.prisma.$connect
