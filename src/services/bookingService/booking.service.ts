@@ -26,7 +26,7 @@ class BookingService {
             }
               const startIndex = (page - 1) * pageSize;
        
-            const totalItems = await this.prisma.city.count();
+            const totalItems = await this.prisma.booking.count();
     
         
             await this.prisma.$connect
